@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
+# Clion debug
+cmake-build-debug/
+
 # User-specific files
 *.suo
 *.user
