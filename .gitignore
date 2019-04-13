@@ -5,7 +5,7 @@
 
 
 # Clion debug
-cmake-build-debug/
+PROJETO_PG_GA/cmake-build-debug/
 
 # User-specific files
 *.suo
