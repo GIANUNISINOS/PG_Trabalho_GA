@@ -89,6 +89,9 @@
 		<Unit filename="/Users/gian/GitHub/PG_Trabalho_GA/TESTANDO/CMakeLists.txt">
 			<Option target="TESTANDO"/>
 		</Unit>
+		<Unit filename="/Users/gian/GitHub/PG_Trabalho_GA/TESTANDO/header/Includes.h">
+			<Option target="TESTANDO"/>
+		</Unit>
 		<Unit filename="/Users/gian/GitHub/PG_Trabalho_GA/TESTANDO/header/Shader.h">
 			<Option target="TESTANDO"/>
 		</Unit>

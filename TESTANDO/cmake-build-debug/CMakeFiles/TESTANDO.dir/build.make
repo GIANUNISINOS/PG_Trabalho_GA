@@ -79,6 +79,7 @@ TESTANDO_EXTERNAL_OBJECTS =
 
 TESTANDO: CMakeFiles/TESTANDO.dir/source/main.cpp.o
 TESTANDO: CMakeFiles/TESTANDO.dir/build.make
+TESTANDO: /usr/local/lib/libglfw.3.2.dylib
 TESTANDO: /usr/local/lib/libGLEW.dylib
 TESTANDO: CMakeFiles/TESTANDO.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/gian/GitHub/PG_Trabalho_GA/TESTANDO/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable TESTANDO"
