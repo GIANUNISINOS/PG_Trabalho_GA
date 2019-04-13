@@ -281,14 +281,10 @@ int main() {
     layers.push_back(t1);
     layers.push_back(t2);
 
-
-
-
     //AO INCIAR A MASCARA ESTA EM POSICAO 0,0 SEU CENTRO
     //A TEXTURA PODE ESTAR VIRARA
     //ALGUNS COMANDOS SAO EXECUTADOS
     colocarObjetoEmPosicaoAdequadaNoEspaco();
-
 
 
     //os callback
