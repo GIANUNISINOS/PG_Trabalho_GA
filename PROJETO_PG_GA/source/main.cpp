@@ -273,9 +273,9 @@ int main() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-    Sprite* t0 = new Sprite("./resource/nuvem.png", 0.0f, 0.0f, -0.51f, 0.005f);
-    Sprite* t1 = new Sprite("./resource/grama.png", 0.0f, 0.0f, -0.50f, 0.001f);
-    Sprite* t2 = new Sprite("./resource/batman.png", 0.0f, 0.0f, -0.49f, 0.013);
+    Sprite* t0 = new Sprite("../resource/nuvem.png", 0.0f, 0.0f, -0.51f, 0.005f);
+    Sprite* t1 = new Sprite("../resource/grama.png", 0.0f, 0.0f, -0.50f, 0.001f);
+    Sprite* t2 = new Sprite("../resource/batman.png", 0.0f, 0.0f, -0.49f, 0.013);
 
     layers.push_back(t0);
     layers.push_back(t1);
