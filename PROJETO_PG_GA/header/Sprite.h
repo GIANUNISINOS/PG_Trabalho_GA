@@ -13,9 +13,9 @@ public:
 
     }
 
-    Sprite(const char* filename, float paramOffsetX, float paramOffsetY, float paramZ, float paramSpeedX)
+    Sprite(const char* filename, bool useAlpha, float paramOffsetX, float paramOffsetY, float paramZ, float paramSpeedX)
     {
-        create_textures(filename);
+        create_textures(filename, useAlpha);
         offsetX = paramOffsetX;
         offsetY = paramOffsetY;
         z = paramZ;
@@ -29,7 +29,7 @@ public:
             offsetX -= 1.00f;
     }
 
-    void create_textures(const char* filename) {
+    void create_textures(const char* filename, bool useAlpha) {
 
         glGenTextures(1, &textureId);
         glBindTexture(GL_TEXTURE_2D, textureId);
@@ -41,13 +41,16 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         // load and generate the texture
-        int charWidth, charHeight, charNrChannels;
-        charNrChannels =0;
+        int width, height, nrChannels;
+        nrChannels =0;
 
-        unsigned char *data = stbi_load(filename, &charWidth, &charHeight, &charNrChannels, 0);
+        unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
         //unsigned char *data = SOIL_load_image(filename, &tex_width, &tex_height, 0, SOIL_LOAD_RGBA);
         if (data){
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, charWidth, charHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            if(useAlpha)
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            else
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
             glGenerateMipmap(GL_TEXTURE_2D);
             //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex_width, tex_height, nrCHANEL, GL_RGBA, GL_UNSIGNED_BYTE, data);
             //glGenerateMipmap(GL_TEXTURE_2D);
@@ -55,7 +58,6 @@ public:
         } else {
             std::cout << "Failed to load main character texture" << std::endl;
         }
-
 
         stbi_image_free(data);
         //SOIL_free_image_data(data);

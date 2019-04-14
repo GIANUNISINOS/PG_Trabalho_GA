@@ -273,13 +273,15 @@ int main() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-    Sprite* t0 = new Sprite("../resource/nuvem.png", 0.0f, 0.0f, -0.51f, 0.005f);
-    Sprite* t1 = new Sprite("../resource/grama.png", 0.0f, 0.0f, -0.50f, 0.001f);
-    Sprite* t2 = new Sprite("../resource/batman.png", 0.0f, 0.0f, -0.49f, 0.013);
+    Sprite* t0 = new Sprite("../resource/fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.005f);
+    Sprite* t1 = new Sprite("../resource/nuvem.png", true, 0.0f, 0.0f, -0.51f, 0.005f);
+    Sprite* t2 = new Sprite("../resource/grama.png", true, 0.0f, 0.0f, -0.50f, 0.001f);
+    Sprite* t3 = new Sprite("../resource/batman.png", true, 0.0f, 0.0f, -0.49f, 0.013);
 
     layers.push_back(t0);
     layers.push_back(t1);
     layers.push_back(t2);
+    layers.push_back(t3);
 
     //AO INCIAR A MASCARA ESTA EM POSICAO 0,0 SEU CENTRO
     //A TEXTURA PODE ESTAR VIRARA
@@ -303,7 +305,7 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
 
             // Define shaderProgram como o shader a ser utilizado
             glUseProgram(shaderProgram);
