@@ -16,7 +16,10 @@
 //#include <stdio.h>
 
 // to usleep
-#include <unistd.h>
+#ifdef __APPLE__
+	#include <unistd.h> //Não Existe no Windows, e não está sendo utilizado
+#endif
+
 
 //To GLEW
 #include <GL/glew.h>
@@ -29,14 +32,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
-//To SOIL
-//#include <SOIL.h>
-
-//to STB IMAGE
+//Load image Libraries
 #ifdef __APPLE__
-#define STB_IMAGE_IMPLEMENTATION
-#endif //APPLE
-#include "./header/stb_image.h"
+	#define STB_IMAGE_IMPLEMENTATION
+	#include "./header/stb_image.h"
+#elif _WIN64
+	#include <SOIL.h>
+#endif
+
 
 using namespace std;
