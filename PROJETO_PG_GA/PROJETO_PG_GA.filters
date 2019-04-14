@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{7b175f1a-a40a-42fe-a7ff-f4b21f919644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{439a49b3-44be-4a2a-899b-397ed404c6f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header">
+      <UniqueIdentifier>{1a25e2b4-37cf-46b5-81fb-e0f26e96fa49}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\backblue.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\batman.jpg">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\batman.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\batman1.jpg">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\batman1.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\batman2.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\container.jpg">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\grama.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\nuvem.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\textura1.jpg">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\textura2.jpg">
+      <Filter>resource</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="header\Sprite.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\stb_image.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Includes.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Shader.h">
+      <Filter>header</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
