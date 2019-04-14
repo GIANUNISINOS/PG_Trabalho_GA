@@ -32,6 +32,7 @@ GLuint VAO_OBJ;
 GLuint EBO_OBJ;
 GLuint VBO_OBJ;
 
+glm::mat4 matrix_static = glm::mat4(1);
 glm::mat4 matrix_translaction_OBJ = glm::mat4(1);
 glm::mat4 matrix_rotation_OBJ = glm::mat4(1);
 glm::mat4 matrix_scala_OBJ = glm::mat4(1);
@@ -151,9 +152,11 @@ void colocarObjetoEmPosicaoAdequadaNoEspaco() {
     double tmpxpos = WIDTH / 2;
     double tmpypos = HEIGHT / 2;
     matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ, glm::vec3((float)(tmpxpos), (float)(tmpypos), 0.0f));
-    matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ;
+    matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ*matrix_scala_OBJ;
     xCentro = tmpxpos;
     yCentro = tmpypos;
+
+    matrix_static = glm::translate(matrix_static, glm::vec3((float)(tmpxpos), (float)(tmpypos), 0.0f));
     // e rotaciona 180 degress
     //matrix_rotation_OBJ = glm::rotate(matrix_rotation_OBJ, glm::radians(180.0f), glm::vec3(0, 0, 1));
     //matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ;
@@ -316,14 +319,14 @@ int main() {
     // esta para quando redimensionar a tela
     glfwSetWindowSizeCallback(window, window_size_callback);
 
-    // glm projecao
-    glm::mat4 projection =
-            glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
+
 
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+// glm projecao
+        glm::mat4 projection =
+                glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
         for (int i = 0; i < 5; i++) {
 
             // Define shaderProgram como o shader a ser utilizado
@@ -332,10 +335,10 @@ int main() {
             glUniformMatrix4fv(
                     glGetUniformLocation(shaderProgram, "proj"), 1,
                     GL_FALSE, glm::value_ptr(projection));
-
-            glUniformMatrix4fv(
-                    glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
-                    GL_FALSE, glm::value_ptr(matrix_OBJ));
+                glUniformMatrix4fv(
+            glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
+            GL_FALSE, glm::value_ptr(matrix_OBJ));
+            
 
             // realiza movimento da camada em X
             layers[i]->moveX();
