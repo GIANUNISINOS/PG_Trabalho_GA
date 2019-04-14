@@ -41,7 +41,7 @@ glm::mat4 matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_sc
 float xCentro = 0.0f;
 float yCentro = 0.0f;
 float value_scala = 1.2f;
-float value_move = 3.0f;
+float value_move = 15.0f;
 
 
 //Define acoes do mouse
@@ -109,9 +109,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         }
         else if (key == GLFW_KEY_UP) {
             matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
-                                                 glm::vec3(0.0f, -value_move, 0.0f));
-            matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-            yCentro = yCentro - value_move;
+                                                     glm::vec3(0.0f, -value_move, 0.0f));
+                matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+                yCentro = yCentro - value_move;
         }
         else if (key == GLFW_KEY_ESCAPE) {
             glfwSetWindowShouldClose(window, true);
@@ -272,14 +272,12 @@ int main() {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
 
-    //texture1 = create_textures("batman.png");
-    //glUniform1i(glGetUniformLocation(shaderProgram, "texture_a"), 0);
 
-    //texture2 = create_textures("container.jpg");
-    //glUniform1i(glGetUniformLocation(shaderProgram, "texture_b"), 1);
-
+    // define shader
     glUseProgram(shaderProgram);
+    // habilita funcao de profundidade
     glEnable(GL_DEPTH_TEST);
+    // habilita função de transparencia
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
@@ -335,10 +333,16 @@ int main() {
             glUniformMatrix4fv(
                     glGetUniformLocation(shaderProgram, "proj"), 1,
                     GL_FALSE, glm::value_ptr(projection));
+
+            if(i==4) {
                 glUniformMatrix4fv(
-            glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
-            GL_FALSE, glm::value_ptr(matrix_OBJ));
-            
+                        glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
+                        GL_FALSE, glm::value_ptr(matrix_OBJ));
+            } else {
+                glUniformMatrix4fv(
+                        glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
+                        GL_FALSE, glm::value_ptr(matrix_static));
+            }
 
             // realiza movimento da camada em X
             layers[i]->moveX();
@@ -369,6 +373,10 @@ int main() {
 
     delete t0;
     delete t1;
+    delete t2;
+    delete t3;
+    delete t4;
+
 
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
