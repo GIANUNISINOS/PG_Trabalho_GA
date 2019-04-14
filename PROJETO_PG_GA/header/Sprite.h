@@ -27,6 +27,8 @@ public:
         offsetX += speedX;
         if (offsetX > 1.00f)
             offsetX -= 1.00f;
+        else if (offsetX < -1.00f)
+            offsetX += 1.00f;
     }
 
     void create_textures(const char* filename, bool useAlpha) {
