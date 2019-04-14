@@ -1,3 +1,3 @@
 # Ignore aditional libraries
-x64/
-.vs/
+External/
+*.dll

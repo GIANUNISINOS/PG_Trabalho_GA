@@ -1,6 +1,13 @@
-#include "header/Includes.h"
-#include "header/Shader.h"
-#include "header/Sprite.h"
+#ifdef __APPLE__
+	#include "header/Includes.h"
+	#include "header/Shader.h"
+	#include "header/Sprite.h"
+#elif _WIN64
+	#include "../header/Includes.h";
+	#include "../header/Shader.h";
+	#include "../header/Sprite.h";
+#endif
+
 
 //#define EXIT_FAILURE -1
 //#define EXIT_SUCCESS 0
@@ -25,6 +32,7 @@ GLuint VAO_OBJ;
 GLuint EBO_OBJ;
 GLuint VBO_OBJ;
 
+glm::mat4 matrix_static = glm::mat4(1);
 glm::mat4 matrix_translaction_OBJ = glm::mat4(1);
 glm::mat4 matrix_rotation_OBJ = glm::mat4(1);
 glm::mat4 matrix_scala_OBJ = glm::mat4(1);
@@ -144,9 +152,11 @@ void colocarObjetoEmPosicaoAdequadaNoEspaco() {
     double tmpxpos = WIDTH / 2;
     double tmpypos = HEIGHT / 2;
     matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ, glm::vec3((float)(tmpxpos), (float)(tmpypos), 0.0f));
-    matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ;
+    matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ*matrix_scala_OBJ;
     xCentro = tmpxpos;
     yCentro = tmpypos;
+
+    matrix_static = glm::translate(matrix_static, glm::vec3((float)(tmpxpos), (float)(tmpypos), 0.0f));
     // e rotaciona 180 degress
     //matrix_rotation_OBJ = glm::rotate(matrix_rotation_OBJ, glm::radians(180.0f), glm::vec3(0, 0, 1));
     //matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ;
@@ -230,7 +240,7 @@ int main() {
             "out vec4 frag_color;"
 
             "void main() {"
-            "	vec4 texel0 = texture(sprite,vec2(-(TexCoord.x + offsetX),-(TexCoord.y + offsetY)));"
+			"	vec4 texel0 = texture(sprite,vec2(-(TexCoord.x + offsetX),-(TexCoord.y + offsetY)));"
             "	frag_color = texel0;"
             "}";
 
@@ -273,17 +283,27 @@ int main() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-    Sprite* t0 = new Sprite("../resource/fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
-    Sprite* t1 = new Sprite("../resource/sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
-    Sprite* t2 = new Sprite("../resource/nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.003f);
-    Sprite* t3 = new Sprite("../resource/grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.006);
-    Sprite* t4 = new Sprite("../resource/megamen.png", true, 0.0f, 0.0f, -0.48f, 0.012);
+
+	#ifdef __APPLE__
+		Sprite* t0 = new Sprite("../resource/fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
+		Sprite* t1 = new Sprite("../resource/sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
+		Sprite* t2 = new Sprite("../resource/nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.003f);
+		Sprite* t3 = new Sprite("../resource/grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.006);
+		Sprite* t4 = new Sprite("../resource/megamen.png", true, 0.0f, 0.0f, -0.48f, 0.012);
+	#elif _WIN64
+		Sprite* t0 = new Sprite("resource/fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
+		Sprite* t1 = new Sprite("resource/sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
+		Sprite* t2 = new Sprite("resource/nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.003f);
+		Sprite* t3 = new Sprite("resource/grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.006);
+		Sprite* t4 = new Sprite("resource/megamen.png", true, 0.0f, 0.0f, -0.48f, 0.012);
+	#endif //APPLE
+
 
     layers.push_back(t0);
     layers.push_back(t1);
     layers.push_back(t2);
-    layers.push_back(t3);
-    layers.push_back(t4);
+	layers.push_back(t3);
+	layers.push_back(t4);
 
     //AO INCIAR A MASCARA ESTA EM POSICAO 0,0 SEU CENTRO
     //A TEXTURA PODE ESTAR VIRARA
@@ -299,14 +319,14 @@ int main() {
     // esta para quando redimensionar a tela
     glfwSetWindowSizeCallback(window, window_size_callback);
 
-    // glm projecao
-    glm::mat4 projection =
-            glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
+
 
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+// glm projecao
+        glm::mat4 projection =
+                glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
         for (int i = 0; i < 5; i++) {
 
             // Define shaderProgram como o shader a ser utilizado
@@ -315,10 +335,10 @@ int main() {
             glUniformMatrix4fv(
                     glGetUniformLocation(shaderProgram, "proj"), 1,
                     GL_FALSE, glm::value_ptr(projection));
-
-            glUniformMatrix4fv(
-                    glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
-                    GL_FALSE, glm::value_ptr(matrix_OBJ));
+                glUniformMatrix4fv(
+            glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
+            GL_FALSE, glm::value_ptr(matrix_OBJ));
+            
 
             // realiza movimento da camada em X
             layers[i]->moveX();
