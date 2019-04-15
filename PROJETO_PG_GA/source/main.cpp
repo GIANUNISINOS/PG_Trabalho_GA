@@ -32,6 +32,9 @@ GLuint VAO_OBJ;
 GLuint EBO_OBJ;
 GLuint VBO_OBJ;
 
+//teclas pressionadas
+int keys[1024];
+
 glm::mat4 matrix_static = glm::mat4(1);
 glm::mat4 matrix_translaction_OBJ = glm::mat4(1);
 glm::mat4 matrix_rotation_OBJ = glm::mat4(1);
@@ -75,58 +78,64 @@ void window_size_callback(GLFWwindow* window, int width, int height)
     NEW_HEIGHT = height;
 }
 
-//Define acoes do teclado
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
+/*
+	Controla que teclas estão pressionadas em um dado momento
+*/
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if(action == GLFW_PRESS) keys[key] = 1;
+	if(action == GLFW_RELEASE) keys[key] = 0;
+}
 
-    if ((action == GLFW_REPEAT || action == GLFW_PRESS)) {
-        if (key == GLFW_KEY_U) {
-            matrix_rotation_OBJ = glm::rotate(matrix_rotation_OBJ, glm::radians(-20.0f), glm::vec3(0, 0, 1));
-            matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-        }
-        else if (key == GLFW_KEY_R) {
-            matrix_rotation_OBJ = glm::rotate(matrix_rotation_OBJ, glm::radians(20.0f), glm::vec3(0, 0, 1));
-            matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-        }
-
-        else if (key == GLFW_KEY_RIGHT) {
-            matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
-                                                 glm::vec3(value_move, 0.0f, 0.0f));
-            matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-            xCentro = xCentro + value_move;
-        }
-        else if (key == GLFW_KEY_LEFT) {
-            matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
-                                                 glm::vec3(-value_move, 0.0f, 0.0f));
-            matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-            xCentro = xCentro - value_move;
-        }
-        else if (key == GLFW_KEY_DOWN) {
-            matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
-                                                 glm::vec3(0.0f, value_move, 0.0f));
-            matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-            yCentro = yCentro + value_move;
-        }
-        else if (key == GLFW_KEY_UP) {
-            matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
-                                                     glm::vec3(0.0f, -value_move, 0.0f));
-                matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-                yCentro = yCentro - value_move;
-        }
-        else if (key == GLFW_KEY_ESCAPE) {
-            glfwSetWindowShouldClose(window, true);
-        }
-        else if (key == GLFW_KEY_KP_ADD)
-        {
-            matrix_scala_OBJ = glm::scale(matrix_scala_OBJ, glm::vec3(value_scala, value_scala, value_scala));
-            matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-        }
-        else if (key == GLFW_KEY_KP_SUBTRACT)
-        {
-            matrix_scala_OBJ = glm::scale(matrix_scala_OBJ, glm::vec3(1.0f / value_scala, 1.0f / value_scala, 1.0f / value_scala));
-            matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-        }
-    }
+/*
+	Função que responde às teclas pressionadas
+*/
+void keyboard_reaction() {
+	if (keys[GLFW_KEY_U] == 1) {
+		matrix_rotation_OBJ = glm::rotate(matrix_rotation_OBJ, glm::radians(-20.0f), glm::vec3(0, 0, 1));
+		matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+	}
+	if (keys[GLFW_KEY_R] == 1) {
+		matrix_rotation_OBJ = glm::rotate(matrix_rotation_OBJ, glm::radians(20.0f), glm::vec3(0, 0, 1));
+		matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+	}
+	if (keys[GLFW_KEY_RIGHT] == 1) {
+		matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
+			glm::vec3(value_move, 0.0f, 0.0f));
+		matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+		xCentro = xCentro + value_move;
+	}
+	if (keys[GLFW_KEY_LEFT] == 1) {
+		matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
+			glm::vec3(-value_move, 0.0f, 0.0f));
+		matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+		xCentro = xCentro - value_move;
+	}
+	if (keys[GLFW_KEY_DOWN] == 1) {
+		matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
+			glm::vec3(0.0f, value_move, 0.0f));
+		matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+		yCentro = yCentro + value_move;
+	}
+	if (keys[GLFW_KEY_UP] == 1) {
+		matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
+			glm::vec3(0.0f, -value_move, 0.0f));
+		matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+		yCentro = yCentro - value_move;
+	}
+	if (keys[GLFW_KEY_ESCAPE] == 1) {
+		glfwSetWindowShouldClose(window, true);
+	}
+	if (keys[GLFW_KEY_KP_ADD] == 1)
+	{
+		matrix_scala_OBJ = glm::scale(matrix_scala_OBJ, glm::vec3(value_scala, value_scala, value_scala));
+		matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+	}
+	if (keys[GLFW_KEY_KP_SUBTRACT] == 1)
+	{
+		matrix_scala_OBJ = glm::scale(matrix_scala_OBJ, glm::vec3(1.0f / value_scala, 1.0f / value_scala, 1.0f / value_scala));
+		matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+	}
+	
 }
 
 GLFWwindow* createWindow() {
@@ -143,11 +152,11 @@ GLFWwindow* createWindow() {
 void configurarFundo(){
 
     float vertices_FUNDO[] = {
-            // positions              // colors                // texture coords
-            0.0f,   0.0f,   0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top left
-            0.0f,   600.0f, 0.0f,     0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom left
-            800.0f, 600.0f, 0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom right
-            800.0f, 0.0f,   0.0f,     1.0f, 1.0f, 0.0f,   0.0f, 1.0f,  // top right
+            // positions              // texture coords
+            0.0f,   0.0f,   0.0f,     1.0f, 1.0f, // top left
+            0.0f,   600.0f, 0.0f,     1.0f, 0.0f, // bottom left
+            800.0f, 600.0f, 0.0f,     0.0f, 0.0f, // bottom right
+            800.0f, 0.0f,   0.0f,     0.0f, 1.0f,  // top right
     };
 	/*
 		Aponta qual o indice do vertices_Fundo[] será usado para desenhar o trìângulo
@@ -165,12 +174,24 @@ void configurarFundo(){
     glBindBuffer(GL_ARRAY_BUFFER, VBO_FUNDO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_FUNDO), vertices_FUNDO, GL_STATIC_DRAW);
 
-    glBindVertexArray(VAO_FUNDO);
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_FUNDO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_FUNDO), indices_FUNDO, GL_STATIC_DRAW);
 
-    glBindVertexArray(VAO_FUNDO);
+	/*
+	   Antes de utilizar o glVertexAttribPointer é necessário dar o bind do buffer que será lido.
+	   Aqui o EBO é o último buffer a receber o bind, no entanto glVertexAttribPointer continua
+	   funcionando no VBO. Isto deve significar que o glVertexAttribPointer atua no último 
+	   buffer do tipo GL_ARRAY_BUFFER a receber bind
+	*/
+
+	// Passa e ativa o atributo (location) 0 no vertexShader, a partir do VBO
+    // Lê o atributo de 5 em 5 floats, começando em 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	// Lê o atributo de 5 em 5 floats, começando em 1
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 }
 
@@ -204,17 +225,7 @@ int main() {
         shaderProgram = new Shader("shader/vertexShader.txt","shader/fragmentShader.txt");
     #endif
 
-    // posições
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+   
 
 
     // define shader para uso
@@ -261,6 +272,8 @@ int main() {
         // glm projecao
         glm::mat4 projection =
                 glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
+
+		keyboard_reaction();
         for (int i = 0; i < 5; i++) {
 
             // Define shaderProgram como o shader a ser utilizado
