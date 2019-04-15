@@ -17,7 +17,7 @@
 
 // to usleep
 #ifdef __APPLE__
-	#include <unistd.h> //Não Existe no Windows, e não está sendo utilizado
+	#include <unistd.h> //Nï¿½o Existe no Windows, e nï¿½o estï¿½ sendo utilizado
 #endif
 
 
@@ -33,12 +33,14 @@
 #include <glm/gtc/type_ptr.hpp>
 
 //Load image Libraries
+#define STB_IMAGE_IMPLEMENTATION
 #ifdef __APPLE__
-	#define STB_IMAGE_IMPLEMENTATION
-	#include "./header/stb_image.h"
+    #include "./header/stb_image.h"
 #elif _WIN64
-	#include <SOIL.h>
-#endif
+    #include "./stb_image.h"
+#endif //APPLE
+
+
 
 
 using namespace std;

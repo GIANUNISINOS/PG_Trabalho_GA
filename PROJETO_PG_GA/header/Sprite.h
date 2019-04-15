@@ -14,9 +14,9 @@ public:
 
     }
 
-	Sprite(const char* filename, bool useAlpha, float paramOffsetX, float paramOffsetY, float paramZ, float paramSpeedX)
+	Sprite(string filename, bool useAlpha, float paramOffsetX, float paramOffsetY, float paramZ, float paramSpeedX)
     {
-        create_textures(filename, useAlpha);
+        create_textures(filename.c_str(), useAlpha);
         offsetX = paramOffsetX;
         offsetY = paramOffsetY;
         z = paramZ;
@@ -46,30 +46,21 @@ public:
         // load and generate the texture
 		int width, height, nrChannels;
 		nrChannels = 0;
-		
-		#ifdef __APPLE__
-			unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
-		#elif _WIN64
-			unsigned char *data = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_RGBA);
-		#endif
+
+		unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
         
         if (data){
 			if (useAlpha)
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			else
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            glGenerateMipmap(GL_TEXTURE_2D);
-            //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex_width, tex_height, nrCHANEL, GL_RGBA, GL_UNSIGNED_BYTE, data);
-            //glGenerateMipmap(GL_TEXTURE_2D);
-            //SOIL_create_OGL_texture(data, tex_width, tex_height, nrCHANEL, texture, SOIL_FLAG_INVERT_Y);
+
+			glGenerateMipmap(GL_TEXTURE_2D);
         } else {
-            std::cout << "Failed to load main character texture" << std::endl;
+            std::cout << "Falha ao carregar images." << std::endl;
         }
 
-		#ifdef __APPLE__
-			stbi_image_free(data);
-		#elif _WIN64
-			SOIL_free_image_data(data);
-		#endif
+		stbi_image_free(data);
+
 	}
 };

@@ -236,20 +236,20 @@ int main() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
+    string resource_path;
 
-	#ifdef __APPLE__
-		Sprite* t0 = new Sprite("../resource/fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
-		Sprite* t1 = new Sprite("../resource/sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
-		Sprite* t2 = new Sprite("../resource/nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.003f);
-		Sprite* t3 = new Sprite("../resource/grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.006);
-		Sprite* t4 = new Sprite("../resource/megamen.png", true, 0.0f, 0.0f, -0.48f, 0.012);
-	#elif _WIN64
-		Sprite* t0 = new Sprite("resource/fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
-		Sprite* t1 = new Sprite("resource/sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
-		Sprite* t2 = new Sprite("resource/nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.003f);
-		Sprite* t3 = new Sprite("resource/grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.006);
-		Sprite* t4 = new Sprite("resource/megamen.png", true, 0.0f, 0.0f, -0.48f, 0.012);
-	#endif //APPLE
+    #ifdef __APPLE__
+        resource_path = "../resource/";
+    #elif _WIN64
+        resource_path = "resource/";
+    #endif //APPLE
+
+    Sprite* t0 = new Sprite(resource_path+"fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
+	Sprite* t1 = new Sprite(resource_path+"sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
+	Sprite* t2 = new Sprite(resource_path+"nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.003f);
+	Sprite* t3 = new Sprite(resource_path+"grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.006);
+	Sprite* t4 = new Sprite(resource_path+"megamen.png", true, 0.0f, 0.0f, -0.48f, 0.012);
+
 
 
     layers.push_back(t0);
@@ -313,8 +313,8 @@ int main() {
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
 
-        glfwWaitEvents();
-//        glfwPollEvents();
+        //glfwWaitEvents();
+        glfwPollEvents();
         glfwSwapBuffers(window);
 
     }
