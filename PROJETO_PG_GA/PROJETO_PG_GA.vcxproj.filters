@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="header\Includes.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Sprite.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Shader.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="header\stb_image.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\textura2.jpg">
+      <Filter>headers</Filter>
+    </Image>
+    <Image Include="resource\textura1.jpg">
+      <Filter>headers</Filter>
+    </Image>
+    <Image Include="resource\nuvem.png">
+      <Filter>headers</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="resource">
+      <UniqueIdentifier>{b8db2fd0-2a62-4b40-a986-067407006e74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{5e40c361-83e6-4363-9e20-d3f331445ea6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{c39d4882-f97d-4907-8a22-fbd612cd2c34}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="shader\vertexShader.txt">
+      <Filter>source</Filter>
+    </Text>
+    <Text Include="shader\fragmentShader.txt">
+      <Filter>source</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

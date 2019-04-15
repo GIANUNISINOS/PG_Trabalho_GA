@@ -22,14 +22,6 @@
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resource\backblue.png" />
-    <Image Include="resource\batman.jpg" />
-    <Image Include="resource\batman.png" />
-    <Image Include="resource\batman1.jpg" />
-    <Image Include="resource\batman1.png" />
-    <Image Include="resource\batman2.png" />
-    <Image Include="resource\container.jpg" />
-    <Image Include="resource\grama.png" />
     <Image Include="resource\nuvem.png" />
     <Image Include="resource\textura1.jpg" />
     <Image Include="resource\textura2.jpg" />
@@ -39,6 +31,10 @@
     <ClInclude Include="header\Shader.h" />
     <ClInclude Include="header\Sprite.h" />
     <ClInclude Include="header\stb_image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="shader\fragmentShader.txt" />
+    <Text Include="shader\vertexShader.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6CE88CAA-5B08-4D10-90E2-5A9051699676}</ProjectGuid>

@@ -140,38 +140,22 @@ GLFWwindow* createWindow() {
     return window;
 }
 
-void colocarObjetoEmPosicaoAdequadaNoEspaco() {
-    //Fazer a translacao no meio da tela
-    double tmpxpos = WIDTH / 2;
-    double tmpypos = HEIGHT / 2;
-    matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ, glm::vec3((float)(tmpxpos), (float)(tmpypos), 0.0f));
-    matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ*matrix_scala_OBJ;
-    xCentro = tmpxpos;
-    yCentro = tmpypos;
-
-    matrix_static = glm::translate(matrix_static, glm::vec3((float)(tmpxpos), (float)(tmpypos), 0.0f));
-    // e rotaciona 180 degress
-    //matrix_rotation_OBJ = glm::rotate(matrix_rotation_OBJ, glm::radians(180.0f), glm::vec3(0, 0, 1));
-    //matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ;
-}
-
 void configurarFundo(){
 
     float vertices_FUNDO[] = {
-            // positions                // colors                // texture coords
-            -400.0f, -300.0f, 0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top left
-            -400.0f, 300.0f, 0.0f,      0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom left
-            400.0f, 300.0f, 0.0f,       0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom right
-            400.0f, 300.0f, 0.0f,       0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom right
-            400.0f, -300.0f, 0.0f,      1.0f, 1.0f, 0.0f,   0.0f, 1.0f,  // top right
-            -400.0f, -300.0f, 0.0f,     1.0f, 0.0f, 1.0f,   1.0f, 1.0f, // top left
+            // positions              // colors                // texture coords
+            0.0f,   0.0f,   0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top left
+            0.0f,   600.0f, 0.0f,     0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom left
+            800.0f, 600.0f, 0.0f,     0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom right
+            800.0f, 0.0f,   0.0f,     1.0f, 1.0f, 0.0f,   0.0f, 1.0f,  // top right
     };
-
+	/*
+		Aponta qual o indice do vertices_Fundo[] será usado para desenhar o trìângulo
+	*/
     unsigned int indices_FUNDO[] = {
             0, 1, 2,   // first triangle
-            3, 4, 5    // second triangle
+            0, 3, 2    // second triangle
     };
-
     glGenBuffers(1, &EBO_FUNDO);
     glGenBuffers(1, &VBO_FUNDO);
 
@@ -262,12 +246,6 @@ int main() {
     layers.push_back(t2);
 	layers.push_back(t3);
 	layers.push_back(t4);
-
-    //AO INCIAR A MASCARA ESTA EM POSICAO 0,0 SEU CENTRO
-    //A TEXTURA PODE ESTAR VIRARA
-    //ALGUNS COMANDOS SAO EXECUTADOS
-    colocarObjetoEmPosicaoAdequadaNoEspaco();
-
 
     //os callback
     // esta para quando clicar com o mouse
