@@ -12,7 +12,7 @@
 //#define EXIT_FAILURE -1
 //#define EXIT_SUCCESS 0
 
-//Shader *shader;
+Shader *shaderProgram;
 GLFWwindow *window;
 vector<Sprite *> layers;
 
@@ -129,13 +129,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
-GLuint create_shader(GLenum shaderType, const char* shaderSource) {
-    GLuint shader = glCreateShader(shaderType);
-    glShaderSource(shader, 1, &shaderSource, NULL);
-    glCompileShader(shader);
-    return shader;
-}
-
 GLFWwindow* createWindow() {
     GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Triângulo Maluco", NULL, NULL);
     if (window == NULL) {
@@ -215,50 +208,12 @@ int main() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    const char* vertexShaderSource =
-            "#version 410\n "
-            "layout (location = 0) in vec2 aPos;"
-            "layout (location = 2) in vec2 aTexCoord;"
-            "out vec2 TexCoord;"
-            "uniform mat4 matrix_OBJ;"
-            "uniform mat4 proj;"
-            "uniform float layer_z;"
-            "void main() {"
-            "   gl_Position = proj * matrix_OBJ * vec4(aPos,layer_z,1.0);"
-            "   TexCoord = aTexCoord;"
-            "}";
-
-
-    const char* fragmentShaderSource =
-            "#version 410\n "
-            "in vec2 TexCoord;"
-
-            "uniform sampler2D sprite;"
-            "uniform float offsetX;"
-            "uniform float offsetY;"
-
-            "out vec4 frag_color;"
-
-            "void main() {"
-			"	vec4 texel0 = texture(sprite,vec2(-(TexCoord.x + offsetX),-(TexCoord.y + offsetY)));"
-            "	frag_color = texel0;"
-            "}";
-
-
-
-
-
-
-    unsigned int vertexShader = create_shader(GL_VERTEX_SHADER, vertexShaderSource);
-    GLuint fragmentShader = create_shader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    //criacao do shader
+    #ifdef __APPLE__
+        shaderProgram = new Shader("../shader/vertexShader.txt","../shader/fragmentShader.txt");
+    #elif _WIN64
+        shaderProgram = new Shader("shader/vertexShader.txt","shader/fragmentShader.txt");
+    #endif
 
     // posições
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -273,8 +228,8 @@ int main() {
     glEnableVertexAttribArray(2);
 
 
-    // define shader
-    glUseProgram(shaderProgram);
+    // define shader para uso
+    shaderProgram->UseProgramShaders();
     // habilita funcao de profundidade
     glEnable(GL_DEPTH_TEST);
     // habilita função de transparencia
@@ -322,25 +277,26 @@ int main() {
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-// glm projecao
+        // glm projecao
         glm::mat4 projection =
                 glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
         for (int i = 0; i < 5; i++) {
 
             // Define shaderProgram como o shader a ser utilizado
-            glUseProgram(shaderProgram);
+//            glUseProgram(shaderProgram);
+            shaderProgram->UseProgramShaders();
 
             glUniformMatrix4fv(
-                    glGetUniformLocation(shaderProgram, "proj"), 1,
+                    glGetUniformLocation(shaderProgram->Program, "proj"), 1,
                     GL_FALSE, glm::value_ptr(projection));
 
             if(i==4) {
                 glUniformMatrix4fv(
-                        glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
+                        glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
                         GL_FALSE, glm::value_ptr(matrix_OBJ));
             } else {
                 glUniformMatrix4fv(
-                        glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
+                        glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
                         GL_FALSE, glm::value_ptr(matrix_static));
             }
 
@@ -348,16 +304,16 @@ int main() {
             layers[i]->moveX();
 
             glUniform1f(
-                    glGetUniformLocation(shaderProgram, "offsetX"), layers[i]->offsetX);
+                    glGetUniformLocation(shaderProgram->Program, "offsetX"), layers[i]->offsetX);
             glUniform1f(
-                    glGetUniformLocation(shaderProgram, "offsetY"), layers[i]->offsetY);
+                    glGetUniformLocation(shaderProgram->Program, "offsetY"), layers[i]->offsetY);
             glUniform1f(
-                    glGetUniformLocation(shaderProgram, "layer_z"), layers[i]->z);
+                    glGetUniformLocation(shaderProgram->Program, "layer_z"), layers[i]->z);
 
             // bind Texture
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, layers[i]->textureId);
-            glUniform1i((glGetUniformLocation(shaderProgram, "sprite")), 0);
+            glUniform1i((glGetUniformLocation(shaderProgram->Program, "sprite")), 0);
 
             // Define vao como verte array atual
             glBindVertexArray(VAO);

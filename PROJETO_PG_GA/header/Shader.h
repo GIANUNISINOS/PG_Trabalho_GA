@@ -38,7 +38,7 @@ public:
             vertexCode = vShaderStream.str();
             fragmentCode = fShaderStream.str();
         } catch (std::ifstream::failure e) {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+            std::cout << "Erro no Shader: Arquivo nao lido com sucesso;" << std::endl;
         }
 
         const GLchar* vShaderCode = vertexCode.c_str();
@@ -59,7 +59,7 @@ public:
 
         if (!success) {
             glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+            std::cout << "Erro vertexShader: falha de compilação\n" << infoLog << std::endl;
         }
 
         // Fragment Shader
@@ -71,7 +71,7 @@ public:
         glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+            std::cout << "Erro fragmentShader: falha de compilação\n" << infoLog << std::endl;
         }
 
         // Shader Program
@@ -83,7 +83,7 @@ public:
         glGetProgramiv(this->Program, GL_LINK_STATUS, &success);
         if (!success) {
             glGetProgramInfoLog(this->Program, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+            std::cout << "Erro na linkagem do programa do Shader\n" << infoLog << std::endl;
         }
 
         glDeleteShader(vertex);
