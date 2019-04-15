@@ -155,27 +155,9 @@ void colocarObjetoEmPosicaoAdequadaNoEspaco() {
     //matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ;
 }
 
-int main() {
-    if (!glfwInit()) {
-        fprintf(stderr, "ERRO: não é possivel iniciar GLFW3\n");
-        return 1;
-    }
+void configurarFundo(){
 
-    /* Caso necess·rio, definiÁıes especÌficas para SOs, p. e. Apple OSX  Definir como 3.2 para Apple OS X */
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#endif // !APPLE
-
-    window = createWindow();
-
-    // inicia manipulador da extens„o GLEW
-    glewExperimental = GL_TRUE;
-    glewInit();
-
-    float vertices[] = {
+    float vertices_FUNDO[] = {
             // positions                // colors                // texture coords
             -400.0f, -300.0f, 0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top left
             -400.0f, 300.0f, 0.0f,      0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom left
@@ -185,28 +167,51 @@ int main() {
             -400.0f, -300.0f, 0.0f,     1.0f, 0.0f, 1.0f,   1.0f, 1.0f, // top left
     };
 
-    unsigned int indices[] = {
+    unsigned int indices_FUNDO[] = {
             0, 1, 2,   // first triangle
             3, 4, 5    // second triangle
     };
 
-    unsigned int EBO;
-    glGenBuffers(1, &EBO);
+    glGenBuffers(1, &EBO_FUNDO);
+    glGenBuffers(1, &VBO_FUNDO);
 
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    glGenVertexArrays(1, &VAO_FUNDO);
+    glBindVertexArray(VAO_FUNDO);
 
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_FUNDO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_FUNDO), vertices_FUNDO, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindVertexArray(VAO_FUNDO);
 
-    glBindVertexArray(VAO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_FUNDO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_FUNDO), indices_FUNDO, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBindVertexArray(VAO_FUNDO);
+
+}
+
+int main() {
+    if (!glfwInit()) {
+        fprintf(stderr, "ERRO: não é possivel iniciar GLFW3\n");
+        return 1;
+    }
+
+    /* Caso necess·rio, definiÁıes especÌficas para SOs, p. e. Apple OSX  Definir como 3.2 para Apple OS X */
+    #ifdef __APPLE__
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    #endif // !APPLE
+
+    window = createWindow();
+
+    // inicia manipulador da extens„o GLEW
+    glewExperimental = GL_TRUE;
+    glewInit();
+
+    // configura vertice VBO VAO EBO do fundo
+    configurarFundo();
 
     //criacao do shader
     #ifdef __APPLE__
@@ -272,9 +277,7 @@ int main() {
     // esta para quando redimensionar a tela
     glfwSetWindowSizeCallback(window, window_size_callback);
 
-
-
-
+    // looping do main
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // glm projecao
@@ -283,7 +286,6 @@ int main() {
         for (int i = 0; i < 5; i++) {
 
             // Define shaderProgram como o shader a ser utilizado
-//            glUseProgram(shaderProgram);
             shaderProgram->UseProgramShaders();
 
             glUniformMatrix4fv(
@@ -316,11 +318,10 @@ int main() {
             glUniform1i((glGetUniformLocation(shaderProgram->Program, "sprite")), 0);
 
             // Define vao como verte array atual
-            glBindVertexArray(VAO);
+            glBindVertexArray(VAO_FUNDO);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
-
-
+        
         glfwWaitEvents();
 //        glfwPollEvents();
         glfwSwapBuffers(window);
@@ -334,9 +335,9 @@ int main() {
     delete t4;
 
 
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    glDeleteVertexArrays(1, &VAO_FUNDO);
+    glDeleteBuffers(1, &VBO_FUNDO);
+    glDeleteBuffers(1, &EBO_FUNDO);
 
     // encerra contexto GL e outros recursos da GLFW
     glfwTerminate();
