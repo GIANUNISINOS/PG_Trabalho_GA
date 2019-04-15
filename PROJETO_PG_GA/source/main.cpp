@@ -12,7 +12,7 @@
 //#define EXIT_FAILURE -1
 //#define EXIT_SUCCESS 0
 
-//Shader *shader;
+Shader *shaderProgram;
 GLFWwindow *window;
 vector<Sprite *> layers;
 
@@ -41,7 +41,7 @@ glm::mat4 matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_sc
 float xCentro = 0.0f;
 float yCentro = 0.0f;
 float value_scala = 1.2f;
-float value_move = 3.0f;
+float value_move = 15.0f;
 
 
 //Define acoes do mouse
@@ -109,9 +109,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         }
         else if (key == GLFW_KEY_UP) {
             matrix_translaction_OBJ = glm::translate(matrix_translaction_OBJ,
-                                                 glm::vec3(0.0f, -value_move, 0.0f));
-            matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
-            yCentro = yCentro - value_move;
+                                                     glm::vec3(0.0f, -value_move, 0.0f));
+                matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
+                yCentro = yCentro - value_move;
         }
         else if (key == GLFW_KEY_ESCAPE) {
             glfwSetWindowShouldClose(window, true);
@@ -127,13 +127,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ * matrix_scala_OBJ;
         }
     }
-}
-
-GLuint create_shader(GLenum shaderType, const char* shaderSource) {
-    GLuint shader = glCreateShader(shaderType);
-    glShaderSource(shader, 1, &shaderSource, NULL);
-    glCompileShader(shader);
-    return shader;
 }
 
 GLFWwindow* createWindow() {
@@ -162,27 +155,9 @@ void colocarObjetoEmPosicaoAdequadaNoEspaco() {
     //matrix_OBJ = matrix_translaction_OBJ * matrix_rotation_OBJ;
 }
 
-int main() {
-    if (!glfwInit()) {
-        fprintf(stderr, "ERRO: não é possivel iniciar GLFW3\n");
-        return 1;
-    }
+void configurarFundo(){
 
-    /* Caso necess·rio, definiÁıes especÌficas para SOs, p. e. Apple OSX  Definir como 3.2 para Apple OS X */
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#endif // !APPLE
-
-    window = createWindow();
-
-    // inicia manipulador da extens„o GLEW
-    glewExperimental = GL_TRUE;
-    glewInit();
-
-    float vertices[] = {
+    float vertices_FUNDO[] = {
             // positions                // colors                // texture coords
             -400.0f, -300.0f, 0.0f,     1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top left
             -400.0f, 300.0f, 0.0f,      0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom left
@@ -192,73 +167,58 @@ int main() {
             -400.0f, -300.0f, 0.0f,     1.0f, 0.0f, 1.0f,   1.0f, 1.0f, // top left
     };
 
-    unsigned int indices[] = {
+    unsigned int indices_FUNDO[] = {
             0, 1, 2,   // first triangle
             3, 4, 5    // second triangle
     };
 
-    unsigned int EBO;
-    glGenBuffers(1, &EBO);
+    glGenBuffers(1, &EBO_FUNDO);
+    glGenBuffers(1, &VBO_FUNDO);
 
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    glGenVertexArrays(1, &VAO_FUNDO);
+    glBindVertexArray(VAO_FUNDO);
 
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_FUNDO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_FUNDO), vertices_FUNDO, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindVertexArray(VAO_FUNDO);
 
-    glBindVertexArray(VAO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_FUNDO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_FUNDO), indices_FUNDO, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBindVertexArray(VAO_FUNDO);
 
-    const char* vertexShaderSource =
-            "#version 410\n "
-            "layout (location = 0) in vec2 aPos;"
-            "layout (location = 2) in vec2 aTexCoord;"
-            "out vec2 TexCoord;"
-            "uniform mat4 matrix_OBJ;"
-            "uniform mat4 proj;"
-            "uniform float layer_z;"
-            "void main() {"
-            "   gl_Position = proj * matrix_OBJ * vec4(aPos,layer_z,1.0);"
-            "   TexCoord = aTexCoord;"
-            "}";
+}
 
+int main() {
+    if (!glfwInit()) {
+        fprintf(stderr, "ERRO: não é possivel iniciar GLFW3\n");
+        return 1;
+    }
 
-    const char* fragmentShaderSource =
-            "#version 410\n "
-            "in vec2 TexCoord;"
+    /* Caso necess·rio, definiÁıes especÌficas para SOs, p. e. Apple OSX  Definir como 3.2 para Apple OS X */
+    #ifdef __APPLE__
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    #endif // !APPLE
 
-            "uniform sampler2D sprite;"
-            "uniform float offsetX;"
-            "uniform float offsetY;"
+    window = createWindow();
 
-            "out vec4 frag_color;"
+    // inicia manipulador da extens„o GLEW
+    glewExperimental = GL_TRUE;
+    glewInit();
 
-            "void main() {"
-			"	vec4 texel0 = texture(sprite,vec2(-(TexCoord.x + offsetX),-(TexCoord.y + offsetY)));"
-            "	frag_color = texel0;"
-            "}";
+    // configura vertice VBO VAO EBO do fundo
+    configurarFundo();
 
-
-
-
-
-
-    unsigned int vertexShader = create_shader(GL_VERTEX_SHADER, vertexShaderSource);
-    GLuint fragmentShader = create_shader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    //criacao do shader
+    #ifdef __APPLE__
+        shaderProgram = new Shader("../shader/vertexShader.txt","../shader/fragmentShader.txt");
+    #elif _WIN64
+        shaderProgram = new Shader("shader/vertexShader.txt","shader/fragmentShader.txt");
+    #endif
 
     // posições
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -272,14 +232,12 @@ int main() {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
 
-    //texture1 = create_textures("batman.png");
-    //glUniform1i(glGetUniformLocation(shaderProgram, "texture_a"), 0);
 
-    //texture2 = create_textures("container.jpg");
-    //glUniform1i(glGetUniformLocation(shaderProgram, "texture_b"), 1);
-
-    glUseProgram(shaderProgram);
+    // define shader para uso
+    shaderProgram->UseProgramShaders();
+    // habilita funcao de profundidade
     glEnable(GL_DEPTH_TEST);
+    // habilita função de transparencia
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
@@ -319,47 +277,50 @@ int main() {
     // esta para quando redimensionar a tela
     glfwSetWindowSizeCallback(window, window_size_callback);
 
-
-
-
+    // looping do main
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-// glm projecao
+        // glm projecao
         glm::mat4 projection =
                 glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
         for (int i = 0; i < 5; i++) {
 
             // Define shaderProgram como o shader a ser utilizado
-            glUseProgram(shaderProgram);
+            shaderProgram->UseProgramShaders();
 
             glUniformMatrix4fv(
-                    glGetUniformLocation(shaderProgram, "proj"), 1,
+                    glGetUniformLocation(shaderProgram->Program, "proj"), 1,
                     GL_FALSE, glm::value_ptr(projection));
+
+            if(i==4) {
                 glUniformMatrix4fv(
-            glGetUniformLocation(shaderProgram, "matrix_OBJ"), 1,
-            GL_FALSE, glm::value_ptr(matrix_OBJ));
-            
+                        glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
+                        GL_FALSE, glm::value_ptr(matrix_OBJ));
+            } else {
+                glUniformMatrix4fv(
+                        glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
+                        GL_FALSE, glm::value_ptr(matrix_static));
+            }
 
             // realiza movimento da camada em X
             layers[i]->moveX();
 
             glUniform1f(
-                    glGetUniformLocation(shaderProgram, "offsetX"), layers[i]->offsetX);
+                    glGetUniformLocation(shaderProgram->Program, "offsetX"), layers[i]->offsetX);
             glUniform1f(
-                    glGetUniformLocation(shaderProgram, "offsetY"), layers[i]->offsetY);
+                    glGetUniformLocation(shaderProgram->Program, "offsetY"), layers[i]->offsetY);
             glUniform1f(
-                    glGetUniformLocation(shaderProgram, "layer_z"), layers[i]->z);
+                    glGetUniformLocation(shaderProgram->Program, "layer_z"), layers[i]->z);
 
             // bind Texture
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, layers[i]->textureId);
-            glUniform1i((glGetUniformLocation(shaderProgram, "sprite")), 0);
+            glUniform1i((glGetUniformLocation(shaderProgram->Program, "sprite")), 0);
 
             // Define vao como verte array atual
-            glBindVertexArray(VAO);
+            glBindVertexArray(VAO_FUNDO);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
-
 
         glfwWaitEvents();
 //        glfwPollEvents();
@@ -369,10 +330,14 @@ int main() {
 
     delete t0;
     delete t1;
+    delete t2;
+    delete t3;
+    delete t4;
 
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+
+    glDeleteVertexArrays(1, &VAO_FUNDO);
+    glDeleteBuffers(1, &VBO_FUNDO);
+    glDeleteBuffers(1, &EBO_FUNDO);
 
     // encerra contexto GL e outros recursos da GLFW
     glfwTerminate();
