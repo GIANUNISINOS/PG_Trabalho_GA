@@ -321,7 +321,7 @@ int main() {
             glBindVertexArray(VAO_FUNDO);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
-        
+
         glfwWaitEvents();
 //        glfwPollEvents();
         glfwSwapBuffers(window);
