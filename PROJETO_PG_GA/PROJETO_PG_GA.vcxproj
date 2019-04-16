@@ -27,14 +27,21 @@
     <Image Include="resource\textura2.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header\BackgroundObject.h" />
+    <ClInclude Include="header\GameObject.h" />
     <ClInclude Include="header\Includes.h" />
     <ClInclude Include="header\Shader.h" />
     <ClInclude Include="header\Sprite.h" />
     <ClInclude Include="header\stb_image.h" />
+    <ClInclude Include="header\Utils.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="shader\fragmentShader.txt" />
     <Text Include="shader\vertexShader.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PROJETO_PG_GA.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6CE88CAA-5B08-4D10-90E2-5A9051699676}</ProjectGuid>

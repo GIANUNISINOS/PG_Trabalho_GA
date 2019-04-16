@@ -13,16 +13,26 @@
     <ClInclude Include="header\stb_image.h">
       <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="header\GameObject.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="header\BackgroundObject.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="header\Utils.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resource\textura2.jpg">
+    <Image Include="resource\nuvem.png">
       <Filter>headers</Filter>
     </Image>
     <Image Include="resource\textura1.jpg">
-      <Filter>headers</Filter>
+      <Filter>resource</Filter>
     </Image>
-    <Image Include="resource\nuvem.png">
-      <Filter>headers</Filter>
+    <Image Include="resource\textura2.jpg">
+      <Filter>resource</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -48,5 +58,8 @@
     <Text Include="shader\fragmentShader.txt">
       <Filter>source</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PROJETO_PG_GA.rc" />
   </ItemGroup>
 </Project>

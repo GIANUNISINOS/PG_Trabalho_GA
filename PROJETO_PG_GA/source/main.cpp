@@ -8,6 +8,7 @@
 	#include "../header/Shader.h";
 	#include "../header/Sprite.h";
 	#include "../header/GameObject.h";
+	#include "../header/BackgroundObject.h";
 #endif
 
 
@@ -243,41 +244,41 @@ void configurarObjeto(){
 
 
 int main() {
-    if (!glfwInit()) {
-        fprintf(stderr, "ERRO: não é possivel iniciar GLFW3\n");
-        return 1;
-    }
+	if (!glfwInit()) {
+		fprintf(stderr, "ERRO: não é possivel iniciar GLFW3\n");
+		return 1;
+	}
 
-    /* Caso necess·rio, definiÁıes especÌficas para SOs, p. e. Apple OSX  Definir como 3.2 para Apple OS X */
-    #ifdef __APPLE__
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    #endif // !APPLE
+	/* Caso necess·rio, definiÁıes especÌficas para SOs, p. e. Apple OSX  Definir como 3.2 para Apple OS X */
+#ifdef __APPLE__
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif // !APPLE
 
-    window = createWindow();
+	window = createWindow();
 
-    // inicia manipulador da extens„o GLEW
-    glewExperimental = GL_TRUE;
-    glewInit();
+	// inicia manipulador da extens„o GLEW
+	glewExperimental = GL_TRUE;
+	glewInit();
 
-    // configura vertice VBO VAO EBO do fundo
-    configurarFundo();
+	// configura vertice VBO VAO EBO do fundo
+	configurarFundo();
 
-    // configura vertice VBO VAO EBO do objeto
-    //configurarObjeto();
+	// configura vertice VBO VAO EBO do objeto
+	//configurarObjeto();
 
-    //criacao do shader
-    shaderProgram = new Shader("shader/vertexShader.txt","shader/fragmentShader.txt");
+	//criacao do shader
+	shaderProgram = new Shader("shader/vertexShader.txt", "shader/fragmentShader.txt");
 
-    float vertices_OBJ[] = {
-            // positions              // texture coords
-            -50.0f, -50.0f,   0.0f,     1.0f, 1.0f, // top left
-            -50.0f,  50.0f,   0.0f,     1.0f, 0.0f, // bottom left
-            300.0f,   300.0f,   0.0f,     0.0f, 0.0f, // bottom right
-            300.0f,  -300.0f,   0.0f,     0.0f, 1.0f,  // top right
-    };
+	float vertices_OBJ[] = {
+		// positions              // texture coords
+		-50.0f, -50.0f,   0.0f,     1.0f, 1.0f, // top left
+		-50.0f,  50.0f,   0.0f,     1.0f, 0.0f, // bottom left
+		300.0f,   300.0f,   0.0f,     0.0f, 0.0f, // bottom right
+		300.0f,  -300.0f,   0.0f,     0.0f, 1.0f,  // top right
+	};
 
 	// define shader para uso
 	shaderProgram->UseProgramShaders();
@@ -292,84 +293,32 @@ int main() {
 	#elif _WIN64
 		resource_path = "resource/";
 	#endif //APPLE
-    
+
 	//Create GameObjeto
-	GameObject* character = new GameObject(resource_path + "megamen.png", shaderProgram,*vertices_OBJ);
+	GameObject* character = new GameObject(resource_path + "megamen.png", shaderProgram, *vertices_OBJ);
 
-    Sprite* t0 = new Sprite(resource_path+"fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
-	Sprite* t1 = new Sprite(resource_path+"sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
-	Sprite* t2 = new Sprite(resource_path+"nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.002f);
-	Sprite* t3 = new Sprite(resource_path+"grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.004);
-//	Sprite* t4 = new Sprite(resource_path+"megamen.png", true, 0.0f, 0.0f, -0.48f, 0.006);
+	//os callback
+	// esta para quando clicar com o mouse
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
+	// esta para quando clicar uma tecla
+	glfwSetKeyCallback(window, key_callback);
+	// esta para quando redimensionar a tela
+	glfwSetWindowSizeCallback(window, window_size_callback);
 
-    layers.push_back(t0);
-    layers.push_back(t1);
-    layers.push_back(t2);
-	layers.push_back(t3);
-	//layers.push_back(t4);
+	// looping do main
 
-    //os callback
-    // esta para quando clicar com o mouse
-    glfwSetMouseButtonCallback(window, mouse_button_callback);
-    // esta para quando clicar uma tecla
-    glfwSetKeyCallback(window, key_callback);
-    // esta para quando redimensionar a tela
-    glfwSetWindowSizeCallback(window, window_size_callback);
+	BackgroundObject* background = new BackgroundObject(shaderProgram);
 
-    // looping do main
-    while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        // glm projecao
-        glm::mat4 projection =
-                glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
+	while (!glfwWindowShouldClose(window)) {
+		background->draw();
+		//character->nextFrame();
 
-		keyboard_reaction();
-		for (int i = 0; i < 4; i++) {
+		glfwPollEvents();
+		glfwSwapBuffers(window);
+	}
+	
 
-            // Define shaderProgram como o shader a ser utilizado
-            shaderProgram->UseProgramShaders();
-
-            glUniformMatrix4fv(
-                    glGetUniformLocation(shaderProgram->Program, "proj"), 1,
-                    GL_FALSE, glm::value_ptr(projection));
-
-                glUniformMatrix4fv(
-                        glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
-                        GL_FALSE, glm::value_ptr(matrix_static));
-            
-
-            // realiza movimento da camada em X
-            layers[i]->moveX();
-
-            glUniform1f(
-                    glGetUniformLocation(shaderProgram->Program, "offsetX"), layers[i]->offsetX);
-            glUniform1f(
-                    glGetUniformLocation(shaderProgram->Program, "offsetY"), layers[i]->offsetY);
-            glUniform1f(
-                    glGetUniformLocation(shaderProgram->Program, "layer_z"), layers[i]->z);
-
-            // bind Texture
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, layers[i]->textureId);
-            glUniform1i((glGetUniformLocation(shaderProgram->Program, "sprite")), 0);
-
-            // Define vao como verte array atual
-            glBindVertexArray(VAO_FUNDO);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        }
-		character->nextFrame(projection);
-
-        //glfwWaitEvents();
-        glfwPollEvents();
-        glfwSwapBuffers(window);
-
-    }
-
-    delete t0;
-    delete t1;
-    delete t2;
-    delete t3;
-    //delete t4;
+	delete background;
 	delete character;
     delete shaderProgram;
 
