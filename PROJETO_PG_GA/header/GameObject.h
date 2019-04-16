@@ -9,20 +9,20 @@
 
 class GameObject{
 public:
-    GLuint *shaderProgram;
+	Shader *shaderProgram;
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;
-    float vertices[20];
+    float vertices;
     GLuint indices[6] ={
             0, 1, 2,   // first triangle
             0, 3, 2    // second triangle
     };
 
 
-    GameObject(GLuint *shaderProgramParam, float *verticesParam) {
+    GameObject(Shader* shaderProgramParam, float verticesParam) {
         shaderProgram = shaderProgramParam;
-        memcpy(vertices,verticesParam,0,sizeof(float)*t);
+		vertices = verticesParam;
         setup();
     }
 
@@ -47,7 +47,7 @@ public:
         glBindVertexArray(VAO);
 
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(&vertices), &vertices, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);

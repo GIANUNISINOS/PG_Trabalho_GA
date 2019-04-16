@@ -7,6 +7,7 @@
 	#include "../header/Includes.h";
 	#include "../header/Shader.h";
 	#include "../header/Sprite.h";
+	#include "../header/GameObject.h";
 #endif
 
 
@@ -16,8 +17,6 @@
 Shader *shaderProgram;
 GLFWwindow *window;
 vector<Sprite *> layers;
-
-GameObject goObjeto;
 
 //Atributos janela
 int NEW_WIDTH = 800;
@@ -290,7 +289,7 @@ int main() {
     };
 
     //Create GameObjeto
-    goObjeto = new GameObject(shaderProgram,vertices_OBJ,20);
+	GameObject* goObjeto = new GameObject(shaderProgram,*vertices_OBJ);
 
 
     // define shader para uso
