@@ -11,18 +11,18 @@ public:
 	
 	glm::mat4 transformations = glm::mat4(1);
 	
-	BackgroundObject(Shader* shaderProgramParam){
+	BackgroundObject(Shader* shaderProgramParam, float width, float height){
 		shaderProgram = shaderProgramParam;
-		setupVertex();
+		setupVertex(width, height);
 		setupTextures();
 	}
-	void setupVertex() {
+	void setupVertex(float width, float height) {
 		float vertices[] = {
 			// positions              // texture coords
 			0.0f,   0.0f,   0.0f,     1.0f, 1.0f, // top left
-			0.0f,   600.0f, 0.0f,     1.0f, 0.0f, // bottom left
-			800.0f, 600.0f, 0.0f,     0.0f, 0.0f, // bottom right
-			800.0f, 0.0f,   0.0f,     0.0f, 1.0f,  // top right
+			0.0f,   height, 0.0f,     1.0f, 0.0f, // bottom left
+			width, height, 0.0f,     0.0f, 0.0f, // bottom right
+			width, 0.0f,   0.0f,     0.0f, 1.0f,  // top right
 		};
 		/*
 			Aponta qual o indice do vertices_Fundo[] será usado para desenhar o trìângulo
@@ -83,24 +83,13 @@ public:
 	}
 	
 	void draw() {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		// glm projecao
-		glm::mat4 projection =
-			glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
-
 		for (int i = 0; i < 4; i++) {
 
 			// Define shaderProgram como o shader a ser utilizado
 			shaderProgram->UseProgramShaders();
-
-			glUniformMatrix4fv(
-				glGetUniformLocation(shaderProgram->Program, "proj"), 1,
-				GL_FALSE, glm::value_ptr(projection));
-
 			glUniformMatrix4fv(
 				glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
 				GL_FALSE, glm::value_ptr(transformations));
-
 
 			// realiza movimento da camada em X
 			layers[i]->moveX();

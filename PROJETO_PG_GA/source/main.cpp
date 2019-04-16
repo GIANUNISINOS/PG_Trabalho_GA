@@ -295,9 +295,11 @@ int main() {
 	#endif //APPLE
 
 	//Create GameObjeto
-	GameObject* character = new GameObject(resource_path + "megamen.png", shaderProgram, *vertices_OBJ);
+	
 
-	//os callback
+	GameObject* character = new GameObject(shaderProgram, resource_path + "megamen.png", 200.0f, 200.0f, -0.48f);
+	
+	//os 1callback
 	// esta para quando clicar com o mouse
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	// esta para quando clicar uma tecla
@@ -307,11 +309,22 @@ int main() {
 
 	// looping do main
 
-	BackgroundObject* background = new BackgroundObject(shaderProgram);
+	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
 
 	while (!glfwWindowShouldClose(window)) {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// glm projecao
+		glm::mat4 projection =
+			glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
+		
+		glUniformMatrix4fv(
+			glGetUniformLocation(shaderProgram->Program, "proj"), 1,
+			GL_FALSE, glm::value_ptr(projection));
+
+
 		background->draw();
-		//character->nextFrame();
+		character->draw();
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
