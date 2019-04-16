@@ -3,6 +3,8 @@
 
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o
  ../././header/stb_image.h
+ .././header/./stb_image.h
+ .././header/GameObject.h
  .././header/Includes.h
  .././header/Shader.h
  .././header/Sprite.h

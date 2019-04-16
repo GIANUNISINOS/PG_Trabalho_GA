@@ -89,6 +89,9 @@
 		<Unit filename="/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/CMakeLists.txt">
 			<Option target="PROJETO_PG_GA"/>
 		</Unit>
+		<Unit filename="/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h">
+			<Option target="PROJETO_PG_GA"/>
+		</Unit>
 		<Unit filename="/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Includes.h">
 			<Option target="PROJETO_PG_GA"/>
 		</Unit>
