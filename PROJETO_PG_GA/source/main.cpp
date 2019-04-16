@@ -274,11 +274,7 @@ int main() {
 
 
     //criacao do shader
-    #ifdef __APPLE__
-        shaderProgram = new Shader("../shader/vertexShader.txt","../shader/fragmentShader.txt");
-    #elif _WIN64
-        shaderProgram = new Shader("shader/vertexShader.txt","shader/fragmentShader.txt");
-    #endif
+    shaderProgram = new Shader("shader/vertexShader.txt","shader/fragmentShader.txt");
 
     float vertices_OBJ[] = {
             // positions              // texture coords
@@ -300,13 +296,9 @@ int main() {
 //    glEnable(GL_BLEND);
 //    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-    string resource_path;
 
-    #ifdef __APPLE__
-        resource_path = "../resource/";
-    #elif _WIN64
-        resource_path = "resource/";
-    #endif //APPLE
+    string resource_path;
+    resource_path = "resource/";
 
     Sprite* t0 = new Sprite(resource_path+"fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
 	Sprite* t1 = new Sprite(resource_path+"sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);

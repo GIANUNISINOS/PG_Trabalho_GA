@@ -114,6 +114,8 @@ glm/gtc/type_ptr.hpp
 
 .././header/Sprite.h
 
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h
+
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Includes.h
 iostream
 -
@@ -171,6 +173,8 @@ header/GameObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Shader.h
 ../header/Sprite.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Sprite.h
+../header/GameObject.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h
 
 /usr/local/include/GL/glew.h
 stddef.h
