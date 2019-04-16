@@ -4,10 +4,12 @@
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o
  ../././header/stb_image.h
  .././header/./stb_image.h
+ .././header/BackgroundObject.h
  .././header/GameObject.h
  .././header/Includes.h
  .././header/Shader.h
  .././header/Sprite.h
+ /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/BackgroundObject.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Includes.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Shader.h

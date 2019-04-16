@@ -70,6 +70,8 @@ intrin.h
 arm_neon.h
 -
 
+.././header/BackgroundObject.h
+
 .././header/GameObject.h
 
 .././header/Includes.h
@@ -113,6 +115,8 @@ glm/gtc/type_ptr.hpp
 .././header/Shader.h
 
 .././header/Sprite.h
+
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/BackgroundObject.h
 
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h
 
@@ -167,6 +171,8 @@ header/Sprite.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/Sprite.h
 header/GameObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/GameObject.h
+header/BackgroundObject.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/BackgroundObject.h
 ../header/Includes.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Includes.h
 ../header/Shader.h
@@ -175,6 +181,8 @@ header/GameObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Sprite.h
 ../header/GameObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h
+../header/BackgroundObject.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/BackgroundObject.h
 
 /usr/local/include/GL/glew.h
 stddef.h

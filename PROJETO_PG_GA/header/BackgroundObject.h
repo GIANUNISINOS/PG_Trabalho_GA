@@ -25,7 +25,7 @@ public:
 			width, 0.0f,   0.0f,     0.0f, 1.0f,  // top right
 		};
 		/*
-			Aponta qual o indice do vertices_Fundo[] será usado para desenhar o trìângulo
+			Aponta qual o indice do vertices_Fundo[] serï¿½ usado para desenhar o trï¿½ï¿½ngulo
 		*/
 		unsigned int indices[] = {
 				0, 1, 2,   // first triangle
@@ -44,29 +44,25 @@ public:
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		/*
-			Antes de utilizar o glVertexAttribPointer é necessário dar o bind do buffer que será lido.
-			Aqui o EBO é o último buffer a receber o bind, no entanto glVertexAttribPointer continua
-			funcionando no VBO. Isto deve significar que o glVertexAttribPointer atua no último
+			Antes de utilizar o glVertexAttribPointer eh necessario dar o bind do buffer que sera lido.
+			Aqui o EBO eh o ultimo buffer a receber o bind, no entanto glVertexAttribPointer continua
+			funcionando no VBO. Isto deve significar que o glVertexAttribPointer atua no ltimo
 			buffer do tipo GL_ARRAY_BUFFER a receber bind
 		*/
 
 		// Passa e ativa o atributo (location) 0 no vertexShader, a partir do VBO
-		// Lê o atributo de 5 em 5 floats, começando em 0
+		// Lï¿½ o atributo de 5 em 5 floats, comecando em 0
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
-		// Lê o atributo de 5 em 5 floats, começando em 3
+		// Lï¿½ o atributo de 5 em 5 floats, comecando em 3
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
 	}
 
 	void setupTextures() {
 		string resource_path;
-		#ifdef __APPLE__
-				resource_path = "../resource/";
-		#elif _WIN64
-				resource_path = "resource/";
-		#endif //APPLE
+		resource_path = "resource/";
 
 		/*
 			O ideal seria ler o path em um arquivo externo

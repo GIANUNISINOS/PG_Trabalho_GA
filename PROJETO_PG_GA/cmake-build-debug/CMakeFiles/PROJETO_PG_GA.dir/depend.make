@@ -3,10 +3,12 @@
 
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../././header/stb_image.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/./stb_image.h
+CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/BackgroundObject.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/GameObject.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/Includes.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/Shader.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/Sprite.h
+CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/BackgroundObject.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/GameObject.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/Includes.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/Shader.h
