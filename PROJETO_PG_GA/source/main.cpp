@@ -3,6 +3,7 @@
 	#include "header/Shader.h"
 	#include "header/Sprite.h"
     #include "header/GameObject.h"
+	#include "header/BackgroundObject.h";
 #elif _WIN64
 	#include "../header/Includes.h";
 	#include "../header/Shader.h";
@@ -152,97 +153,6 @@ GLFWwindow* createWindow() {
     return window;
 }
 
-void configurarFundo(){
-
-    float vertices_FUNDO[] = {
-            // positions              // texture coords
-            0.0f,   0.0f,   0.0f,     1.0f, 1.0f, // top left
-            0.0f,   600.0f, 0.0f,     1.0f, 0.0f, // bottom left
-            800.0f, 600.0f, 0.0f,     0.0f, 0.0f, // bottom right
-            800.0f, 0.0f,   0.0f,     0.0f, 1.0f,  // top right
-    };
-	/*
-		Aponta qual o indice do vertices_Fundo[] será usado para desenhar o trìângulo
-	*/
-    unsigned int indices_FUNDO[] = {
-            0, 1, 2,   // first triangle
-            0, 3, 2    // second triangle
-    };
-    glGenBuffers(1, &EBO_FUNDO);
-    glGenBuffers(1, &VBO_FUNDO);
-
-    glGenVertexArrays(1, &VAO_FUNDO);
-    glBindVertexArray(VAO_FUNDO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO_FUNDO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_FUNDO), vertices_FUNDO, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_FUNDO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_FUNDO), indices_FUNDO, GL_STATIC_DRAW);
-	
-	/*
-		Antes de utilizar o glVertexAttribPointer é necessário dar o bind do buffer que será lido.
-		Aqui o EBO é o último buffer a receber o bind, no entanto glVertexAttribPointer continua
-		funcionando no VBO. Isto deve significar que o glVertexAttribPointer atua no último
-		buffer do tipo GL_ARRAY_BUFFER a receber bind
-	*/
-
-	// Passa e ativa o atributo (location) 0 no vertexShader, a partir do VBO
-	// Lê o atributo de 5 em 5 floats, começando em 0
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// Lê o atributo de 5 em 5 floats, começando em 3
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-}
-
-void configurarObjeto(){
-
-    float vertices_OBJ[] = {
-            // positions              // texture coords
-            -50.0f, -50.0f,   0.0f,     1.0f, 1.0f, // top left
-            -50.0f,  50.0f,   0.0f,     1.0f, 0.0f, // bottom left
-            50.0f,   50.0f,   0.0f,     0.0f, 0.0f, // bottom right
-            50.0f,  -50.0f,   0.0f,     0.0f, 1.0f,  // top right
-    };
-    /*
-        Aponta qual o indice do vertices_OBJ[] será usado para desenhar o trìângulo
-    */
-    unsigned int indices_OBJ[] = {
-            0, 1, 2,   // first triangle
-            0, 3, 2    // second triangle
-    };
-    glGenBuffers(1, &EBO_OBJ);
-    glGenBuffers(1, &VBO_OBJ);
-
-    glGenVertexArrays(1, &VAO_OBJ);
-    glBindVertexArray(VAO_OBJ);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO_OBJ);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_OBJ), vertices_OBJ, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_OBJ);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_OBJ), indices_OBJ, GL_STATIC_DRAW);
-
-	/*
-		Antes de utilizar o glVertexAttribPointer é necessário dar o bind do buffer que será lido.
-		Aqui o EBO é o último buffer a receber o bind, no entanto glVertexAttribPointer continua
-		funcionando no VBO. Isto deve significar que o glVertexAttribPointer atua no último
-		buffer do tipo GL_ARRAY_BUFFER a receber bind
-	*/
-
-	// Passa e ativa o atributo (location) 0 no vertexShader, a partir do VBO
-	// Lê o atributo de 5 em 5 floats, começando em 0
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// Lê o atributo de 5 em 5 floats, começando em 3
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-}
-
-
 int main() {
 	if (!glfwInit()) {
 		fprintf(stderr, "ERRO: não é possivel iniciar GLFW3\n");
@@ -263,43 +173,15 @@ int main() {
 	glewExperimental = GL_TRUE;
 	glewInit();
 
-	// configura vertice VBO VAO EBO do fundo
-	configurarFundo();
-
-	// configura vertice VBO VAO EBO do objeto
-	//configurarObjeto();
-
 	//criacao do shader
 	shaderProgram = new Shader("shader/vertexShader.txt", "shader/fragmentShader.txt");
-
-	float vertices_OBJ[] = {
-		// positions              // texture coords
-		-50.0f, -50.0f,   0.0f,     1.0f, 1.0f, // top left
-		-50.0f,  50.0f,   0.0f,     1.0f, 0.0f, // bottom left
-		300.0f,   300.0f,   0.0f,     0.0f, 0.0f, // bottom right
-		300.0f,  -300.0f,   0.0f,     0.0f, 1.0f,  // top right
-	};
 
 	// define shader para uso
 	shaderProgram->UseProgramShaders();
 	// habilita funcao de profundidade
 	glEnable(GL_DEPTH_TEST);
-	// habilita função de transparencia
 
-	string resource_path;
-
-	#ifdef __APPLE__
-		resource_path = "../resource/";
-	#elif _WIN64
-		resource_path = "resource/";
-	#endif //APPLE
-
-	//Create GameObjeto
-	
-
-	GameObject* character = new GameObject(shaderProgram, resource_path + "megamen.png", 200.0f, 200.0f, -0.48f);
-	
-	//os 1callback
+	//os callback
 	// esta para quando clicar com o mouse
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	// esta para quando clicar uma tecla
@@ -307,10 +189,17 @@ int main() {
 	// esta para quando redimensionar a tela
 	glfwSetWindowSizeCallback(window, window_size_callback);
 
-	// looping do main
-
+	//Create Objects
+	string resource_path;
+	#ifdef __APPLE__
+		resource_path = "../resource/";
+	#elif _WIN64
+		resource_path = "resource/";
+	#endif //APPLE
+	GameObject* character = new GameObject(shaderProgram, resource_path + "megamen.png", 200.0f, 200.0f, -0.48f);
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
 
+	// looping do main
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

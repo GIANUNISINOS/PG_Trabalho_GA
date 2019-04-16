@@ -27,10 +27,10 @@ public:
 		*/
 		float vertices[] = {
 			// positions              // texture coords
-			-width/2, -height, 0.0f,     1.0f, 1.0f, // top left
-			-width/2, height,  0.0f,     1.0f, 0.0f, // bottom left
-			width/2,  height,  0.0f,     0.0f, 0.0f, // bottom right
-			width/2,  -height, 0.0f,     0.0f, 1.0f,  // top right
+			-width/2, -height/2, 0.0f,     1.0f, 1.0f, // top left
+			-width/2, height/2,  0.0f,     1.0f, 0.0f, // bottom left
+			width/2,  height/2,  0.0f,     0.0f, 0.0f, // bottom right
+			width/2,  -height/2, 0.0f,     0.0f, 1.0f,  // top right
 		};
 		/*
 			Aponta qual o indice do array de vértices será usado para desenhar o trìângulo
