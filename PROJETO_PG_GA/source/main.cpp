@@ -2,6 +2,7 @@
 	#include "header/Includes.h"
 	#include "header/Shader.h"
 	#include "header/Sprite.h"
+    #include "header/GameObject.h"
 #elif _WIN64
 	#include "../header/Includes.h";
 	#include "../header/Shader.h";
@@ -15,6 +16,8 @@
 Shader *shaderProgram;
 GLFWwindow *window;
 vector<Sprite *> layers;
+
+GameObject goObjeto;
 
 //Atributos janela
 int NEW_WIDTH = 800;
@@ -195,6 +198,53 @@ void configurarFundo(){
 
 }
 
+void configurarObjeto(){
+
+    float vertices_OBJ[] = {
+            // positions              // texture coords
+            -50.0f, -50.0f,   0.0f,     1.0f, 1.0f, // top left
+            -50.0f,  50.0f,   0.0f,     1.0f, 0.0f, // bottom left
+            50.0f,   50.0f,   0.0f,     0.0f, 0.0f, // bottom right
+            50.0f,  -50.0f,   0.0f,     0.0f, 1.0f,  // top right
+    };
+    /*
+        Aponta qual o indice do vertices_OBJ[] será usado para desenhar o trìângulo
+    */
+    unsigned int indices_OBJ[] = {
+            0, 1, 2,   // first triangle
+            0, 3, 2    // second triangle
+    };
+    glGenBuffers(1, &EBO_OBJ);
+    glGenBuffers(1, &VBO_OBJ);
+
+    glGenVertexArrays(1, &VAO_OBJ);
+    glBindVertexArray(VAO_OBJ);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_OBJ);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_OBJ), vertices_OBJ, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_OBJ);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_OBJ), indices_OBJ, GL_STATIC_DRAW);
+
+    /*
+       Antes de utilizar o glVertexAttribPointer é necessário dar o bind do buffer que será lido.
+       Aqui o EBO é o último buffer a receber o bind, no entanto glVertexAttribPointer continua
+       funcionando no VBO. Isto deve significar que o glVertexAttribPointer atua no último
+       buffer do tipo GL_ARRAY_BUFFER a receber bind
+    */
+
+    // Passa e ativa o atributo (location) 0 no vertexShader, a partir do VBO
+    // Lê o atributo de 5 em 5 floats, começando em 0
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    // Lê o atributo de 5 em 5 floats, começando em 1
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+}
+
+
 int main() {
     if (!glfwInit()) {
         fprintf(stderr, "ERRO: não é possivel iniciar GLFW3\n");
@@ -218,6 +268,12 @@ int main() {
     // configura vertice VBO VAO EBO do fundo
     configurarFundo();
 
+    // configura vertice VBO VAO EBO do objeto
+    configurarObjeto();
+
+
+
+
     //criacao do shader
     #ifdef __APPLE__
         shaderProgram = new Shader("../shader/vertexShader.txt","../shader/fragmentShader.txt");
@@ -225,7 +281,16 @@ int main() {
         shaderProgram = new Shader("shader/vertexShader.txt","shader/fragmentShader.txt");
     #endif
 
-   
+    float vertices_OBJ[] = {
+            // positions              // texture coords
+            -50.0f, -50.0f,   0.0f,     1.0f, 1.0f, // top left
+            -50.0f,  50.0f,   0.0f,     1.0f, 0.0f, // bottom left
+            50.0f,   50.0f,   0.0f,     0.0f, 0.0f, // bottom right
+            50.0f,  -50.0f,   0.0f,     0.0f, 1.0f,  // top right
+    };
+
+    //Create GameObjeto
+    goObjeto = new GameObject(shaderProgram,vertices_OBJ,20);
 
 
     // define shader para uso
@@ -233,8 +298,8 @@ int main() {
     // habilita funcao de profundidade
     glEnable(GL_DEPTH_TEST);
     // habilita função de transparencia
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+//    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
     string resource_path;
 
@@ -246,9 +311,9 @@ int main() {
 
     Sprite* t0 = new Sprite(resource_path+"fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
 	Sprite* t1 = new Sprite(resource_path+"sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
-	Sprite* t2 = new Sprite(resource_path+"nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.003f);
-	Sprite* t3 = new Sprite(resource_path+"grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.006);
-	Sprite* t4 = new Sprite(resource_path+"megamen.png", true, 0.0f, 0.0f, -0.48f, 0.012);
+	Sprite* t2 = new Sprite(resource_path+"nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.002f);
+	Sprite* t3 = new Sprite(resource_path+"grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.004);
+	Sprite* t4 = new Sprite(resource_path+"megamen.png", true, 0.0f, 0.0f, -0.48f, 0.006);
 
 
 
@@ -313,6 +378,7 @@ int main() {
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
 
+
         //glfwWaitEvents();
         glfwPollEvents();
         glfwSwapBuffers(window);
@@ -324,7 +390,7 @@ int main() {
     delete t2;
     delete t3;
     delete t4;
-
+    delete shaderProgram;
 
     glDeleteVertexArrays(1, &VAO_FUNDO);
     glDeleteBuffers(1, &VBO_FUNDO);

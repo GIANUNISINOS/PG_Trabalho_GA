@@ -38,6 +38,40 @@ intrin.h
 arm_neon.h
 -
 
+.././header/./stb_image.h
+stb_image.h
+.././header/./stb_image.h
+stdio.h
+-
+stdlib.h
+-
+stdarg.h
+-
+stddef.h
+-
+stdlib.h
+-
+string.h
+-
+limits.h
+-
+math.h
+-
+stdio.h
+-
+assert.h
+-
+stdint.h
+-
+emmintrin.h
+-
+intrin.h
+-
+arm_neon.h
+-
+
+.././header/GameObject.h
+
 .././header/Includes.h
 iostream
 -
@@ -46,6 +80,8 @@ string
 cstdio
 -
 cstdlib
+-
+stdio.h
 -
 vector
 -
@@ -71,8 +107,8 @@ glm/gtc/type_ptr.hpp
 -
 ./header/stb_image.h
 .././header/./header/stb_image.h
-SOIL.h
--
+./stb_image.h
+.././header/./stb_image.h
 
 .././header/Shader.h
 
@@ -86,6 +122,8 @@ string
 cstdio
 -
 cstdlib
+-
+stdio.h
 -
 vector
 -
@@ -111,8 +149,8 @@ glm/gtc/type_ptr.hpp
 -
 ./header/stb_image.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/./header/stb_image.h
-SOIL.h
--
+./stb_image.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/./stb_image.h
 
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Shader.h
 
@@ -125,6 +163,8 @@ header/Shader.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/Shader.h
 header/Sprite.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/Sprite.h
+header/GameObject.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/GameObject.h
 ../header/Includes.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Includes.h
 ../header/Shader.h
