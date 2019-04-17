@@ -7,13 +7,19 @@ CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o
  .././header/BackgroundObject.h
  .././header/GameObject.h
  .././header/Includes.h
+ .././header/Layer.h
  .././header/Shader.h
- .././header/Sprite.h
+ .././header/SpriteSheet.h
+ .././header/Texture.h
+ .././header/VerticesObject.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/BackgroundObject.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Includes.h
+ /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Layer.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Shader.h
- /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Sprite.h
+ /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/SpriteSheet.h
+ /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Texture.h
+ /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/VerticesObject.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/main.cpp
  /usr/local/include/GL/glew.h
  /usr/local/include/GLFW/glfw3.h

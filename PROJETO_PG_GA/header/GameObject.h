@@ -14,7 +14,6 @@ public:
     glm::mat4 matrix_translaction = glm::mat4(1);
     glm::mat4 matrix_rotation = glm::mat4(1);
     glm::mat4 matrix_scala = glm::mat4(1);
-
     glm::mat4 transformations = matrix_translaction*matrix_rotation*matrix_scala;
 
 	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth) {
@@ -25,7 +24,7 @@ public:
 		setupVertices(width, height, sprites->frames, sprites->actions);
 
 		//poe na pos inicial
-		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(100.0f, 500.0f, 0.0f));
+		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(400.0f, 500.0f, 0.0f));
         transformations = matrix_translaction*matrix_rotation*matrix_scala;
 	}
 	/*

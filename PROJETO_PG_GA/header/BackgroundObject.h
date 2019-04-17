@@ -40,9 +40,9 @@ void BackgroundObject::setupTextures() {
 		O ideal seria ler o path em um arquivo externo
 	*/
 	Layer* t0 = new Layer(resource_path + "fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
-	Layer* t1 = new Layer(resource_path + "sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
-	Layer* t2 = new Layer(resource_path + "nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.002f);
-	Layer* t3 = new Layer(resource_path + "grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.004);
+	Layer* t1 = new Layer(resource_path + "sol.png", true, 0.0f, 0.0f, -0.51f, -0.001f);
+	Layer* t2 = new Layer(resource_path + "nuvem.png", true, 0.0f, 0.0f, -0.50f, 0.002f);
+	Layer* t3 = new Layer(resource_path + "grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, 0.004);
 
 	layers.push_back(t0);
 	layers.push_back(t1);

@@ -1,10 +1,12 @@
 #ifdef __APPLE__
-	#include "header/Includes.h"
-	#include "header/Shader.h"
-	#include "header/Sprite.h"
-    #include "header/GameObject.h"
-	#include "header/BackgroundObject.h";
-	#include "header/BackgroundObject.h";
+    #include "header/Includes.h";
+    #include "header/Shader.h";
+    #include "header/Texture.h";
+    #include "header/Layer.h";
+    #include "header/SpriteSheet.h";
+    #include "header/VerticesObject.h";
+    #include "header/GameObject.h";
+    #include "header/BackgroundObject.h";
 #elif _WIN64
 	#include "../header/Includes.h";
 	#include "../header/Shader.h";

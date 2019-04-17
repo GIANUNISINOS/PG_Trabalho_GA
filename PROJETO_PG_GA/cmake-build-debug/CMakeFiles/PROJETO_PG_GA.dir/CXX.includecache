@@ -112,9 +112,15 @@ glm/gtc/type_ptr.hpp
 ./stb_image.h
 .././header/./stb_image.h
 
+.././header/Layer.h
+
 .././header/Shader.h
 
-.././header/Sprite.h
+.././header/SpriteSheet.h
+
+.././header/Texture.h
+
+.././header/VerticesObject.h
 
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/BackgroundObject.h
 
@@ -158,17 +164,29 @@ glm/gtc/type_ptr.hpp
 ./stb_image.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/./stb_image.h
 
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Layer.h
+
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Shader.h
 
-/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Sprite.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/SpriteSheet.h
+
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Texture.h
+
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/VerticesObject.h
 
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/main.cpp
 header/Includes.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/Includes.h
 header/Shader.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/Shader.h
-header/Sprite.h
-/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/Sprite.h
+header/Texture.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/Texture.h
+header/Layer.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/Layer.h
+header/SpriteSheet.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/SpriteSheet.h
+header/VerticesObject.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/VerticesObject.h
 header/GameObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/GameObject.h
 header/BackgroundObject.h
@@ -177,8 +195,14 @@ header/BackgroundObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Includes.h
 ../header/Shader.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Shader.h
-../header/Sprite.h
-/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Sprite.h
+../header/Texture.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Texture.h
+../header/Layer.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Layer.h
+../header/SpriteSheet.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/SpriteSheet.h
+../header/VerticesObject.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/VerticesObject.h
 ../header/GameObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h
 ../header/BackgroundObject.h
