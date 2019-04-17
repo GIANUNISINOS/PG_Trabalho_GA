@@ -14,20 +14,22 @@ public:
 	int currentFrame;
 	float z;
 
-	SpriteSheet(string filename, int framesParam, int actionsParam, float z) {
+	SpriteSheet(string filename, int framesParam, int actionsParam, float zParam) {
 		create_textures(filename.c_str());
 		actions = actionsParam;
 		frames = framesParam;
 		currentAction = 0;
 		currentFrame = 0;
+		z = zParam;
+
 	};
 	~SpriteSheet();
 
-	int getOffsetX() {
-		return width / frames * (currentFrame%frames);
+	float getOffsetX() {
+		return (float)1 / frames * (currentFrame%frames);
 	}
-	int getOffsetY() {
-		return height / actions * (currentAction%actions);
+	float getOffsetY() {
+		return (float)1 / actions * (currentAction%actions);
 	}
 	void nextFrame() {
 		currentFrame++;
@@ -55,7 +57,7 @@ public:
 
 		if (data) {	
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		
+			glGenerateMipmap(GL_TEXTURE_2D);
 		}
 		else {
 			std::cout << "Falha ao carregar images." << std::endl;
@@ -69,4 +71,4 @@ public:
 SpriteSheet::~SpriteSheet()
 {
 }
-#endif //PROJETO_PG_GA_GAMEOBJECT_H
+#endif

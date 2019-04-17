@@ -5,12 +5,13 @@
 class GameObject
 {
 public:
-	GLuint textureId;
 	Shader *shaderProgram;
 	GLuint VAO;
 	GLuint VBO;
 	GLuint EBO;
 	SpriteSheet* sprites;
+	double previousSeconds;
+	int t = 0;
 
     glm::mat4 matrix_translaction = glm::mat4(1);
     glm::mat4 matrix_rotation = glm::mat4(1);
@@ -20,21 +21,20 @@ public:
 
 	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth) {
 		shaderProgram = shaderProgramParam;
-
-		setupVertex(width, height, 2, 5);
-
 		sprites = spritesParam;
+		previousSeconds = glfwGetTime();
+
+		setupVertex(width, height, sprites->frames, sprites->actions);
 
 		//poe na pos inicial
 		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(100.0f, 500.0f, 0.0f));
-        // matrix_scala = glm::scale(matrix_scala,glm::vec3(800.0f/width, 600.0f/height, 0.0f));
         transformations = matrix_translaction*matrix_rotation*matrix_scala;
 	}
 	/*
-		actions é o número de linhas da imagem de sprites
-		frames  é o número de colunas da imagem de sprites
+		actions e o numero de linhas da imagem de sprites
+		frames  e o numero de colunas da imagem de sprites
 	*/
-	void setupVertex(float width, float height, int actions, int frames) {
+	void setupVertex(float width, float height, int frames, int actions) {
 		/*
 			Comeca centralizado no zero.
 			Fazer funcao de tranlacao pra posicao inicial depois
@@ -90,7 +90,7 @@ public:
 			GL_FALSE, glm::value_ptr(transformations));
 
 		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "offsetX"), sprites->getOffsetX() );
+			glGetUniformLocation(shaderProgram->Program, "offsetX"), sprites->getOffsetX());
 		glUniform1f(
 			glGetUniformLocation(shaderProgram->Program, "offsetY"), sprites->getOffsetY() );
 		glUniform1f(
@@ -104,6 +104,14 @@ public:
 		// Define vao como verte array atual
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		
+		double currentSeconds = glfwGetTime();
+		double elapsedSeconds = currentSeconds - previousSeconds;
+		
+		if (elapsedSeconds > 0.1) {
+			sprites->nextFrame();
+			previousSeconds = currentSeconds;
+		}
 	}
 
 	virtual ~GameObject();

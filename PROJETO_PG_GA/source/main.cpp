@@ -4,13 +4,14 @@
 	#include "header/Sprite.h"
     #include "header/GameObject.h"
 	#include "header/BackgroundObject.h";
+	#include "header/BackgroundObject.h";
 #elif _WIN64
 	#include "../header/Includes.h";
 	#include "../header/Shader.h";
 	#include "../header/Sprite.h";
+	#include "../header/SpriteSheet.h";
 	#include "../header/GameObject.h";
 	#include "../header/BackgroundObject.h";
-	#include "../header/SpriteSheet.h";
 #endif
 
 
@@ -191,13 +192,14 @@ int main() {
 	glfwSetWindowSizeCallback(window, window_size_callback);
 
 	//Create Objects
-	string resource_path;
 
-	resource_path = "resource/";
+	/*
+		Juntar as duas as 2 ações dessa imagem do megaman em 1 só
+	*/
 	SpriteSheet* megamanSprites = new SpriteSheet("resource/sprites_megaman-runnnig.png", 5, 2, -0.48f);
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
-    GameObject* character = new GameObject(megamanSprites, 100.0f, 100.0f, -0.48f);
+    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f);
 
 	// looping do main
 	while (!glfwWindowShouldClose(window)) {
