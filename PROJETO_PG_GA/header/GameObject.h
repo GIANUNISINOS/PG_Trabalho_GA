@@ -54,20 +54,15 @@ public:
 			glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
 			GL_FALSE, glm::value_ptr(transformations));
 
-		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "offsetX"), sprites->getOffsetX() );
-		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "offsetY"), sprites->getOffsetY() );
-		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "layer_z"), sprites->z);
+		// Passa os offsets para o shader
+		sprites->passUniformsToShader(shaderProgram);
 
-		// bind Texture
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, sprites->textureId);
-		glUniform1i((glGetUniformLocation(shaderProgram->Program, "sprite")), 0);
+		// Define qual textura sera desenhada pelo shader
+		sprites->texture->bind(shaderProgram);
 
-		// Define vao como verte array atual
-		glBindVertexArray(vertices->VAO);
+		// Define qual vertice sera desenhado pelo shader
+		vertices->bind(shaderProgram);
+
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
 		double currentSeconds = glfwGetTime();
@@ -85,6 +80,7 @@ public:
 GameObject::~GameObject()
 {
 	delete sprites;
+	delete vertices;
 }
 
 #endif //PROJETO_PG_GA_GAMEOBJECT_H

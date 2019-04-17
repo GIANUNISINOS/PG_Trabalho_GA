@@ -3,7 +3,8 @@ class VerticesObject
 {
 public:
 	GLuint VAO;
-	
+	GLuint VBO;
+	GLuint EBO;
 	/*
 		E necessario receber o size pois o array sera enviado
 		para o construtor por ponteiro, e o ponteiro nao guarda
@@ -19,6 +20,7 @@ public:
 	~VerticesObject();
 
 	void setup(float verticesCoordinates[], int size);
+	void bind(Shader* shaderProgram);
 
 };
 
@@ -26,9 +28,11 @@ VerticesObject::VerticesObject(float verticesCoordinates[], int size){
 	setup(verticesCoordinates, size);
 }
 
+void VerticesObject::bind(Shader* shaderProgram) {
+	glBindVertexArray(VAO);
+}
+
 void VerticesObject::setup(float verticesCoordinates[], int size) {
-	GLuint VBO;
-	GLuint EBO;
 	/*
 		Aponta qual o indice do array de vertices sera usado para desenhar o triangulo
 	*/
@@ -68,4 +72,8 @@ void VerticesObject::setup(float verticesCoordinates[], int size) {
 
 VerticesObject::~VerticesObject()
 {
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+
 }

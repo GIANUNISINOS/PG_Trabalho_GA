@@ -1,7 +1,7 @@
 #ifndef TESTANDO_SPRITE_H 
 #define TESTANDO_SPRITE_H
 
-class Sprite {
+class Layer {
 public:
     GLuint textureId;
     float offsetX;
@@ -9,11 +9,11 @@ public:
     float z;
     float speedX;
 
-    Sprite() {
+    Layer() {
 
     }
 
-	Sprite(string filename, bool useAlpha, float paramOffsetX, float paramOffsetY, float paramZ, float paramSpeedX)
+	Layer(string filename, bool useAlpha, float paramOffsetX, float paramOffsetY, float paramZ, float paramSpeedX)
     {
         create_textures(filename.c_str(), useAlpha);
         offsetX = paramOffsetX;

@@ -8,7 +8,7 @@ public:
 	GLuint textureId;
 	Shader *shaderProgram;
 	VerticesObject* vertices;
-	vector<Sprite *> layers;
+	vector<Layer *> layers;
 	
 	glm::mat4 transformations = glm::mat4(1);
 	
@@ -39,10 +39,10 @@ void BackgroundObject::setupTextures() {
 	/*
 		O ideal seria ler o path em um arquivo externo
 	*/
-	Sprite* t0 = new Sprite(resource_path + "fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
-	Sprite* t1 = new Sprite(resource_path + "sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
-	Sprite* t2 = new Sprite(resource_path + "nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.002f);
-	Sprite* t3 = new Sprite(resource_path + "grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.004);
+	Layer* t0 = new Layer(resource_path + "fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
+	Layer* t1 = new Layer(resource_path + "sol.png", true, 0.0f, 0.0f, -0.51f, 0.001f);
+	Layer* t2 = new Layer(resource_path + "nuvem.png", true, 0.0f, 0.0f, -0.50f, -0.002f);
+	Layer* t3 = new Layer(resource_path + "grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, -0.004);
 
 	layers.push_back(t0);
 	layers.push_back(t1);
@@ -86,5 +86,7 @@ BackgroundObject::~BackgroundObject()
 	delete layers[1];
 	delete layers[2];
 	delete layers[3];
+
+	delete vertices;
 }
 #endif

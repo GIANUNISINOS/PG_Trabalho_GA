@@ -8,7 +8,8 @@
 #elif _WIN64
 	#include "../header/Includes.h";
 	#include "../header/Shader.h";
-	#include "../header/Sprite.h";
+	#include "../header/Texture.h";
+	#include "../header/Layer.h";
 	#include "../header/SpriteSheet.h";
 	#include "../header/VerticesObject.h";
 	#include "../header/GameObject.h";
@@ -21,23 +22,12 @@
 
 Shader *shaderProgram;
 GLFWwindow *window;
-vector<Sprite *> layers;
 
 //Atributos janela
 int NEW_WIDTH = 800;
 int NEW_HEIGHT = 600;
 int WIDTH = 800;
 int HEIGHT = 600;
-
-// atributos Cena
-GLuint VAO_FUNDO;
-GLuint EBO_FUNDO;
-GLuint VBO_FUNDO;
-
-//atributos objeto
-GLuint VAO_OBJ;
-GLuint EBO_OBJ;
-GLuint VBO_OBJ;
 
 //teclas pressionadas
 int keys[1024];
@@ -226,10 +216,6 @@ int main() {
 	delete background;
 	delete character;
     delete shaderProgram;
-
-    glDeleteVertexArrays(1, &VAO_FUNDO);
-    glDeleteBuffers(1, &VBO_FUNDO);
-    glDeleteBuffers(1, &EBO_FUNDO);
 
     // encerra contexto GL e outros recursos da GLFW
     glfwTerminate();

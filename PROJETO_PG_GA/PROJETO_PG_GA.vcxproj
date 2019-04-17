@@ -31,9 +31,10 @@
     <ClInclude Include="header\GameObject.h" />
     <ClInclude Include="header\Includes.h" />
     <ClInclude Include="header\Shader.h" />
-    <ClInclude Include="header\Sprite.h" />
+    <ClInclude Include="header\Layer.h" />
     <ClInclude Include="header\SpriteSheet.h" />
     <ClInclude Include="header\stb_image.h" />
+    <ClInclude Include="header\Texture.h" />
     <ClInclude Include="header\Utils.h" />
     <ClInclude Include="header\VerticesObject.h" />
     <ClInclude Include="resource.h" />

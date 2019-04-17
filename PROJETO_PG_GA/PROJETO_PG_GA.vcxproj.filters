@@ -4,9 +4,6 @@
     <ClInclude Include="header\Includes.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="header\Sprite.h">
-      <Filter>headers</Filter>
-    </ClInclude>
     <ClInclude Include="header\Shader.h">
       <Filter>headers</Filter>
     </ClInclude>
@@ -27,6 +24,12 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="header\VerticesObject.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Layer.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Texture.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
