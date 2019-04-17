@@ -6,10 +6,8 @@ class GameObject
 {
 public:
 	Shader *shaderProgram;
-	GLuint VAO;
-	GLuint VBO;
-	GLuint EBO;
 	SpriteSheet* sprites;
+	VerticesObject* vertices;
 	double previousSeconds;
 	int t = 0;
 
@@ -24,7 +22,7 @@ public:
 		sprites = spritesParam;
 		previousSeconds = glfwGetTime();
 
-		setupVertex(width, height, sprites->frames, sprites->actions);
+		setupVertices(width, height, sprites->frames, sprites->actions);
 
 		//poe na pos inicial
 		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(100.0f, 500.0f, 0.0f));
@@ -34,52 +32,19 @@ public:
 		actions e o numero de linhas da imagem de sprites
 		frames  e o numero de colunas da imagem de sprites
 	*/
-	void setupVertex(float width, float height, int frames, int actions) {
+	void setupVertices(float width, float height, int frames, int actions) {
 		/*
 			Comeca centralizado no zero.
 			Fazer funcao de tranlacao pra posicao inicial depois
 		*/
-		float vertices[] = {
+		float verticesCoordinates[] = {
 			// positions						// texture coords
 			-width/2,  -height/2, 0.0f,			0.0f,            1.0f,			   // top left
 			-width/2,  height/2,  0.0f,			0.0f,	         (float)1/actions, // bottom left
 			width/2,   height/2,  0.0f,			(float)1/frames, (float)1/actions, // bottom right
 			width/2, - height/2,  0.0f,			(float)1/frames, 1.0f,             // top right
 		};
-		/*
-			Aponta qual o indice do array de vertices sera usado para desenhar o triangulo
-		*/
-		unsigned int indices[] = {
-				0, 1, 2,   // first triangle
-				0, 3, 2    // second triangle
-		};
-		glGenBuffers(1, &EBO);
-		glGenBuffers(1, &VBO);
-
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
-
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-		/*
-			Antes de utilizar o glVertexAttribPointer e necessario dar o bind do buffer que sera lido.
-			Aqui o EBO e o ultimo buffer a receber o bind, no entanto glVertexAttribPointer continua
-			funcionando no VBO. Isto deve significar que o glVertexAttribPointer atua no ultimo
-			buffer do tipo GL_ARRAY_BUFFER a receber bind
-		*/
-
-		// Passa e ativa o atributo (location) 0 no vertexShader, a partir do VBO
-		// Le o atributo de 5 em 5 floats, comecando em 0
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-
-		// Le o atributo de 5 em 5 floats, comecando em 3
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
+		vertices = new VerticesObject(verticesCoordinates, 20);
 	}
 
 	void draw() {
@@ -102,7 +67,7 @@ public:
 		glUniform1i((glGetUniformLocation(shaderProgram->Program, "sprite")), 0);
 
 		// Define vao como verte array atual
-		glBindVertexArray(VAO);
+		glBindVertexArray(vertices->VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
 		double currentSeconds = glfwGetTime();

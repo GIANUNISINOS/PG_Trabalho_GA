@@ -21,14 +21,15 @@ public:
 
 BackgroundObject::BackgroundObject(Shader* shaderProgramParam, float width, float height) {
 	shaderProgram = shaderProgramParam;
-	float verticesCoordenates[] = {
+	float verticesCoordinates[] = {
 		// positions              // texture coords
 		0.0f,  0.0f,   0.0f,     0.0f, 1.0f, // top left
 		0.0f,  height, 0.0f,     0.0f, 0.0f, // bottom left
 		width, height, 0.0f,     1.0f, 0.0f, // bottom right
 		width, 0.0f,   0.0f,     1.0f, 1.0f,  // top right
 	};
-	vertices = new VerticesObject(verticesCoordenates);
+
+	vertices = new VerticesObject(verticesCoordinates, 20);
 	setupTextures();
 }
 void BackgroundObject::setupTextures() {

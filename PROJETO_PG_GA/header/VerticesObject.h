@@ -3,22 +3,32 @@ class VerticesObject
 {
 public:
 	GLuint VAO;
-	GLuint VBO;
-	GLuint EBO;
+	
+	/*
+		E necessario receber o size pois o array sera enviado
+		para o construtor por ponteiro, e o ponteiro nao guarda
+		o tamanho.
 
-	VerticesObject(float vertices[]);
+		Todo array enviado por parametro se transforma em um
+		ponteiro, seja ele 
+	
+		*array, array[] ou array[n];
+	*/
+
+	VerticesObject(float verticesCoordinates[], int size);
 	~VerticesObject();
 
-	void setup(float vertices[]);
+	void setup(float verticesCoordinates[], int size);
 
 };
 
-VerticesObject::VerticesObject(float verticesCoordenates[]){
-	setup(verticesCoordenates);
+VerticesObject::VerticesObject(float verticesCoordinates[], int size){
+	setup(verticesCoordinates, size);
 }
 
-void VerticesObject::setup(float verticesCoordenates[]) {
-
+void VerticesObject::setup(float verticesCoordinates[], int size) {
+	GLuint VBO;
+	GLuint EBO;
 	/*
 		Aponta qual o indice do array de vertices sera usado para desenhar o triangulo
 	*/
@@ -33,7 +43,7 @@ void VerticesObject::setup(float verticesCoordenates[]) {
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesCoordenates), verticesCoordenates, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size*sizeof(float), verticesCoordinates, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
