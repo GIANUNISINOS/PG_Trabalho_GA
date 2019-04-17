@@ -11,6 +11,12 @@ public:
 	double previousSeconds;
 	int t = 0;
 
+    //teclas pressionadas
+    float xCentro = 0.0f;
+    float yCentro = 0.0f;
+    float value_scala = 1.2f;
+    float value_move = 10.0f;
+
     glm::mat4 matrix_translaction = glm::mat4(1);
     glm::mat4 matrix_rotation = glm::mat4(1);
     glm::mat4 matrix_scala = glm::mat4(1);
@@ -24,8 +30,10 @@ public:
 		setupVertices(width, height, sprites->frames, sprites->actions);
 
 		//poe na pos inicial
-		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(400.0f, 500.0f, 0.0f));
-        transformations = matrix_translaction*matrix_rotation*matrix_scala;
+        xCentro =   400.0f;
+        yCentro = 500.0f;
+		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(xCentro, yCentro, 0.0f));
+		transformations = matrix_translaction*matrix_rotation*matrix_scala;
 	}
 	/*
 		actions e o numero de linhas da imagem de sprites
@@ -72,6 +80,56 @@ public:
 			previousSeconds = currentSeconds;
 		}
 	}
+
+
+    /*
+	Função que responde às teclas pressionadas
+    */
+    void keyboard_reaction(int keys[1024]) {
+        if (keys[GLFW_KEY_U] == 1) {
+            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(-20.0f), glm::vec3(0, 0, 1));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+        }
+        if (keys[GLFW_KEY_R] == 1) {
+            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(20.0f), glm::vec3(0, 0, 1));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+        }
+        if (keys[GLFW_KEY_RIGHT] == 1) {
+            matrix_translaction = glm::translate(matrix_translaction,
+                                                 glm::vec3(value_move, 0.0f, 0.0f));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+            xCentro = xCentro + value_move;
+        }
+        if (keys[GLFW_KEY_LEFT] == 1) {
+            matrix_translaction = glm::translate(matrix_translaction,
+                                                 glm::vec3(-value_move, 0.0f, 0.0f));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+            xCentro = xCentro - value_move;
+        }
+        if (keys[GLFW_KEY_DOWN] == 1) {
+            matrix_translaction = glm::translate(matrix_translaction,
+                                                 glm::vec3(0.0f, value_move, 0.0f));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+            yCentro = yCentro + value_move;
+        }
+        if (keys[GLFW_KEY_UP] == 1) {
+            matrix_translaction = glm::translate(matrix_translaction,
+                                                 glm::vec3(0.0f, -value_move, 0.0f));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+            yCentro = yCentro - value_move;
+        }
+        if (keys[GLFW_KEY_KP_ADD] == 1)
+        {
+            matrix_scala = glm::scale(matrix_scala, glm::vec3(value_scala, value_scala, value_scala));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+        }
+        if (keys[GLFW_KEY_KP_SUBTRACT] == 1)
+        {
+            matrix_scala = glm::scale(matrix_scala, glm::vec3(1.0f / value_scala, 1.0f / value_scala, 1.0f / value_scala));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+        }
+    }
+
 
 	virtual ~GameObject();
 };
