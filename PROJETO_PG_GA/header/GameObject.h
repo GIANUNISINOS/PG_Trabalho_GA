@@ -13,24 +13,28 @@ public:
 
 	GameObject(Shader* shaderProgramParam, string path, float width, float height, float depth) {
 		shaderProgram = shaderProgramParam;
-		setupVertex(width, height);
+		setupVertex(width, height, 2, 5);
 		/*
 			Aqui será a classe sprites adequada, e não esta classe
 			Sprite atual, que é voltada para texturas
 		*/
-		sprites = new Sprite(path, false, 0.0f, 0.0f, depth, 0.000f);
+		sprites = new Sprite(path, true, 0.0f, 0.0f, depth, 0.000f);
 	}
-	void setupVertex(float width, float height) {
+	/*
+		actions é o número de linhas da imagem de sprites
+		frames  é o número de colunas da imagem de sprites
+	*/
+	void setupVertex(float width, float height, int actions, int frames) {
 		/*
 			Começa centralizado no zero.
 			Fazer função de tranlação pra posição inicial depois
 		*/
 		float vertices[] = {
-			// positions              // texture coords
-			-width/2, -height/2, 0.0f,     1.0f, 1.0f, // top left
-			-width/2, height/2,  0.0f,     1.0f, 0.0f, // bottom left
-			width/2,  height/2,  0.0f,     0.0f, 0.0f, // bottom right
-			width/2,  -height/2, 0.0f,     0.0f, 1.0f,  // top right
+			// positions						// texture coords
+			-width/2,  -height/2, 0.0f,			0.0f,            1.0f,			   // top left
+			-width/2,  height/2,  0.0f,			0.0f,	         (float)1/actions, // bottom left
+			width/2,   height/2,  0.0f,			(float)1/frames, (float)1/actions, // bottom right
+			width/2, - height/2,  0.0f,			(float)1/frames, 1.0f,             // top right
 		};
 		/*
 			Aponta qual o indice do array de vértices será usado para desenhar o trìângulo

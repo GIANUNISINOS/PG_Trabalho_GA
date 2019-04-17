@@ -10,6 +10,7 @@
 	#include "../header/Sprite.h";
 	#include "../header/GameObject.h";
 	#include "../header/BackgroundObject.h";
+	#include "../header/SpriteSheet.h";
 #endif
 
 
@@ -196,7 +197,7 @@ int main() {
 	#elif _WIN64
 		resource_path = "resource/";
 	#endif //APPLE
-	GameObject* character = new GameObject(shaderProgram, resource_path + "megamen.png", 200.0f, 200.0f, -0.48f);
+	GameObject* character = new GameObject(shaderProgram, resource_path + "sprites_megaman-runnnig.png", 100.0f, 100.0f, -0.48f);
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
 
 	// looping do main

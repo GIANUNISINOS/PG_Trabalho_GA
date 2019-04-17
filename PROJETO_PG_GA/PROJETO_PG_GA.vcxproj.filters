@@ -23,15 +23,18 @@
     <ClInclude Include="header\Utils.h">
       <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="header\SpriteSheet.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resource\nuvem.png">
-      <Filter>headers</Filter>
-    </Image>
     <Image Include="resource\textura1.jpg">
       <Filter>resource</Filter>
     </Image>
     <Image Include="resource\textura2.jpg">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="resource\nuvem.png">
       <Filter>resource</Filter>
     </Image>
   </ItemGroup>
