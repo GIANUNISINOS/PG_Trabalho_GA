@@ -192,13 +192,11 @@ int main() {
 
 	//Create Objects
 	string resource_path;
-	#ifdef __APPLE__
-		resource_path = "../resource/";
-	#elif _WIN64
-		resource_path = "resource/";
-	#endif //APPLE
-	GameObject* character = new GameObject(shaderProgram, resource_path + "sprites_megaman-runnnig.png", 100.0f, 100.0f, -0.48f);
+
+	resource_path = "resource/";
+
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
+    GameObject* character = new GameObject(shaderProgram, resource_path + "sprites_megaman-runnnig.png", 100.0f, 100.0f, -0.48f);
 
 	// looping do main
 	while (!glfwWindowShouldClose(window)) {

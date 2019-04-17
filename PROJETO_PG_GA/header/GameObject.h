@@ -9,16 +9,29 @@ public:
 	GLuint EBO;
 	Sprite* sprites;
 
-	glm::mat4 transformations = glm::mat4(1);
+    glm::mat4 matrix_translaction = glm::mat4(1);
+    glm::mat4 matrix_rotation = glm::mat4(1);
+    glm::mat4 matrix_scala = glm::mat4(1);
+
+    glm::mat4 transformations = matrix_translaction*matrix_rotation*matrix_scala;
 
 	GameObject(Shader* shaderProgramParam, string path, float width, float height, float depth) {
 		shaderProgram = shaderProgramParam;
-		setupVertex(width, height, 2, 5);
+
+	setupVertex(width, height, 2, 5);
+
 		/*
-			Aqui será a classe sprites adequada, e não esta classe
-			Sprite atual, que é voltada para texturas
+			Aqui sera a classe sprites adequada, e nao esta classe
+			Sprite atual, que e voltada para texturas
 		*/
 		sprites = new Sprite(path, true, 0.0f, 0.0f, depth, 0.000f);
+
+
+		//poe na pos inicial
+		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(600.0f, 300.0f, 0.0f));
+        transformations = matrix_translaction*matrix_rotation*matrix_scala;
+        matrix_scala = glm::scale(matrix_scala,glm::vec3(800.0f/width, 600.0f/height, 0.0f));
+        transformations = matrix_translaction*matrix_rotation*matrix_scala;
 	}
 	/*
 		actions é o número de linhas da imagem de sprites
@@ -26,8 +39,8 @@ public:
 	*/
 	void setupVertex(float width, float height, int actions, int frames) {
 		/*
-			Começa centralizado no zero.
-			Fazer função de tranlação pra posição inicial depois
+			Comeca centralizado no zero.
+			Fazer funcao de tranlacao pra posicao inicial depois
 		*/
 		float vertices[] = {
 			// positions						// texture coords
@@ -37,7 +50,7 @@ public:
 			width/2, - height/2,  0.0f,			(float)1/frames, 1.0f,             // top right
 		};
 		/*
-			Aponta qual o indice do array de vértices será usado para desenhar o trìângulo
+			Aponta qual o indice do array de vertices sera usado para desenhar o triangulo
 		*/
 		unsigned int indices[] = {
 				0, 1, 2,   // first triangle
@@ -56,18 +69,18 @@ public:
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		/*
-			Antes de utilizar o glVertexAttribPointer é necessário dar o bind do buffer que será lido.
-			Aqui o EBO é o último buffer a receber o bind, no entanto glVertexAttribPointer continua
-			funcionando no VBO. Isto deve significar que o glVertexAttribPointer atua no último
+			Antes de utilizar o glVertexAttribPointer e necessario dar o bind do buffer que sera lido.
+			Aqui o EBO e o ultimo buffer a receber o bind, no entanto glVertexAttribPointer continua
+			funcionando no VBO. Isto deve significar que o glVertexAttribPointer atua no ultimo
 			buffer do tipo GL_ARRAY_BUFFER a receber bind
 		*/
 
 		// Passa e ativa o atributo (location) 0 no vertexShader, a partir do VBO
-		// Lê o atributo de 5 em 5 floats, começando em 0
+		// Le o atributo de 5 em 5 floats, comecando em 0
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
-		// Lê o atributo de 5 em 5 floats, começando em 3
+		// Le o atributo de 5 em 5 floats, comecando em 3
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
 	}
