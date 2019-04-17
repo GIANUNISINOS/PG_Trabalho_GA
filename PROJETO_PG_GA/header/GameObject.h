@@ -1,3 +1,6 @@
+#ifndef PROJETO_PG_GA_GAMEOBJECT_H
+	#define PROJETO_PG_GA_GAMEOBJECT_H
+
 #pragma once
 class GameObject
 {
@@ -7,7 +10,7 @@ public:
 	GLuint VAO;
 	GLuint VBO;
 	GLuint EBO;
-	Sprite* sprites;
+	SpriteSheet* sprites;
 
     glm::mat4 matrix_translaction = glm::mat4(1);
     glm::mat4 matrix_rotation = glm::mat4(1);
@@ -15,22 +18,16 @@ public:
 
     glm::mat4 transformations = matrix_translaction*matrix_rotation*matrix_scala;
 
-	GameObject(Shader* shaderProgramParam, string path, float width, float height, float depth) {
+	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth) {
 		shaderProgram = shaderProgramParam;
 
-	setupVertex(width, height, 2, 5);
+		setupVertex(width, height, 2, 5);
 
-		/*
-			Aqui sera a classe sprites adequada, e nao esta classe
-			Sprite atual, que e voltada para texturas
-		*/
-		sprites = new Sprite(path, true, 0.0f, 0.0f, depth, 0.000f);
-
+		sprites = spritesParam;
 
 		//poe na pos inicial
-		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(600.0f, 300.0f, 0.0f));
-        transformations = matrix_translaction*matrix_rotation*matrix_scala;
-        matrix_scala = glm::scale(matrix_scala,glm::vec3(800.0f/width, 600.0f/height, 0.0f));
+		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(100.0f, 500.0f, 0.0f));
+        // matrix_scala = glm::scale(matrix_scala,glm::vec3(800.0f/width, 600.0f/height, 0.0f));
         transformations = matrix_translaction*matrix_rotation*matrix_scala;
 	}
 	/*
@@ -93,9 +90,9 @@ public:
 			GL_FALSE, glm::value_ptr(transformations));
 
 		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "offsetX"), sprites->offsetX);
+			glGetUniformLocation(shaderProgram->Program, "offsetX"), sprites->getOffsetX() );
 		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "offsetY"), sprites->offsetY);
+			glGetUniformLocation(shaderProgram->Program, "offsetY"), sprites->getOffsetY() );
 		glUniform1f(
 			glGetUniformLocation(shaderProgram->Program, "layer_z"), sprites->z);
 
@@ -116,3 +113,5 @@ GameObject::~GameObject()
 {
 	delete sprites;
 }
+
+#endif //PROJETO_PG_GA_GAMEOBJECT_H

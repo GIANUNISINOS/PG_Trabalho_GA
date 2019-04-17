@@ -1,4 +1,7 @@
 #pragma once
+#ifndef PROJETO_PG_GA_BACKGROUNDOBJECT_H
+	#define PROJETO_PG_GA_BACKGROUNDOBJECT_H
+	
 class BackgroundObject
 {
 public:
@@ -118,3 +121,4 @@ BackgroundObject::~BackgroundObject()
 	delete layers[2];
 	delete layers[3];
 }
+#endif

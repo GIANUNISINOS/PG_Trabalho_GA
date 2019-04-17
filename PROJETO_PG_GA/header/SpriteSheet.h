@@ -1,3 +1,6 @@
+#ifndef PROJETO_PG_GA_SPRITESHEET_H
+	#define PROJETO_PG_GA_SPRITESHEET_H
+
 #pragma once
 class SpriteSheet
 {
@@ -5,13 +8,33 @@ public:
 	GLuint textureId;
 	int actions;
 	int frames;
+	int width;
+	int height;
+	int currentAction;
+	int currentFrame;
+	float z;
 
-	SpriteSheet(string filename, int actionsParam, int framesParam) {
+	SpriteSheet(string filename, int framesParam, int actionsParam, float z) {
 		create_textures(filename.c_str());
 		actions = actionsParam;
 		frames = framesParam;
+		currentAction = 0;
+		currentFrame = 0;
 	};
 	~SpriteSheet();
+
+	int getOffsetX() {
+		return width / frames * (currentFrame%frames);
+	}
+	int getOffsetY() {
+		return height / actions * (currentAction%actions);
+	}
+	void nextFrame() {
+		currentFrame++;
+	}
+	void setActions(int a) {
+		currentAction = a;
+	}
 
 	void create_textures(const char* filename) {
 
@@ -25,7 +48,7 @@ public:
 //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		// load and generate the texture
-		int width, height, nrChannels;
+		int nrChannels;
 		nrChannels = 0;
 
 		unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
@@ -46,3 +69,4 @@ public:
 SpriteSheet::~SpriteSheet()
 {
 }
+#endif //PROJETO_PG_GA_GAMEOBJECT_H

@@ -194,9 +194,10 @@ int main() {
 	string resource_path;
 
 	resource_path = "resource/";
+	SpriteSheet* megamanSprites = new SpriteSheet("resource/sprites_megaman-runnnig.png", 5, 2, -0.48f);
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
-    GameObject* character = new GameObject(shaderProgram, resource_path + "sprites_megaman-runnnig.png", 100.0f, 100.0f, -0.48f);
+    GameObject* character = new GameObject(megamanSprites, 100.0f, 100.0f, -0.48f);
 
 	// looping do main
 	while (!glfwWindowShouldClose(window)) {
