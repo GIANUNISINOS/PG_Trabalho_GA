@@ -35,6 +35,7 @@
     <ClInclude Include="header\SpriteSheet.h" />
     <ClInclude Include="header\stb_image.h" />
     <ClInclude Include="header\Utils.h" />
+    <ClInclude Include="header\VerticesObject.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

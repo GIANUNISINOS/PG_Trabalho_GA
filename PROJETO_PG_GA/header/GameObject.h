@@ -90,7 +90,7 @@ public:
 			GL_FALSE, glm::value_ptr(transformations));
 
 		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "offsetX"), sprites->getOffsetX());
+			glGetUniformLocation(shaderProgram->Program, "offsetX"), sprites->getOffsetX() );
 		glUniform1f(
 			glGetUniformLocation(shaderProgram->Program, "offsetY"), sprites->getOffsetY() );
 		glUniform1f(

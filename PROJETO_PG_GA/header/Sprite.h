@@ -1,6 +1,5 @@
 #ifndef TESTANDO_SPRITE_H 
 #define TESTANDO_SPRITE_H
-#endif
 
 class Sprite {
 public:
@@ -64,3 +63,5 @@ public:
 
 	}
 };
+
+#endif

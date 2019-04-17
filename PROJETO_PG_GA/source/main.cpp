@@ -10,6 +10,7 @@
 	#include "../header/Shader.h";
 	#include "../header/Sprite.h";
 	#include "../header/SpriteSheet.h";
+	#include "../header/VerticesObject.h";
 	#include "../header/GameObject.h";
 	#include "../header/BackgroundObject.h";
 #endif

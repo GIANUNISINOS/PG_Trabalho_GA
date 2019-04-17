@@ -26,6 +26,9 @@
     <ClInclude Include="header\SpriteSheet.h">
       <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="header\VerticesObject.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textura1.jpg">
