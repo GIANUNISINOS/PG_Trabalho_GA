@@ -193,8 +193,8 @@ int main() {
 	string resource_path;
 	resource_path = "resource/";
 
-	GameObject* character = new GameObject(shaderProgram, resource_path + "megamen.png", 200.0f, 200.0f, -0.48f);
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
+    GameObject* character = new GameObject(shaderProgram, resource_path + "megamen.png", 200.0f, 200.0f, -0.48f);
 
 	// looping do main
 	while (!glfwWindowShouldClose(window)) {

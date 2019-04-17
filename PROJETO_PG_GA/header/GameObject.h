@@ -9,16 +9,27 @@ public:
 	GLuint EBO;
 	Sprite* sprites;
 
-	glm::mat4 transformations = glm::mat4(1);
+    glm::mat4 matrix_translaction = glm::mat4(1);
+    glm::mat4 matrix_rotation = glm::mat4(1);
+    glm::mat4 matrix_scala = glm::mat4(1);
+
+    glm::mat4 transformations = matrix_translaction*matrix_rotation*matrix_scala;
 
 	GameObject(Shader* shaderProgramParam, string path, float width, float height, float depth) {
 		shaderProgram = shaderProgramParam;
 		setupVertex(width, height);
+
 		/*
 			Aqui sera a classe sprites adequada, e nao esta classe
 			Sprite atual, que e voltada para texturas
 		*/
-		sprites = new Sprite(path, false, 0.0f, 0.0f, depth, 0.000f);
+		sprites = new Sprite(path, true, 0.0f, 0.0f, depth, 0.000f);
+
+		//poe na pos inicial
+		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(600.0f, 300.0f, 0.0f));
+        transformations = matrix_translaction*matrix_rotation*matrix_scala;
+        matrix_scala = glm::scale(matrix_scala,glm::vec3(800.0f/width, 600.0f/height, 0.0f));
+        transformations = matrix_translaction*matrix_rotation*matrix_scala;
 	}
 	void setupVertex(float width, float height) {
 		/*
