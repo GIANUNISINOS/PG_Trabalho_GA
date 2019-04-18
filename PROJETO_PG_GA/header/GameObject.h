@@ -82,6 +82,7 @@ public:
                 transformations = matrix_translaction * matrix_rotation * matrix_scala;
                 yCentro = yCentro + value_move;
             }
+            sprites->setActions(2);
             isOnTopJump=false;
 		}
 
@@ -133,6 +134,7 @@ public:
         if (keys[GLFW_KEY_UP] == 1) {
             if(!isOnTopJump){
                 isOnTopJump = true;
+                sprites->setActions(1);
                 for(int i=0;i<10;i++){
                         matrix_translaction = glm::translate(matrix_translaction,
                                                              glm::vec3(0.0f, -value_move, 0.0f));
