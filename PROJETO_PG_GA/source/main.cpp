@@ -51,7 +51,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 GLFWwindow* createWindow() {
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Triângulo Maluco", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Megamen Game", NULL, NULL);
     if (window == NULL) {
         printf("%s", "Houve uma falha ao criar a janela GLFW");
         glfwTerminate();
@@ -101,9 +101,11 @@ int main() {
 		Juntar as duas as 2 ações dessa imagem do megaman em 1 só
 	*/
 	SpriteSheet* megamanSprites = new SpriteSheet("resource/sprites_megaman-runnnig.png", 5, 2, -0.48f);
+    SpriteSheet* projetilSprites = new SpriteSheet("resource/sprites_shoots.png", 4, 4, -0.47f);
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
-    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f);
+    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f);
+    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,500.0f);
 
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
@@ -121,6 +123,7 @@ int main() {
 		background->draw();
 		character->draw();
         character->keyboard_reaction(keys);
+        projetil->draw();
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);

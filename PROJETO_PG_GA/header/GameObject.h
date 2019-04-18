@@ -22,7 +22,7 @@ public:
     glm::mat4 matrix_scala = glm::mat4(1);
     glm::mat4 transformations = matrix_translaction*matrix_rotation*matrix_scala;
 
-	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth) {
+	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY) {
 		shaderProgram = shaderProgramParam;
 		sprites = spritesParam;
 		previousSeconds = glfwGetTime();
@@ -30,8 +30,8 @@ public:
 		setupVertices(width, height, sprites->frames, sprites->actions);
 
 		//poe na pos inicial
-        xCentro =   400.0f;
-        yCentro = 500.0f;
+        xCentro = initialPosX;
+        yCentro = initialPosY;
 		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(xCentro, yCentro, 0.0f));
 		transformations = matrix_translaction*matrix_rotation*matrix_scala;
 	}
@@ -47,9 +47,9 @@ public:
 		float verticesCoordinates[] = {
 			// positions						// texture coords
 			-width/2,  -height/2, 0.0f,			0.0f,            1.0f,			   // top left
-			-width/2,  height/2,  0.0f,			0.0f,	         (float)1/actions, // bottom left
-			width/2,   height/2,  0.0f,			(float)1/frames, (float)1/actions, // bottom right
-			width/2, - height/2,  0.0f,			(float)1/frames, 1.0f,             // top right
+			-width/2,  height/2,  0.0f,			0.0f,	         1.00f - (1.00f/(float)actions), // bottom left
+			width/2,   height/2,  0.0f,			1.00f/(float)frames, 1.00f - (1.00f/(float)actions), // bottom right
+			width/2, - height/2,  0.0f,			1.00f/(float)frames, 1.0f,             // top right
 		};
 		vertices = new VerticesObject(verticesCoordinates, 20);
 	}
