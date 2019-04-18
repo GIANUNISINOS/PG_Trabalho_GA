@@ -11,6 +11,9 @@ public:
 	double previousSeconds;
 	int t = 0;
 
+	bool isOnTopJump;
+	float speed;
+
     //teclas pressionadas
     float xCentro = 0.0f;
     float yCentro = 0.0f;
@@ -34,6 +37,8 @@ public:
         yCentro = initialPosY;
 		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(xCentro, yCentro, 0.0f));
 		transformations = matrix_translaction*matrix_rotation*matrix_scala;
+
+        isOnTopJump = false;
 	}
 
 	/*
@@ -69,6 +74,17 @@ public:
 
 		// Define em quais vertices sera desenhado pelo shader
 		vertices->bind(shaderProgram);
+
+		if(isOnTopJump){
+            for(int i=0;i<10;i++){
+                matrix_translaction = glm::translate(matrix_translaction,
+                                                     glm::vec3(0.0f, value_move, 0.0f));
+                transformations = matrix_translaction * matrix_rotation * matrix_scala;
+                yCentro = yCentro + value_move;
+            }
+            isOnTopJump=false;
+		}
+
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
@@ -109,16 +125,22 @@ public:
             xCentro = xCentro - value_move;
         }
         if (keys[GLFW_KEY_DOWN] == 1) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                 glm::vec3(0.0f, value_move, 0.0f));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-            yCentro = yCentro + value_move;
+//            matrix_translaction = glm::translate(matrix_translaction,
+//                                                 glm::vec3(0.0f, value_move, 0.0f));
+//            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+//            yCentro = yCentro + value_move;
         }
         if (keys[GLFW_KEY_UP] == 1) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                 glm::vec3(0.0f, -value_move, 0.0f));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-            yCentro = yCentro - value_move;
+            if(!isOnTopJump){
+                isOnTopJump = true;
+                for(int i=0;i<10;i++){
+                        matrix_translaction = glm::translate(matrix_translaction,
+                                                             glm::vec3(0.0f, -value_move, 0.0f));
+                        transformations = matrix_translaction * matrix_rotation * matrix_scala;
+                        yCentro = yCentro - value_move;
+                }
+
+            }
         }
         if (keys[GLFW_KEY_KP_ADD] == 1)
         {
