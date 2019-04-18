@@ -97,12 +97,7 @@ int main() {
 	glfwSetWindowSizeCallback(window, window_size_callback);
 
 	//Create Objects
-	/*
-		Juntar as duas as 2 ações dessa imagem do megaman em 1 só
-	*/
-//    SpriteSheet* megamanSprites = new SpriteSheet("resource/sprites_megaman-runnnig.png", 5, 2, -0.48f);
     SpriteSheet* megamanSprites = new SpriteSheet("resource/images.png", 9, 2, -0.48f);
-//    megamanSprites->currentAction++;
 
     SpriteSheet* projetilSprites = new SpriteSheet("resource/sprites_fire.png", 4, 4, -0.47f);
     projetilSprites->setActions(3);

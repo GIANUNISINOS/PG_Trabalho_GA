@@ -42,15 +42,14 @@ public:
 	*/
 	void setupVertices(float width, float height, int frames, int actions) {
 		/*
-			Comeca centralizado no zero.
-			Fazer funcao de tranlacao pra posicao inicial depois
+			Comeca centralizado no zero
 		*/
 		float verticesCoordinates[] = {
 			// positions						// texture coords
-			-width/2,  -height/2, 0.0f,			0.0f,            1.0f,			   // top left
-			-width/2,  height/2,  0.0f,			0.0f,	         1.00f - (1.00f/(float)actions), // bottom left
+			-width/2,  -height/2, 0.0f,			0.0f,                1.0f,							 // top left
+			-width/2,  height/2,  0.0f,			0.0f,	             1.00f - (1.00f/(float)actions), // bottom left
 			width/2,   height/2,  0.0f,			1.00f/(float)frames, 1.00f - (1.00f/(float)actions), // bottom right
-			width/2, - height/2,  0.0f,			1.00f/(float)frames, 1.0f,             // top right
+			width/2, - height/2,  0.0f,			1.00f/(float)frames, 1.0f,							 // top right
 		};
 		vertices = new VerticesObject(verticesCoordinates, 20);
 	}
@@ -68,14 +67,16 @@ public:
 		// Define qual textura sera desenhada pelo shader
 		sprites->texture->bind(shaderProgram);
 
-		// Define qual vertice sera desenhado pelo shader
+		// Define em quais vertices sera desenhado pelo shader
 		vertices->bind(shaderProgram);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
+		/*
+			Troca o sprite, a 10fps;
+		*/
 		double currentSeconds = glfwGetTime();
 		double elapsedSeconds = currentSeconds - previousSeconds;
-		
 		if (elapsedSeconds > 0.1) {
 			sprites->nextFrame();
 			previousSeconds = currentSeconds;
@@ -84,7 +85,7 @@ public:
 
 
     /*
-	Função que responde às teclas pressionadas
+		Função que responde às teclas pressionadas
     */
     void keyboard_reaction(int keys[1024]) {
         if (keys[GLFW_KEY_U] == 1) {

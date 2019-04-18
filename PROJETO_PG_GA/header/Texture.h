@@ -6,20 +6,20 @@ public:
 	int width;
 	int height;
 
-	Texture(string filename);
+	Texture(string filename, bool useAlpha);
 	~Texture();
 
-	void create_texture(const char* filename);
+	void create_texture(const char* filename, bool useAlpha);
 	void bind(Shader* shaderProgram);
 	void passUniformsToShader(Shader* shaderProgram, float offsetX, float offsetY, float layer_z);
 };
 
-Texture::Texture(string filename)
+Texture::Texture(string filename, bool useAlpha)
 {
 	/*
 		c._str() pra passar de string para char*
 	*/
-	create_texture(filename.c_str());
+	create_texture(filename.c_str(), useAlpha);
 }
 void Texture::bind(Shader* shaderProgram) {
 	glActiveTexture(GL_TEXTURE0);
@@ -36,7 +36,7 @@ void Texture::passUniformsToShader(Shader* shaderProgram, float offsetX, float o
 		glGetUniformLocation(shaderProgram->Program, "layer_z"), layer_z);
 }
 
-void Texture::create_texture(const char* filename) {
+void Texture::create_texture(const char* filename, bool useAlpha) {
 
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
@@ -48,13 +48,17 @@ void Texture::create_texture(const char* filename) {
 //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		// load and generate the texture
-	int nrChannels;
+	int width, height, nrChannels;
 	nrChannels = 0;
 
 	unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
 
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		if (useAlpha)
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		else
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else {

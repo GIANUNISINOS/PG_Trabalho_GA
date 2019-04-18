@@ -52,18 +52,21 @@ void BackgroundObject::setupTextures() {
 }
 
 void BackgroundObject::draw() {
+	/*
+		Realiza o movimento das camadas, a 60fps;		
+	*/
 	double currentSeconds = glfwGetTime();
 	double elapsedSeconds = currentSeconds - previousSeconds;
 	if (elapsedSeconds > 0.015) {
 		for (int i = 0; i < 4; i++) {
-			// realiza movimento da camada em X
 			layers[i]->moveX();
 			
 		}
 		previousSeconds = currentSeconds;
 	}
-	
-
+	/*
+		Desenha as 4 texturas, uma apos a outra
+	*/
 	for (int i = 0; i < 4; i++) {
 
 		// Define shaderProgram como o shader a ser utilizado
@@ -71,24 +74,15 @@ void BackgroundObject::draw() {
 		glUniformMatrix4fv(
 			glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
 			GL_FALSE, glm::value_ptr(transformations));
-
 		
-		
+		// Passa os offsets para o shader
+		layers[i]->passUniformsToShader(shaderProgram);
 
-		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "offsetX"), layers[i]->offsetX);
-		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "offsetY"), layers[i]->offsetY);
-		glUniform1f(
-			glGetUniformLocation(shaderProgram->Program, "layer_z"), layers[i]->z);
+		// Define qual textura sera desenhada pelo shader
+		layers[i]->texture->bind(shaderProgram);
 
-		// bind Texture
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, layers[i]->textureId);
-		glUniform1i((glGetUniformLocation(shaderProgram->Program, "sprite")), 0);
-
-		// Define vao como verte array atual
-		glBindVertexArray(vertices->VAO);
+		// Define em quais vertices sera desenhado pelo shader
+		vertices->bind(shaderProgram);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 }

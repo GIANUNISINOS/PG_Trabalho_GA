@@ -13,7 +13,7 @@ public:
 	float z;
 
 	SpriteSheet(string filename, int framesParam, int actionsParam, float zParam) {
-		texture = new Texture(filename);
+		texture = new Texture(filename, true);
 		actions = actionsParam;
 		frames = framesParam;
 		currentAction = 0;
