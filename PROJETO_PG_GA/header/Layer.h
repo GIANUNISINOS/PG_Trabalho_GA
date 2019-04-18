@@ -9,10 +9,6 @@ public:
     float z;
     float speedX;
 
-    Layer() {
-
-    }
-
 	Layer(string filename, bool useAlpha, float paramOffsetX, float paramOffsetY, float paramZ, float paramSpeedX)
     {
 		texture = new Texture(filename, useAlpha);
@@ -29,11 +25,11 @@ public:
     void moveX()
     {
         offsetX += speedX;
-//        if (offsetX > 1.00f)
-//            offsetX -= 1.00f;
-//		else if (offsetX < -1.00f)
-//			offsetX += 1.00f;
     }
+	~Layer()
+	{
+		delete texture;
+	}
 };
 
 #endif

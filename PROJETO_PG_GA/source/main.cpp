@@ -120,8 +120,8 @@ int main() {
 
 
 		background->draw();
+		character->keyboard_reaction(keys);
 		character->draw();
-        character->keyboard_reaction(keys);
         projetil->draw();
 
 		glfwPollEvents();

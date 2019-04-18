@@ -48,7 +48,7 @@ void Texture::create_texture(const char* filename, bool useAlpha) {
 //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		// load and generate the texture
-	int width, height, nrChannels;
+	int nrChannels;
 	nrChannels = 0;
 
 	unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
