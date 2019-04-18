@@ -35,6 +35,7 @@ public:
 		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(xCentro, yCentro, 0.0f));
 		transformations = matrix_translaction*matrix_rotation*matrix_scala;
 	}
+
 	/*
 		actions e o numero de linhas da imagem de sprites
 		frames  e o numero de colunas da imagem de sprites

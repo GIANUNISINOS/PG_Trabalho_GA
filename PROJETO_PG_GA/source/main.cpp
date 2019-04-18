@@ -102,6 +102,7 @@ int main() {
 	*/
 	SpriteSheet* megamanSprites = new SpriteSheet("resource/sprites_megaman-runnnig.png", 5, 2, -0.48f);
     SpriteSheet* projetilSprites = new SpriteSheet("resource/sprites_shoots.png", 4, 4, -0.47f);
+    projetilSprites->currentAction++;
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
     GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f);
