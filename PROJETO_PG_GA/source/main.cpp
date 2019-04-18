@@ -46,7 +46,8 @@ void window_size_callback(GLFWwindow* window, int width, int height)
 	Controla que teclas estão pressionadas em um dado momento
 */
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if(action == GLFW_PRESS) keys[key] = 1;
+    if(action == GLFW_PRESS) keys[key] = 1;
+    if(action == GLFW_REPEAT) keys[key] = 0;
 	if(action == GLFW_RELEASE) keys[key] = 0;
 }
 
