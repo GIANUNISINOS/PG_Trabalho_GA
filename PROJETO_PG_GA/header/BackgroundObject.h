@@ -9,7 +9,7 @@ public:
 	Shader *shaderProgram;
 	VerticesObject* vertices;
 	vector<Layer *> layers;
-	
+	double previousSeconds;
 	glm::mat4 transformations = glm::mat4(1);
 	
 	BackgroundObject(Shader* shaderProgramParam, float width, float height);
@@ -21,6 +21,7 @@ public:
 
 BackgroundObject::BackgroundObject(Shader* shaderProgramParam, float width, float height) {
 	shaderProgram = shaderProgramParam;
+	previousSeconds = glfwGetTime();
 	float verticesCoordinates[] = {
 		// positions              // texture coords
 		0.0f,  0.0f,   0.0f,     0.0f, 1.0f, // top left
@@ -39,10 +40,10 @@ void BackgroundObject::setupTextures() {
 	/*
 		O ideal seria ler o path em um arquivo externo
 	*/
-	Layer* t0 = new Layer(resource_path + "fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.000f);
-	Layer* t1 = new Layer(resource_path + "sol.png", true, 0.0f, 0.0f, -0.51f, -0.001f);
-	Layer* t2 = new Layer(resource_path + "nuvem.png", true, 0.0f, 0.0f, -0.50f, 0.002f);
-	Layer* t3 = new Layer(resource_path + "grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, 0.004);
+	Layer* t0 = new Layer(resource_path + "fundo.jpg", false, 0.0f, 0.0f, -0.52f, 0.00f);
+	Layer* t1 = new Layer(resource_path + "sol.png", true, 0.0f, 0.0f, -0.51f, -0.003f);
+	Layer* t2 = new Layer(resource_path + "nuvem.png", true, 0.0f, 0.0f, -0.50f, 0.006f);
+	Layer* t3 = new Layer(resource_path + "grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, 0.012);
 
 	layers.push_back(t0);
 	layers.push_back(t1);
@@ -51,6 +52,18 @@ void BackgroundObject::setupTextures() {
 }
 
 void BackgroundObject::draw() {
+	double currentSeconds = glfwGetTime();
+	double elapsedSeconds = currentSeconds - previousSeconds;
+	if (elapsedSeconds > 0.015) {
+		for (int i = 0; i < 4; i++) {
+			// realiza movimento da camada em X
+			layers[i]->moveX();
+			
+		}
+		previousSeconds = currentSeconds;
+	}
+	
+
 	for (int i = 0; i < 4; i++) {
 
 		// Define shaderProgram como o shader a ser utilizado
@@ -59,8 +72,8 @@ void BackgroundObject::draw() {
 			glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
 			GL_FALSE, glm::value_ptr(transformations));
 
-		// realiza movimento da camada em X
-		layers[i]->moveX();
+		
+		
 
 		glUniform1f(
 			glGetUniformLocation(shaderProgram->Program, "offsetX"), layers[i]->offsetX);
