@@ -100,13 +100,16 @@ int main() {
 	/*
 		Juntar as duas as 2 ações dessa imagem do megaman em 1 só
 	*/
-	SpriteSheet* megamanSprites = new SpriteSheet("resource/sprites_megaman-runnnig.png", 5, 2, -0.48f);
-    SpriteSheet* projetilSprites = new SpriteSheet("resource/sprites_shoots.png", 4, 4, -0.47f);
-    projetilSprites->currentAction++;
+//    SpriteSheet* megamanSprites = new SpriteSheet("resource/sprites_megaman-runnnig.png", 5, 2, -0.48f);
+    SpriteSheet* megamanSprites = new SpriteSheet("resource/images.png", 9, 2, -0.48f);
+//    megamanSprites->currentAction++;
+
+    SpriteSheet* projetilSprites = new SpriteSheet("resource/sprites_fire.png", 4, 4, -0.47f);
+    projetilSprites->setActions(3);
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
     GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f);
-    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,500.0f);
+    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,490.0f);
 
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
