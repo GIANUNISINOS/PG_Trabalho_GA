@@ -59,6 +59,20 @@ public:
 		vertices = new VerticesObject(verticesCoordinates, 20);
 	}
 
+	void doingLoping(){
+        matrix_translaction = glm::translate(matrix_translaction,
+                                             glm::vec3(-value_move, 0.0f, 0.0f));
+        transformations = matrix_translaction * matrix_rotation * matrix_scala;
+        xCentro = xCentro - value_move;
+
+        if(xCentro<=0.0f){
+            matrix_translaction = glm::translate(matrix_translaction,
+                                                 glm::vec3(800.0f-xCentro, 0.0f, 0.0f));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+            xCentro = 800.0f-xCentro;
+        }
+    }
+
 	void draw() {
 		// Define shaderProgram como o shader a ser utilizado
 		shaderProgram->UseProgramShaders();

@@ -124,7 +124,7 @@ int main() {
 		character->draw();
         character->keyboard_reaction(keys);
         projetil->draw();
-
+        projetil->doingLoping();
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
