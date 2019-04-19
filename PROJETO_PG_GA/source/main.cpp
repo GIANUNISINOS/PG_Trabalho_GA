@@ -125,6 +125,17 @@ int main() {
         character->keyboard_reaction(keys);
         projetil->draw();
         projetil->doingLoping();
+
+        //testa colisão da morte
+        float difInX = (character->xCentro+character->value_move)-(projetil->xCentro);
+        float difInY = (character->yCentro)-(projetil->yCentro);
+
+        if(difInX==0.0f&&difInY>=character->value_move){
+            printf("VOCÊ MORREU, GAME OVER!\n");
+            //FECHAR JANELA!
+            glfwSetWindowShouldClose(window, true);
+        }
+
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
