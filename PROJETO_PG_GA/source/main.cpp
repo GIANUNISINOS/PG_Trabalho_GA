@@ -107,6 +107,9 @@ int main() {
     GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f);
     GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,490.0f);
 
+    // Tempo que ira acabar o jogo (30 segundos)
+    time_t timeEnd = time(NULL) + 30;
+
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -129,17 +132,21 @@ int main() {
         //testa colisão da morte
         float difInX = (character->xCentro+character->value_move)-(projetil->xCentro);
         float difInY = (character->yCentro)-(projetil->yCentro);
-
         if(difInX==0.0f&&difInY>=character->value_move){
             printf("VOCÊ MORREU, GAME OVER!\n");
             //FECHAR JANELA!
             glfwSetWindowShouldClose(window, true);
         }
 
+        //testa o tempo se viver, ganha
+        if (time(NULL) > timeEnd){
+            printf("VOCÊ GANHOU, GAME WIN!\n");
+            glfwSetWindowShouldClose(window, true);
+        }
+
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
-	
 
 	delete background;
 	delete character;
