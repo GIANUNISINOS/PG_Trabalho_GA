@@ -90,12 +90,11 @@ public:
 		vertices->bind(shaderProgram);
 
 		if(isOnTopJump){
-            for(int i=0;i<10;i++){
-                matrix_translaction = glm::translate(matrix_translaction,
-                                                     glm::vec3(0.0f, value_move, 0.0f));
-                transformations = matrix_translaction * matrix_rotation * matrix_scala;
-                yCentro = yCentro + value_move;
-            }
+
+            matrix_translaction = glm::translate(matrix_translaction,
+                                                 glm::vec3(0.0f,10.0f*value_move, 0.0f));
+            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+            yCentro = yCentro + 10.0f*value_move;
             sprites->setActions(2);
             isOnTopJump=false;
 		}
@@ -119,55 +118,56 @@ public:
 		Função que responde às teclas pressionadas
     */
     void keyboard_reaction(int keys[1024]) {
-        if (keys[GLFW_KEY_U] == 1) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(-20.0f), glm::vec3(0, 0, 1));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-        }
-        if (keys[GLFW_KEY_R] == 1) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(20.0f), glm::vec3(0, 0, 1));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-        }
+//        if (keys[GLFW_KEY_U] == 1) {
+//            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(-20.0f), glm::vec3(0, 0, 1));
+//            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+//        }
+//        if (keys[GLFW_KEY_R] == 1) {
+//            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(20.0f), glm::vec3(0, 0, 1));
+//            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+//        }
         if (keys[GLFW_KEY_RIGHT] == 1) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                 glm::vec3(value_move, 0.0f, 0.0f));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-            xCentro = xCentro + value_move;
+            if(xCentro<(800.00f-value_move)) {
+                matrix_translaction = glm::translate(matrix_translaction,
+                                                     glm::vec3(value_move, 0.0f, 0.0f));
+                transformations = matrix_translaction * matrix_rotation * matrix_scala;
+                xCentro = xCentro + value_move;
+            }
         }
         if (keys[GLFW_KEY_LEFT] == 1) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                 glm::vec3(-value_move, 0.0f, 0.0f));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-            xCentro = xCentro - value_move;
+            if(xCentro>(value_move/2.0f)){
+                matrix_translaction = glm::translate(matrix_translaction,
+                                                     glm::vec3(-value_move, 0.0f, 0.0f));
+                transformations = matrix_translaction * matrix_rotation * matrix_scala;
+                xCentro = xCentro - value_move;
+            }
         }
-        if (keys[GLFW_KEY_DOWN] == 1) {
+//        if (keys[GLFW_KEY_DOWN] == 1) {
 //            matrix_translaction = glm::translate(matrix_translaction,
 //                                                 glm::vec3(0.0f, value_move, 0.0f));
 //            transformations = matrix_translaction * matrix_rotation * matrix_scala;
 //            yCentro = yCentro + value_move;
-        }
+//        }
         if (keys[GLFW_KEY_UP] == 1) {
             if(!isOnTopJump){
                 isOnTopJump = true;
                 sprites->setActions(1);
-                for(int i=0;i<10;i++){
-                        matrix_translaction = glm::translate(matrix_translaction,
-                                                             glm::vec3(0.0f, -value_move, 0.0f));
-                        transformations = matrix_translaction * matrix_rotation * matrix_scala;
-                        yCentro = yCentro - value_move;
-                }
-
+                matrix_translaction = glm::translate(matrix_translaction,
+                                                     glm::vec3(0.0f, -10.0f*value_move, 0.0f));
+                transformations = matrix_translaction * matrix_rotation * matrix_scala;
+                yCentro = yCentro - 10.0f*value_move;
             }
         }
-        if (keys[GLFW_KEY_KP_ADD] == 1)
-        {
-            matrix_scala = glm::scale(matrix_scala, glm::vec3(value_scala, value_scala, value_scala));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-        }
-        if (keys[GLFW_KEY_KP_SUBTRACT] == 1)
-        {
-            matrix_scala = glm::scale(matrix_scala, glm::vec3(1.0f / value_scala, 1.0f / value_scala, 1.0f / value_scala));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-        }
+//        if (keys[GLFW_KEY_KP_ADD] == 1)
+//        {
+//            matrix_scala = glm::scale(matrix_scala, glm::vec3(value_scala, value_scala, value_scala));
+//            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+//        }
+//        if (keys[GLFW_KEY_KP_SUBTRACT] == 1)
+//        {
+//            matrix_scala = glm::scale(matrix_scala, glm::vec3(1.0f / value_scala, 1.0f / value_scala, 1.0f / value_scala));
+//            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+//        }
     }
 
 
