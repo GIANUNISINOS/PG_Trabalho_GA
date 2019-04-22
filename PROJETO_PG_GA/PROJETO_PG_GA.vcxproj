@@ -30,6 +30,7 @@
     <ClInclude Include="header\BackgroundObject.h" />
     <ClInclude Include="header\GameObject.h" />
     <ClInclude Include="header\Includes.h" />
+    <ClInclude Include="header\Position.h" />
     <ClInclude Include="header\Shader.h" />
     <ClInclude Include="header\Layer.h" />
     <ClInclude Include="header\SpriteSheet.h" />

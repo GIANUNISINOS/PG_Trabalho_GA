@@ -5,7 +5,8 @@
     #include "header/Layer.h";
     #include "header/SpriteSheet.h";
     #include "header/VerticesObject.h";
-    #include "header/GameObject.h";
+	#include "header/Position.h";
+	#include "header/GameObject.h";
     #include "header/BackgroundObject.h";
 #elif _WIN64
 	#include "../header/Includes.h";
@@ -14,6 +15,7 @@
 	#include "../header/Layer.h";
 	#include "../header/SpriteSheet.h";
 	#include "../header/VerticesObject.h";
+	#include "../header/Position.h";
 	#include "../header/GameObject.h";
 	#include "../header/BackgroundObject.h";
 #endif
@@ -46,7 +48,8 @@ void window_size_callback(GLFWwindow* window, int width, int height)
 	Controla que teclas estão pressionadas em um dado momento
 */
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if(action == GLFW_PRESS) keys[key] = 1;
+    if(action == GLFW_PRESS) keys[key] = 1;
+    if(action == GLFW_REPEAT) keys[key] = 0;
 	if(action == GLFW_RELEASE) keys[key] = 0;
 }
 
@@ -103,8 +106,11 @@ int main() {
     projetilSprites->setActions(3);
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
-    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f);
-    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,490.0f);
+    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f, 1.0f);
+    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,490.0f, -1.0f);
+
+    // Tempo que ira acabar o jogo (30 segundos)
+    time_t timeEnd = time(NULL) + 30;
 
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
@@ -123,11 +129,26 @@ int main() {
 		character->keyboard_reaction(keys);
 		character->draw();
         projetil->draw();
+        projetil->doingLoping();
+
+        //testa colisão da morte
+        float difInX = (character->position->xCenter+character->speed)-(projetil->position->xCenter);
+        float difInY = (character->position->yCenter)-(projetil->position->xCenter);
+        if(difInX==0.0f&&difInY>=character->speed){
+            printf("VOCÊ MORREU, GAME OVER!\n");
+            //FECHAR JANELA!
+          //  glfwSetWindowShouldClose(window, true);
+        }
+
+        //testa o tempo se viver, ganha
+        if (time(NULL) > timeEnd){
+            printf("VOCÊ GANHOU, GAME WIN!\n");
+            glfwSetWindowShouldClose(window, true);
+        }
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
-	
 
 	delete background;
 	delete character;

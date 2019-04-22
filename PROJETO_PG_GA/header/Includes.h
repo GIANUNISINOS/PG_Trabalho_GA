@@ -2,24 +2,29 @@
 // Created by Gian Boschetti on 2019-04-04.
 //
 
+//entradas e saidas std out
 #include <iostream>
-#include <string>
+#include <stdio.h>
 #include <cstdio>
 #include <cstdlib>
-#include <stdio.h>
+
+//trabalhar com strings
+#include <string>
+
+//trabalhar com vetores
 #include <vector>
+
+//calculos matematicos
 #include <cmath>
+
+// stream de arquivos
 #include <fstream>
 #include <sstream>
 
 #include <stdlib.h>
-//#include <stdio.h>
 
-// to usleep
-#ifdef __APPLE__
-	#include <unistd.h> //N�o Existe no Windows, e n�o est� sendo utilizado
-#endif
-
+//temporizador
+#include <time.h>
 
 //To GLEW
 #include <GL/glew.h>

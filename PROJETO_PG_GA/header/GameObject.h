@@ -8,32 +8,26 @@ public:
 	Shader *shaderProgram;
 	SpriteSheet* sprites;
 	VerticesObject* vertices;
+	Position* position;
 	double previousSeconds;
 	int t = 0;
 
-    //teclas pressionadas
-    float xCentro = 0.0f;
-    float yCentro = 0.0f;
-    float value_scala = 1.2f;
-    float value_move = 10.0f;
+	bool isOnTopJump;
+	float speed;
 
-    glm::mat4 matrix_translaction = glm::mat4(1);
-    glm::mat4 matrix_rotation = glm::mat4(1);
-    glm::mat4 matrix_scala = glm::mat4(1);
-    glm::mat4 transformations = matrix_translaction*matrix_rotation*matrix_scala;
-
-	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY) {
+	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam) {
 		shaderProgram = shaderProgramParam;
 		sprites = spritesParam;
 		previousSeconds = glfwGetTime();
 
-		setupVertices(width, height, sprites->frames, sprites->actions);
+		speed = speedParam;
 
+		setupVertices(width, height, sprites->frames, sprites->actions);
+		
 		//poe na pos inicial
-        xCentro = initialPosX;
-        yCentro = initialPosY;
-		matrix_translaction = glm::translate(matrix_translaction,glm::vec3(xCentro, yCentro, 0.0f));
-		transformations = matrix_translaction*matrix_rotation*matrix_scala;
+		position = new Position(initialPosX, initialPosY);
+
+        isOnTopJump = false;
 	}
 
 	/*
@@ -54,12 +48,19 @@ public:
 		vertices = new VerticesObject(verticesCoordinates, 20);
 	}
 
+	void doingLoping(){
+		position->move(speed, 0.0f);
+		if (position->xCenter <= 0.0f) {
+			position->move( 800.0f-position->xCenter, 0.0f );
+		}
+    }
+
 	void draw() {
 		// Define shaderProgram como o shader a ser utilizado
 		shaderProgram->UseProgramShaders();
 		glUniformMatrix4fv(
 			glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
-			GL_FALSE, glm::value_ptr(transformations));
+			GL_FALSE, glm::value_ptr(position->transformations));
 
 		// Passa os offsets para o shader
 		sprites->passUniformsToShader(shaderProgram);
@@ -69,6 +70,15 @@ public:
 
 		// Define em quais vertices sera desenhado pelo shader
 		vertices->bind(shaderProgram);
+
+		if(isOnTopJump){
+
+			position->move(0.0f, 70.0f);
+            
+			sprites->setActions(2);
+            isOnTopJump=false;
+		}
+
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
@@ -88,47 +98,25 @@ public:
 		Função que responde às teclas pressionadas
     */
     void keyboard_reaction(int keys[1024]) {
-        if (keys[GLFW_KEY_U] == 1) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(-20.0f), glm::vec3(0, 0, 1));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-        }
-        if (keys[GLFW_KEY_R] == 1) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(20.0f), glm::vec3(0, 0, 1));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-        }
         if (keys[GLFW_KEY_RIGHT] == 1) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                 glm::vec3(value_move, 0.0f, 0.0f));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-            xCentro = xCentro + value_move;
+            if(position->xCenter < (800.00f-speed) ) {
+
+				position->move(speed, 0.0f);
+            }
         }
         if (keys[GLFW_KEY_LEFT] == 1) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                 glm::vec3(-value_move, 0.0f, 0.0f));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-            xCentro = xCentro - value_move;
-        }
-        if (keys[GLFW_KEY_DOWN] == 1) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                 glm::vec3(0.0f, value_move, 0.0f));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-            yCentro = yCentro + value_move;
+            if(position->xCenter> (speed/2.0f) ){
+				
+				position->move(-speed, 0.0f);
+            }
         }
         if (keys[GLFW_KEY_UP] == 1) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                 glm::vec3(0.0f, -value_move, 0.0f));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-            yCentro = yCentro - value_move;
-        }
-        if (keys[GLFW_KEY_KP_ADD] == 1)
-        {
-            matrix_scala = glm::scale(matrix_scala, glm::vec3(value_scala, value_scala, value_scala));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
-        }
-        if (keys[GLFW_KEY_KP_SUBTRACT] == 1)
-        {
-            matrix_scala = glm::scale(matrix_scala, glm::vec3(1.0f / value_scala, 1.0f / value_scala, 1.0f / value_scala));
-            transformations = matrix_translaction * matrix_rotation * matrix_scala;
+            if(!isOnTopJump){
+                isOnTopJump = true;
+                sprites->setActions(1);
+
+				position->move(0.0f, -70.0f);
+            }
         }
     }
 
@@ -140,6 +128,7 @@ GameObject::~GameObject()
 {
 	delete sprites;
 	delete vertices;
+	delete position;
 }
 
 #endif //PROJETO_PG_GA_GAMEOBJECT_H
