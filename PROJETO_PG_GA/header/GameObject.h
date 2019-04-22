@@ -15,12 +15,19 @@ public:
 	bool isOnTopJump;
 	float speed;
 
+	float normalY;
+
+	float upSpeed;
+	float upDeceleration = 4.0f;
+
 	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam) {
 		shaderProgram = shaderProgramParam;
 		sprites = spritesParam;
 		previousSeconds = glfwGetTime();
 
 		speed = speedParam;
+		upSpeed = 100.0f;
+		normalY = initialPosY;
 
 		setupVertices(width, height, sprites->frames, sprites->actions);
 		
@@ -70,7 +77,8 @@ public:
 
 		// Define em quais vertices sera desenhado pelo shader
 		vertices->bind(shaderProgram);
-
+		
+		/*
 		if(isOnTopJump){
 
 			position->move(0.0f, 70.0f);
@@ -78,7 +86,7 @@ public:
 			sprites->setActions(2);
             isOnTopJump=false;
 		}
-
+		*/
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
@@ -90,6 +98,15 @@ public:
 		if (elapsedSeconds > 0.1) {
 			sprites->nextFrame();
 			previousSeconds = currentSeconds;
+
+			if (position->yCenter < normalY) {
+				position->move(0.0f, upSpeed);
+				upSpeed += upDeceleration;
+			}
+			else {
+				sprites->setActions(2);
+			}
+		
 		}
 	}
 
@@ -111,12 +128,19 @@ public:
             }
         }
         if (keys[GLFW_KEY_UP] == 1) {
-            if(!isOnTopJump){
+			if (position->yCenter >= normalY) {
+				upSpeed = -20.0f;
+				position->move(0.0f, upSpeed);
+				upSpeed += upDeceleration;
+				sprites->setActions(1);
+			}
+			
+			/*if(!isOnTopJump){
                 isOnTopJump = true;
                 sprites->setActions(1);
 
 				position->move(0.0f, -70.0f);
-            }
+            }*/
         }
     }
 
