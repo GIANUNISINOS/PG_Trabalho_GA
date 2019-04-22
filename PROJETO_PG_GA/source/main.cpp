@@ -37,11 +37,14 @@ int HEIGHT = 600;
 int keys[1024];
 
 //Define acoes do redimensionamento da tela
-void window_size_callback(GLFWwindow* window, int width, int height)
-{
+void window_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
     NEW_WIDTH = width;
     NEW_HEIGHT = height;
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
 }
 
 /*
@@ -96,8 +99,10 @@ int main() {
 	//Create SO callbacks
 	// esta para quando clicar uma tecla
 	glfwSetKeyCallback(window, key_callback);
+
 	// esta para quando redimensionar a tela
 	glfwSetWindowSizeCallback(window, window_size_callback);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	//Create Objects
     SpriteSheet* megamanSprites = new SpriteSheet("resource/images.png", 9, 2, -0.48f);
@@ -106,8 +111,8 @@ int main() {
     projetilSprites->setActions(3);
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
-    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f, 10.0f,false);
-    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,490.0f, -10.0f,true);
+    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f, 5.0f,false);
+    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,490.0f, -5.0f,true);
 
     // Tempo que ira acabar o jogo (30 segundos)
     time_t timeEnd = time(NULL) + 30;
