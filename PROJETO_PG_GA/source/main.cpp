@@ -133,11 +133,11 @@ int main() {
 
         //testa colisão da morte
         float difInX = (character->position->xCenter+character->speed)-(projetil->position->xCenter);
-        float difInY = (character->position->yCenter)-(projetil->position->xCenter);
+        float difInY = (character->position->yCenter)-(projetil->position->yCenter);
         if(difInX==0.0f&&difInY>=character->speed){
             printf("VOCÊ MORREU, GAME OVER!\n");
             //FECHAR JANELA!
-          //  glfwSetWindowShouldClose(window, true);
+			glfwSetWindowShouldClose(window, true);
         }
 
         //testa o tempo se viver, ganha

@@ -26,8 +26,7 @@ public:
 		previousSeconds = glfwGetTime();
 
 		speed = speedParam;
-		upSpeed = 100.0f;
-		normalY = initialPosY;
+		normalY = initialPosY;	// Posição Y sem o pulo
 
 		setupVertices(width, height, sprites->frames, sprites->actions);
 		
@@ -91,7 +90,7 @@ public:
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
 		/*
-			Troca o sprite, a 10fps;
+			Troca o sprite, e faz o movimento do pulo a 10fps;
 		*/
 		double currentSeconds = glfwGetTime();
 		double elapsedSeconds = currentSeconds - previousSeconds;
@@ -99,6 +98,11 @@ public:
 			sprites->nextFrame();
 			previousSeconds = currentSeconds;
 
+
+			/*
+				Caso esteja no ar, continuar movimento upSpeed,
+				e desacelerar upSpeed;
+			*/
 			if (position->yCenter < normalY) {
 				position->move(0.0f, upSpeed);
 				upSpeed += upDeceleration;
@@ -128,6 +132,11 @@ public:
             }
         }
         if (keys[GLFW_KEY_UP] == 1) {
+			/*
+				Caso não esteja no ar, iniciar velociade
+				do pulo em -20.0f, fazer primeiro movimento
+				e desacelerar
+			*/
 			if (position->yCenter >= normalY) {
 				upSpeed = -20.0f;
 				position->move(0.0f, upSpeed);
