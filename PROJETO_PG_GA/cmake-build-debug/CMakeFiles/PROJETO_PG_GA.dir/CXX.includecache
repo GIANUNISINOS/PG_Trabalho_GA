@@ -114,6 +114,8 @@ glm/gtc/type_ptr.hpp
 
 .././header/Layer.h
 
+.././header/Position.h
+
 .././header/Shader.h
 
 .././header/SpriteSheet.h
@@ -166,6 +168,8 @@ glm/gtc/type_ptr.hpp
 
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Layer.h
 
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Position.h
+
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Shader.h
 
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/SpriteSheet.h
@@ -187,6 +191,8 @@ header/SpriteSheet.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/SpriteSheet.h
 header/VerticesObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/VerticesObject.h
+header/Position.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/Position.h
 header/GameObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/source/header/GameObject.h
 header/BackgroundObject.h
@@ -203,6 +209,8 @@ header/BackgroundObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/SpriteSheet.h
 ../header/VerticesObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/VerticesObject.h
+../header/Position.h
+/Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Position.h
 ../header/GameObject.h
 /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h
 ../header/BackgroundObject.h

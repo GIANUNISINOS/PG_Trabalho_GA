@@ -8,6 +8,7 @@ CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o
  .././header/GameObject.h
  .././header/Includes.h
  .././header/Layer.h
+ .././header/Position.h
  .././header/Shader.h
  .././header/SpriteSheet.h
  .././header/Texture.h
@@ -16,6 +17,7 @@ CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/GameObject.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Includes.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Layer.h
+ /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Position.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Shader.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/SpriteSheet.h
  /Users/gian/GitHub/PG_Trabalho_GA/PROJETO_PG_GA/header/Texture.h

@@ -106,8 +106,8 @@ int main() {
     projetilSprites->setActions(3);
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
-    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f, 1.0f);
-    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,490.0f, -1.0f);
+    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f, 10.0f,false);
+    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,490.0f, -10.0f,true);
 
     // Tempo que ira acabar o jogo (30 segundos)
     time_t timeEnd = time(NULL) + 30;

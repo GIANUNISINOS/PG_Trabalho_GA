@@ -12,7 +12,6 @@ public:
 	double previousSeconds;
 	int t = 0;
 
-	bool isOnTopJump;
 	float speed;
 
 	float normalY;
@@ -20,7 +19,9 @@ public:
 	float upSpeed;
 	float upDeceleration = 4.0f;
 
-	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam) {
+    bool invertTextureX;
+
+	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam, bool invertX) {
 		shaderProgram = shaderProgramParam;
 		sprites = spritesParam;
 		previousSeconds = glfwGetTime();
@@ -28,12 +29,11 @@ public:
 		speed = speedParam;
 		normalY = initialPosY;	// Posição Y sem o pulo
 
+        invertTextureX = invertX;
 		setupVertices(width, height, sprites->frames, sprites->actions);
-		
+
 		//poe na pos inicial
 		position = new Position(initialPosX, initialPosY);
-
-        isOnTopJump = false;
 	}
 
 	/*
@@ -51,7 +51,22 @@ public:
 			width/2,   height/2,  0.0f,			1.00f/(float)frames, 1.00f - (1.00f/(float)actions), // bottom right
 			width/2, - height/2,  0.0f,			1.00f/(float)frames, 1.0f,							 // top right
 		};
-		vertices = new VerticesObject(verticesCoordinates, 20);
+
+        float verticesCoordinatesInvertedX[] = {
+                // positions						// texture coords
+                -width/2,  -height/2, 0.0f,			1.0f/(float)frames,   1.0f,							 // top left
+                -width/2,  height/2,  0.0f,			1.00f/(float)frames, 1.00f - (1.00f/(float)actions), // bottom left
+                width/2,   height/2,  0.0f,			0.0f,	             1.00f - (1.00f/(float)actions), // bottom right
+                width/2, - height/2,  0.0f,			0.00f,               1.0f,							 // top right
+        };
+
+
+        if(invertTextureX){
+            vertices = new VerticesObject(verticesCoordinatesInvertedX, 20);
+        } else{
+            vertices = new VerticesObject(verticesCoordinates, 20);
+        }
+
 	}
 
 	void doingLoping(){

@@ -7,6 +7,7 @@ CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/BackgroundObject.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/GameObject.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/Includes.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/Layer.h
+CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/Position.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/Shader.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/SpriteSheet.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: .././header/Texture.h
@@ -15,6 +16,7 @@ CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/BackgroundObject.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/GameObject.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/Includes.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/Layer.h
+CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/Position.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/Shader.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/SpriteSheet.h
 CMakeFiles/PROJETO_PG_GA.dir/source/main.cpp.o: ../header/Texture.h
