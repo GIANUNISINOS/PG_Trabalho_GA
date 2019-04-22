@@ -129,46 +129,6 @@ public:
 		}
 	}
 
-
-    /*
-		Função que responde às teclas pressionadas
-    */
-    void keyboard_reaction(int keys[1024]) {
-        if (keys[GLFW_KEY_RIGHT] == 1) {
-            if(position->xCenter < (800.00f-speed) ) {
-
-				position->move(speed, 0.0f);
-            }
-        }
-        if (keys[GLFW_KEY_LEFT] == 1) {
-            if(position->xCenter> (speed/2.0f) ){
-				
-				position->move(-speed, 0.0f);
-            }
-        }
-        if (keys[GLFW_KEY_UP] == 1) {
-			/*
-				Caso não esteja no ar, iniciar velociade
-				do pulo em -20.0f, fazer primeiro movimento
-				e desacelerar
-			*/
-			if (position->yCenter >= normalY) {
-				upSpeed = -20.0f;
-				position->move(0.0f, upSpeed);
-				upSpeed += upDeceleration;
-				sprites->setActions(1);
-			}
-			
-			/*if(!isOnTopJump){
-                isOnTopJump = true;
-                sprites->setActions(1);
-
-				position->move(0.0f, -70.0f);
-            }*/
-        }
-    }
-
-
 	virtual ~GameObject();
 };
 

@@ -7,6 +7,7 @@
     #include "header/VerticesObject.h";
 	#include "header/Position.h";
 	#include "header/GameObject.h";
+    #include "header/CharacterObject.h";
     #include "header/BackgroundObject.h";
 #elif _WIN64
 	#include "../header/Includes.h";
@@ -105,14 +106,19 @@ int main() {
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	//Create Objects
-    SpriteSheet* megamanSprites = new SpriteSheet("resource/images.png", 9, 2, -0.48f);
+    SpriteSheet* knightSprites = new SpriteSheet("resource/sprites_warrior.png", 8, 2, -0.48f);
+    knightSprites->setActions(2);
 
     SpriteSheet* projetilSprites = new SpriteSheet("resource/sprites_fire.png", 4, 4, -0.47f);
-    projetilSprites->setActions(3);
+    projetilSprites->setActions(2);
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
-    GameObject* character = new GameObject(shaderProgram,megamanSprites, 100.0f, 100.0f, -0.48f,400.0f,500.0f, 5.0f,false);
-    GameObject* projetil = new GameObject(shaderProgram,projetilSprites, 100.0f, 100.0f, -0.47f,700.0f,490.0f, -5.0f,true);
+
+	CharacterObject* character
+	    = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f, 400.0f, 490.0f, 5.0f);
+
+	//GameObject* character = new GameObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f,400.0f,490.0f, 5.0f,false);
+    GameObject* projetil = new GameObject(shaderProgram, projetilSprites, 100.0f, 100.0f, -0.47f, 700.0f, 480.0f, -5.0f, true);
 
     // Tempo que ira acabar o jogo (30 segundos)
     time_t timeEnd = time(NULL) + 30;
@@ -122,13 +128,10 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// glm projecao
-		glm::mat4 projection =
-			glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
+		glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
 		
 		glUniformMatrix4fv(
-			glGetUniformLocation(shaderProgram->Program, "proj"), 1,
-			GL_FALSE, glm::value_ptr(projection));
-
+			glGetUniformLocation(shaderProgram->Program, "proj"), 1, GL_FALSE, glm::value_ptr(projection));
 
 		background->draw();
 		character->keyboard_reaction(keys);
@@ -137,9 +140,13 @@ int main() {
         projetil->doingLoping();
 
         //testa colisão da morte
-        float difInX = (character->position->xCenter+character->speed)-(projetil->position->xCenter);
-        float difInY = (character->position->yCenter)-(projetil->position->yCenter);
-        if(difInX==0.0f&&difInY>=character->speed){
+        float difInX =
+                (character->position->xCenter + character->width / 2.0f) - (projetil->position->xCenter);
+
+        float difInY =
+                (character->position->yCenter) - (projetil->position->yCenter);
+
+        if(difInX == 0.0f && difInY >= character->speed){
             printf("VOCÊ MORREU, GAME OVER!\n");
             //FECHAR JANELA!
 			glfwSetWindowShouldClose(window, true);

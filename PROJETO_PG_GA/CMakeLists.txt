@@ -12,7 +12,7 @@ add_executable(PROJETO_PG_GA
         source/main.cpp
         header/Includes.h
         header/SpriteSheet.h
-        header/Shader.h header/GameObject.h)
+        header/Shader.h header/GameObject.h header/CharacterObject.h)
 
 find_package(GLEW REQUIRED)
 find_package(OpenGL REQUIRED)

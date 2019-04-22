@@ -1,5 +1,5 @@
 #ifndef PROJETO_PG_GA_SPRITESHEET_H
-	#define PROJETO_PG_GA_SPRITESHEET_H
+#define PROJETO_PG_GA_SPRITESHEET_H
 
 #pragma once
 class SpriteSheet
@@ -21,6 +21,7 @@ public:
 		z = zParam;
 
 	};
+
 	~SpriteSheet();
 
 	void passUniformsToShader(Shader* shaderProgram) {
@@ -28,18 +29,20 @@ public:
 	}
 
 	float getOffsetX() {
-		return (float)1 / frames * (currentFrame%frames);
+		return (float)1 / frames * (currentFrame % frames);
 	}
+
 	float getOffsetY() {
-		return (float)1 / actions * (currentAction%actions);
+		return (float)1 / actions * (currentAction % actions);
 	}
+
 	void nextFrame() {
 		currentFrame++;
 	}
+
 	void setActions(int a) {
 		currentAction = a;
 	}
-
 };
 
 SpriteSheet::~SpriteSheet()

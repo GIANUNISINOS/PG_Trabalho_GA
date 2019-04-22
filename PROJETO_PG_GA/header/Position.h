@@ -20,26 +20,29 @@ public:
 
 		move(initialPosX, initialPosY);
 		transform();
-	
 	};
+
 	void move(float x, float y) {
 		matrix_translaction = glm::translate(matrix_translaction, glm::vec3(x, y, 0.0f));
 		xCenter += x;
 		yCenter += y;
 		transform();
 	}
+
 	void rotate(float rad) {
 		matrix_rotation = glm::rotate(matrix_rotation, glm::radians( rad ), glm::vec3(0, 0, 1));
 		transform();
 	}
+
 	void scale(float s) {
 		matrix_scala = glm::scale(matrix_scala, glm::vec3( s, s, s));
 		transform();
 	}
+
 	void transform() {
 		transformations = matrix_translaction * matrix_rotation * matrix_scala;
 	}
-	~Position() {
-	};
+
+	~Position() {};
 };
 
