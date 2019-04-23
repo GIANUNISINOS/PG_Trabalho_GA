@@ -118,7 +118,7 @@ int main() {
 	    = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f, 400.0f, 490.0f, 5.0f);
 
 	//GameObject* character = new GameObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f,400.0f,490.0f, 5.0f,false);
-    GameObject* projetil = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, -0.47f, 700.0f, 490.0f, -3.0f, true);
+    GameObject* projetil = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, -0.47f, 700.0f, 490.0f, -4.0f, true);
 
     // Tempo que ira acabar o jogo (30 segundos)
     time_t timeEnd = time(NULL) + 30;
