@@ -7,7 +7,7 @@ x64/
 
 PROJETO_PG_GA/cmake-build-debug/**
 PROJETO_PG_GA/.idea/**
-
+PROJETO_PG_GA/.DS_Store
 
 
 PROJETO_PG_GA/.idea/workspace.xml
