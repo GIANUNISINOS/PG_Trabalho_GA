@@ -125,7 +125,7 @@ public:
                 e desacelerar
             */
             if (position->yCenter >= normalY) {
-                upSpeed = -20.0f;
+                upSpeed = -30.0f;
                 position->move(0.0f, upSpeed);
                 upSpeed += upDeceleration;
                 sprites->setActions(2);

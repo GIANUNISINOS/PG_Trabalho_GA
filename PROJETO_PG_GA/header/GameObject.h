@@ -21,6 +21,9 @@ public:
 
     bool invertTextureX;
 
+    float width;
+    float height;
+
 	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam, bool invertX) {
 		shaderProgram = shaderProgramParam;
 		sprites = spritesParam;
@@ -30,7 +33,9 @@ public:
 		normalY = initialPosY;	// Posição Y sem o pulo
 
         invertTextureX = invertX;
-		setupVertices(width, height, sprites->frames, sprites->actions);
+        this->width = width;
+        this->height = height;
+		setupVertices(sprites->frames, sprites->actions);
 
 		//poe na pos inicial
 		position = new Position(initialPosX, initialPosY);
@@ -40,7 +45,7 @@ public:
 		actions e o numero de linhas da imagem de sprites
 		frames  e o numero de colunas da imagem de sprites
 	*/
-	void setupVertices(float width, float height, int frames, int actions) {
+	void setupVertices(int frames, int actions) {
 		/*
 			Comeca centralizado no zero
 		*/
@@ -91,16 +96,6 @@ public:
 
 		// Define em quais vertices sera desenhado pelo shader
 		vertices->bind(shaderProgram);
-		
-		/*
-		if(isOnTopJump){
-
-			position->move(0.0f, 70.0f);
-            
-			sprites->setActions(2);
-            isOnTopJump=false;
-		}
-		*/
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		

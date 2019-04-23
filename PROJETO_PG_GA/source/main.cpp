@@ -106,11 +106,11 @@ int main() {
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	//Create Objects
-    SpriteSheet* knightSprites = new SpriteSheet("resource/sprites_warrior.png", 8, 2, -0.48f);
-    knightSprites->setActions(2);
+    SpriteSheet* knightSprites = new SpriteSheet("resource/warrior.png", 8, 2, -0.48f);
+    knightSprites->setActions(1);
 
-    SpriteSheet* projetilSprites = new SpriteSheet("resource/sprites_fire.png", 4, 4, -0.47f);
-    projetilSprites->setActions(2);
+    SpriteSheet* projetilSprites = new SpriteSheet("resource/fire.png", 5, 1, -0.47f);
+    projetilSprites->setActions(1);
 
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
 
@@ -118,7 +118,7 @@ int main() {
 	    = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f, 400.0f, 490.0f, 5.0f);
 
 	//GameObject* character = new GameObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f,400.0f,490.0f, 5.0f,false);
-    GameObject* projetil = new GameObject(shaderProgram, projetilSprites, 100.0f, 100.0f, -0.47f, 700.0f, 480.0f, -5.0f, true);
+    GameObject* projetil = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, -0.47f, 700.0f, 490.0f, -5.0f, true);
 
     // Tempo que ira acabar o jogo (30 segundos)
     time_t timeEnd = time(NULL) + 30;
@@ -140,22 +140,26 @@ int main() {
         projetil->doingLoping();
 
         //testa colisão da morte
-        float difInX =
-                (character->position->xCenter + character->width / 2.0f) - (projetil->position->xCenter);
+        bool difInX =
+                (character->position->xCenter + character->width / 2.0f) > (projetil->position->xCenter - projetil->width/2.0f)
+                &&(character->position->xCenter - character->width / 2.0f)< (projetil->position->xCenter + projetil->width/2.0f)
+        ;
 
-        float difInY =
-                (character->position->yCenter) - (projetil->position->yCenter);
+        bool difInY =
+                (character->position->yCenter + character->height/2.0f) > (projetil->position->yCenter - projetil->height/2.0f);
 
-        if(difInX == 0.0f && difInY >= character->speed){
+
+
+        if(difInX && difInY){
             printf("VOCÊ MORREU, GAME OVER!\n");
             //FECHAR JANELA!
-			glfwSetWindowShouldClose(window, true);
+			//glfwSetWindowShouldClose(window, true);
         }
 
         //testa o tempo se viver, ganha
         if (time(NULL) > timeEnd){
             printf("VOCÊ GANHOU, GAME WIN!\n");
-            glfwSetWindowShouldClose(window, true);
+            //glfwSetWindowShouldClose(window, true);
         }
 
 		glfwPollEvents();
