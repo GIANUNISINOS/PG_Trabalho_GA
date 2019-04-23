@@ -141,8 +141,8 @@ int main() {
 
         //testa colisão da morte
         bool difInX =
-                (character->position->xCenter + character->width / 2.0f) > (projetil->position->xCenter - projetil->width/2.0f)
-                &&(character->position->xCenter - character->width / 2.0f)< (projetil->position->xCenter + projetil->width/2.0f)
+                (character->position->xCenter + character->width / 2.0f)-20.0f > (projetil->position->xCenter - projetil->width/2.0f)
+                &&(character->position->xCenter - character->width / 2.0f)+20.0f< (projetil->position->xCenter + projetil->width/2.0f)
         ;
 
         bool difInY =
@@ -153,12 +153,20 @@ int main() {
         if(difInX && difInY){
             printf("VOCÊ MORREU, GAME OVER!\n");
             //FECHAR JANELA!
-			//glfwSetWindowShouldClose(window, true);
+            //glfwSetWindowShouldClose(window, true);
         }
 
         //testa o tempo se viver, ganha
         if (time(NULL) > timeEnd){
             printf("VOCÊ GANHOU, GAME WIN!\n");
+
+            background->layers[0]->speedX = 0.0f;
+            background->layers[1]->speedX = 0.0f;
+            background->layers[2]->speedX = 0.0f;
+            background->layers[3]->speedX = 0.0f;
+            projetil->speed = 0.0f;
+            character->speed = 0.0f;
+
             //glfwSetWindowShouldClose(window, true);
         }
 
