@@ -84,6 +84,7 @@ public:
 	void draw() {
 		// Define shaderProgram como o shader a ser utilizado
 		shaderProgram->UseProgramShaders();
+
 		glUniformMatrix4fv(
 			glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
 			GL_FALSE, glm::value_ptr(position->transformations));
@@ -98,10 +99,8 @@ public:
 		vertices->bind(shaderProgram);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		
-		/*
-			Troca o sprite, e faz o movimento do pulo a 10fps;
-		*/
+
+        //Troca o sprite a 10 FPS
 		double currentSeconds = glfwGetTime();
 		double elapsedSeconds = currentSeconds - previousSeconds;
 		if (elapsedSeconds > 0.1) {
@@ -117,10 +116,6 @@ public:
 				position->move(0.0f, upSpeed);
 				upSpeed += upDeceleration;
 			}
-			else {
-				sprites->setActions(2);
-			}
-		
 		}
 	}
 
