@@ -58,6 +58,17 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if(action == GLFW_RELEASE) keys[key] = 0;
 }
 
+void main_keyboard_reaction() {
+    if (keys[GLFW_KEY_SPACE] == 1) {
+
+    }
+    if (keys[GLFW_KEY_ESCAPE] == 1) {
+        glfwSetWindowShouldClose(window, true);
+    }
+
+}
+
+
 GLFWwindow* createWindow() {
     GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Megamen Game", NULL, NULL);
     if (window == NULL) {
@@ -119,13 +130,13 @@ int main() {
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
 
 	CharacterObject* character
-	    = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f, 400.0f, 490.0f, 5.0f, &gameIsRunning);
+	    = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, 400.0f, 490.0f, 5.0f, &gameIsRunning);
 
     GameObject* projetil
-        = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, -0.47f, 700.0f, 490.0f, -4.0f, true, &gameIsRunning);
+        = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, 700.0f, 490.0f, -4.0f, true, &gameIsRunning);
 
     // Tempo que ira acabar o jogo (30 segundos)
-    time_t timeEnd = time(NULL) + 5;
+    time_t timeEnd = time(NULL) + 10;
 
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
@@ -143,6 +154,10 @@ int main() {
 		character->draw();
         projetil->draw();
         projetil->doingLoping();
+
+
+        //testa reacoes do teclado como ESC e ESPACO
+        main_keyboard_reaction();
 
         //testa colisão da morte
         bool difInX =

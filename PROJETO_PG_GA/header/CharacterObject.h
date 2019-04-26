@@ -25,7 +25,7 @@ public:
 
     bool *gameIsRunning;
 
-    CharacterObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam,bool *gameIsRunning) {
+    CharacterObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float initialPosX, float initialPosY, float speedParam,bool *gameIsRunning) {
         shaderProgram = shaderProgramParam;
         sprites = spritesParam;
         previousSeconds = glfwGetTime();
@@ -97,7 +97,7 @@ public:
                 Caso esteja no ar, continuar movimento upSpeed,
                 e desacelerar upSpeed;
             */
-            if (position->yCenter < normalY) {
+            if (position->yCenter < normalY&&*gameIsRunning) {
                 position->move(0.0f, upSpeed);
                 upSpeed += upDeceleration;
             }
