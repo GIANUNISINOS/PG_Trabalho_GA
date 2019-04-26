@@ -28,6 +28,7 @@
 Shader *shaderProgram;
 GLFWwindow *window;
 bool gameIsRunning;
+time_t timeEnd;
 
 //Atributos janela
 int NEW_WIDTH = 800;
@@ -60,7 +61,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void main_keyboard_reaction() {
     if (keys[GLFW_KEY_SPACE] == 1) {
-
+        // Tempo que ira acabar o jogo (30 segundos)
+        timeEnd = time(NULL) + 10;
+        gameIsRunning = true;
     }
     if (keys[GLFW_KEY_ESCAPE] == 1) {
         glfwSetWindowShouldClose(window, true);
@@ -118,7 +121,7 @@ int main() {
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     // inicializa game
-    gameIsRunning = true;
+    gameIsRunning = false;
 
 	//Create Objects
     SpriteSheet* knightSprites = new SpriteSheet("resource/warrior.png", 8, 2, -0.48f);
@@ -127,16 +130,14 @@ int main() {
     SpriteSheet* projetilSprites = new SpriteSheet("resource/fire.png", 5, 1, -0.47f);
     projetilSprites->setActions(1);
 
-	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
+	BackgroundObject* background
+	    = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT, &gameIsRunning);
 
 	CharacterObject* character
 	    = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, 400.0f, 490.0f, 5.0f, &gameIsRunning);
 
     GameObject* projetil
-        = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, 700.0f, 490.0f, -4.0f, true, &gameIsRunning);
-
-    // Tempo que ira acabar o jogo (30 segundos)
-    time_t timeEnd = time(NULL) + 10;
+        = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, 900.0f, 490.0f, -4.0f, true, &gameIsRunning);
 
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
@@ -177,15 +178,8 @@ int main() {
         }
 
         //testa o tempo se viver, ganha
-        if (time(NULL) > timeEnd){
+        if (time(NULL) > timeEnd && gameIsRunning){
             printf("VOCÊ GANHOU, GAME WIN!\n");
-
-            background->layers[0]->speedX = 0.0f;
-            background->layers[1]->speedX = 0.0f;
-            background->layers[2]->speedX = 0.0f;
-            background->layers[3]->speedX = 0.0f;
-            projetil->speed = 0.0f;
-            character->speed = 0.0f;
             gameIsRunning = false;
             //glfwSetWindowShouldClose(window, true);
         }

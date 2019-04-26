@@ -11,15 +11,16 @@ public:
 	vector<Layer *> layers;
 	double previousSeconds;
 	glm::mat4 transformations = glm::mat4(1);
-	
-	BackgroundObject(Shader* shaderProgramParam, float width, float height);
+    bool *gameIsRunning;
+
+    BackgroundObject(Shader* shaderProgramParam, float width, float height, bool *gameIsRunning);
 	virtual ~BackgroundObject();
 
 	void setupTextures();
 	void draw();
 };
 
-BackgroundObject::BackgroundObject(Shader* shaderProgramParam, float width, float height) {
+BackgroundObject::BackgroundObject(Shader* shaderProgramParam, float width, float height, bool *gameIsRunning) {
 	shaderProgram = shaderProgramParam;
 	previousSeconds = glfwGetTime();
 	float verticesCoordinates[] = {
@@ -31,7 +32,8 @@ BackgroundObject::BackgroundObject(Shader* shaderProgramParam, float width, floa
 	};
 
 	vertices = new VerticesObject(verticesCoordinates, 20);
-	setupTextures();
+    this->gameIsRunning =gameIsRunning;
+    setupTextures();
 }
 void BackgroundObject::setupTextures() {
 	string resource_path;
@@ -57,7 +59,7 @@ void BackgroundObject::draw() {
 	*/
 	double currentSeconds = glfwGetTime();
 	double elapsedSeconds = currentSeconds - previousSeconds;
-	if (elapsedSeconds > 0.015) {
+	if (elapsedSeconds > 0.015&&*gameIsRunning) {
 		for (int i = 0; i < 4; i++) {
 			layers[i]->moveX();
 			

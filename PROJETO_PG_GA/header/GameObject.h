@@ -79,10 +79,12 @@ public:
 	}
 
 	void doingLoping(){
-		position->move(speed, 0.0f);
-		if (position->xCenter <= 0.0f) {
-			position->move( 800.0f-position->xCenter, 0.0f );
-		}
+        if(*gameIsRunning){
+            position->move(speed, 0.0f);
+            if (position->xCenter <= 0.0f) {
+                position->move( 800.0f-position->xCenter, 0.0f );
+            }
+        }
     }
 
 	void draw() {

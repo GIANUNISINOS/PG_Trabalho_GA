@@ -112,30 +112,33 @@ public:
 		Função que responde às teclas pressionadas
     */
     void keyboard_reaction(int keys[1024]) {
-        if (keys[GLFW_KEY_RIGHT] == 1) {
-            if(position->xCenter < (800.00f-speed) ) {
+        if(*gameIsRunning){
+            if (keys[GLFW_KEY_RIGHT] == 1) {
+                if(position->xCenter < (800.00f-speed) ) {
 
-                position->move(speed, 0.0f);
+                    position->move(speed, 0.0f);
+                }
             }
-        }
-        if (keys[GLFW_KEY_LEFT] == 1) {
-            if(position->xCenter> (speed/2.0f) ){
+            if (keys[GLFW_KEY_LEFT] == 1) {
+                if(position->xCenter> (speed/2.0f) ){
 
-                position->move(-speed, 0.0f);
+                    position->move(-speed, 0.0f);
+                }
             }
-        }
-        if (keys[GLFW_KEY_UP] == 1) {
-            /*
-                Caso não esteja no ar, iniciar velociade
-                do pulo em -20.0f, fazer primeiro movimento
-                e desacelerar
-            */
-            if (position->yCenter >= normalY&&*gameIsRunning) {
-                upSpeed = -30.0f;
-                position->move(0.0f, upSpeed);
-                upSpeed += upDeceleration;
-                sprites->setActions(2);
+            if (keys[GLFW_KEY_UP] == 1) {
+                /*
+                    Caso não esteja no ar, iniciar velociade
+                    do pulo em -20.0f, fazer primeiro movimento
+                    e desacelerar
+                */
+                if (position->yCenter >= normalY) {
+                    upSpeed = -30.0f;
+                    position->move(0.0f, upSpeed);
+                    upSpeed += upDeceleration;
+                    sprites->setActions(2);
+                }
             }
+
         }
     }
 
