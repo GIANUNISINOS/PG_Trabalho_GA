@@ -40,9 +40,13 @@ public:
 		currentFrame++;
 	}
 
-	void setActions(int a) {
-		currentAction = a;
-	}
+    void setActions(int a) {
+        currentAction = a;
+    }
+
+    void setFrame(int a) {
+        currentFrame = a;
+    }
 };
 
 SpriteSheet::~SpriteSheet()

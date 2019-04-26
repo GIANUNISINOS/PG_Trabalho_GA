@@ -24,7 +24,9 @@ public:
     float width;
     float height;
 
-	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam, bool invertX) {
+    bool *gameIsRunning;
+
+	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam, bool invertX, bool *gameIsRunning) {
 		shaderProgram = shaderProgramParam;
 		sprites = spritesParam;
 		previousSeconds = glfwGetTime();
@@ -35,6 +37,8 @@ public:
         invertTextureX = invertX;
         this->width = width;
         this->height = height;
+        this->gameIsRunning =gameIsRunning;
+
 		setupVertices(sprites->frames, sprites->actions);
 
 		//poe na pos inicial
@@ -104,7 +108,8 @@ public:
 		double currentSeconds = glfwGetTime();
 		double elapsedSeconds = currentSeconds - previousSeconds;
 		if (elapsedSeconds > 0.1) {
-			sprites->nextFrame();
+			if(*gameIsRunning)
+		        sprites->nextFrame();
 			previousSeconds = currentSeconds;
 
 

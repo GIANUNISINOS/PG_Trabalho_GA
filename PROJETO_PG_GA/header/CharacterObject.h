@@ -23,7 +23,9 @@ public:
     float width;
     float height;
 
-    CharacterObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam) {
+    bool *gameIsRunning;
+
+    CharacterObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float depth, float initialPosX, float initialPosY, float speedParam,bool *gameIsRunning) {
         shaderProgram = shaderProgramParam;
         sprites = spritesParam;
         previousSeconds = glfwGetTime();
@@ -33,6 +35,7 @@ public:
 
         this->width = width;
         this->height = height;
+        this->gameIsRunning =gameIsRunning;
 
         setupVertices(sprites->frames, sprites->actions);
 
@@ -83,7 +86,10 @@ public:
         double currentSeconds = glfwGetTime();
         double elapsedSeconds = currentSeconds - previousSeconds;
         if (elapsedSeconds > 0.075) {
-            sprites->nextFrame();
+            if(*gameIsRunning)
+                sprites->nextFrame();
+            else
+                sprites->setFrame(2);
             previousSeconds = currentSeconds;
 
 
@@ -124,7 +130,7 @@ public:
                 do pulo em -20.0f, fazer primeiro movimento
                 e desacelerar
             */
-            if (position->yCenter >= normalY) {
+            if (position->yCenter >= normalY&&*gameIsRunning) {
                 upSpeed = -30.0f;
                 position->move(0.0f, upSpeed);
                 upSpeed += upDeceleration;

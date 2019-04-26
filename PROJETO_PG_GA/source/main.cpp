@@ -27,6 +27,7 @@
 
 Shader *shaderProgram;
 GLFWwindow *window;
+bool gameIsRunning;
 
 //Atributos janela
 int NEW_WIDTH = 800;
@@ -105,6 +106,9 @@ int main() {
 	glfwSetWindowSizeCallback(window, window_size_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+    // inicializa game
+    gameIsRunning = true;
+
 	//Create Objects
     SpriteSheet* knightSprites = new SpriteSheet("resource/warrior.png", 8, 2, -0.48f);
     knightSprites->setActions(1);
@@ -115,17 +119,18 @@ int main() {
 	BackgroundObject* background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT);
 
 	CharacterObject* character
-	    = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f, 400.0f, 490.0f, 5.0f);
+	    = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f, 400.0f, 490.0f, 5.0f, &gameIsRunning);
 
-	//GameObject* character = new GameObject(shaderProgram, knightSprites, 100.0f, 100.0f, -0.48f,400.0f,490.0f, 5.0f,false);
-    GameObject* projetil = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, -0.47f, 700.0f, 490.0f, -4.0f, true);
+    GameObject* projetil
+        = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, -0.47f, 700.0f, 490.0f, -4.0f, true, &gameIsRunning);
 
     // Tempo que ira acabar o jogo (30 segundos)
-    time_t timeEnd = time(NULL) + 30;
+    time_t timeEnd = time(NULL) + 5;
 
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// glm projecao
 		glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
@@ -166,7 +171,7 @@ int main() {
             background->layers[3]->speedX = 0.0f;
             projetil->speed = 0.0f;
             character->speed = 0.0f;
-
+            gameIsRunning = false;
             //glfwSetWindowShouldClose(window, true);
         }
 
