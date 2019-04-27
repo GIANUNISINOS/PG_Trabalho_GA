@@ -62,7 +62,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void main_keyboard_reaction() {
     if (keys[GLFW_KEY_SPACE] == 1) {
         // Tempo que ira acabar o jogo (30 segundos)
-        timeEnd = time(NULL) + 10;
+        timeEnd = time(NULL) + 30;
         gameIsRunning = true;
     }
     if (keys[GLFW_KEY_ESCAPE] == 1) {
@@ -162,8 +162,8 @@ int main() {
 
         //testa colisão da morte
         bool difInX =
-                (character->position->xCenter + character->width / 2.0f)-20.0f > (projetil->position->xCenter - projetil->width/2.0f)
-                &&(character->position->xCenter - character->width / 2.0f)+20.0f< (projetil->position->xCenter + projetil->width/2.0f)
+                (character->position->xCenter + character->width / 2.0f)-30.0f > (projetil->position->xCenter - projetil->width/2.0f)
+                &&(character->position->xCenter - character->width / 2.0f)+60.0f< (projetil->position->xCenter + projetil->width/2.0f)
         ;
 
         bool difInY =
@@ -171,8 +171,9 @@ int main() {
 
 
 
-        if(difInX && difInY){
+        if(difInX && difInY && gameIsRunning){
             printf("VOCÊ MORREU, GAME OVER!\n");
+            gameIsRunning = false;
             //FECHAR JANELA!
             //glfwSetWindowShouldClose(window, true);
         }

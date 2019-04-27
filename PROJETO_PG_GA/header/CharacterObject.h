@@ -88,8 +88,6 @@ public:
         if (elapsedSeconds > 0.075) {
             if(*gameIsRunning)
                 sprites->nextFrame();
-            else
-                sprites->setFrame(2);
             previousSeconds = currentSeconds;
 
 
