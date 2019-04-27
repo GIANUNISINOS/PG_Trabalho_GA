@@ -72,6 +72,10 @@ void main_keyboard_reaction() {
             //posicao inicial
             character->position->move(400.0f-character->position->xCenter, 490.0f-character->position->yCenter);
             projetil->position->move(900.0f-projetil->position->xCenter, 490.0f-projetil->position->yCenter);
+
+            //remove da tela game win e game over
+            background->layers[4]->z = -1.48;
+            background->layers[5]->z = -1.47;
         }
     }
     if (keys[GLFW_KEY_ESCAPE] == 1) {
@@ -179,6 +183,7 @@ int main() {
 
         if(difInX && difInY && gameIsRunning){
             printf("VOCÊ MORREU, GAME OVER!\n");
+            background->layers[5]->z = -0.47;
             gameIsRunning = false;
             //FECHAR JANELA!
             //glfwSetWindowShouldClose(window, true);
@@ -187,6 +192,7 @@ int main() {
         //testa o tempo se viver, ganha
         if (time(NULL) > timeEnd && gameIsRunning){
             printf("VOCÊ GANHOU, GAME WIN!\n");
+            background->layers[4]->z = -0.48;
             gameIsRunning = false;
             //glfwSetWindowShouldClose(window, true);
         }

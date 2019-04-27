@@ -46,11 +46,15 @@ void BackgroundObject::setupTextures() {
 	Layer* t1 = new Layer(resource_path + "sol.png", true, 0.0f, 0.0f, -0.51f, -0.0001f);
 	Layer* t2 = new Layer(resource_path + "nuvem.png", true, 0.0f, 0.0f, -0.50f, 0.003f);
 	Layer* t3 = new Layer(resource_path + "grama coqueiro.png", true, 0.0f, 0.0f, -0.49f, 0.012);
+    Layer* t4 = new Layer(resource_path + "gamewin.png", true, 0.0f, 0.0f, -1.48f, 0.00f);
+    Layer* t5 = new Layer(resource_path + "gameover.png", true, 0.0f, 0.0f, -1.47f, 0.00f);
 
 	layers.push_back(t0);
 	layers.push_back(t1);
-	layers.push_back(t2);
-	layers.push_back(t3);
+    layers.push_back(t2);
+    layers.push_back(t3);
+    layers.push_back(t4);
+    layers.push_back(t5);
 }
 
 void BackgroundObject::draw() {
@@ -69,7 +73,7 @@ void BackgroundObject::draw() {
 	/*
 		Desenha as 4 texturas, uma apos a outra
 	*/
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 6; i++) {
 
 		// Define shaderProgram como o shader a ser utilizado
 		shaderProgram->UseProgramShaders();
