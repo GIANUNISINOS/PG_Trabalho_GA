@@ -30,6 +30,10 @@ GLFWwindow *window;
 bool gameIsRunning;
 time_t timeEnd;
 
+BackgroundObject* background;
+CharacterObject* character;
+GameObject* projetil;
+
 //Atributos janela
 int NEW_WIDTH = 800;
 int NEW_HEIGHT = 600;
@@ -61,9 +65,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void main_keyboard_reaction() {
     if (keys[GLFW_KEY_SPACE] == 1) {
-        // Tempo que ira acabar o jogo (30 segundos)
-        timeEnd = time(NULL) + 30;
-        gameIsRunning = true;
+        if(gameIsRunning==false){
+            // Tempo que ira acabar o jogo (30 segundos)
+            timeEnd = time(NULL) + 30;
+            gameIsRunning = true;
+            //posicao inicial
+            character->position->move(400.0f-character->position->xCenter, 490.0f-character->position->yCenter);
+            projetil->position->move(900.0f-projetil->position->xCenter, 490.0f-projetil->position->yCenter);
+        }
     }
     if (keys[GLFW_KEY_ESCAPE] == 1) {
         glfwSetWindowShouldClose(window, true);
@@ -130,14 +139,11 @@ int main() {
     SpriteSheet* projetilSprites = new SpriteSheet("resource/fire.png", 5, 1, -0.47f);
     projetilSprites->setActions(1);
 
-	BackgroundObject* background
-	    = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT, &gameIsRunning);
+	background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT, &gameIsRunning);
 
-	CharacterObject* character
-	    = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, 400.0f, 490.0f, 5.0f, &gameIsRunning);
+	character  = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, 400.0f, 490.0f, 5.0f, &gameIsRunning);
 
-    GameObject* projetil
-        = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, 900.0f, 490.0f, -4.0f, true, &gameIsRunning);
+	projetil   = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, 900.0f, 490.0f, -4.0f, true, &gameIsRunning);
 
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
