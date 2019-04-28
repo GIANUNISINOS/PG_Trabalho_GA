@@ -10,7 +10,8 @@ public:
     SpriteSheet* sprites;
     VerticesObject* vertices;
     Position* position;
-    double previousSeconds;
+    double previousFrameTime;
+	double previousReactionTime;
     int t = 0;
 
     float speed;
@@ -18,7 +19,7 @@ public:
     float normalY;
 
     float upSpeed;
-    float upDeceleration = 4.0f;
+    float upDeceleration = 3.0f;
 
     float width;
     float height;
@@ -28,7 +29,8 @@ public:
     CharacterObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float initialPosX, float initialPosY, float speedParam,bool *gameIsRunning) {
         shaderProgram = shaderProgramParam;
         sprites = spritesParam;
-        previousSeconds = glfwGetTime();
+		previousFrameTime = glfwGetTime();
+		previousReactionTime = previousFrameTime;
 
         speed = speedParam;
         normalY = initialPosY;	// Posição Y sem o pulo
@@ -84,24 +86,10 @@ public:
             Troca o sprite, e faz o movimento do pulo a 10fps;
         */
         double currentSeconds = glfwGetTime();
-        double elapsedSeconds = currentSeconds - previousSeconds;
-        if (elapsedSeconds > 0.075) {
-            if(*gameIsRunning)
-                sprites->nextFrame();
-            previousSeconds = currentSeconds;
-
-
-            /*
-                Caso esteja no ar, continuar movimento upSpeed,
-                e desacelerar upSpeed;
-            */
-            if (position->yCenter < normalY&&*gameIsRunning) {
-                position->move(0.0f, upSpeed);
-                upSpeed += upDeceleration;
-            }
-            else {
-                sprites->setActions(1);
-            }
+        double elapsedSeconds = currentSeconds - previousFrameTime;
+        if (elapsedSeconds > 0.075 && *gameIsRunning) {
+            sprites->nextFrame();
+			previousFrameTime = currentSeconds;
         }
     }
 
@@ -110,7 +98,13 @@ public:
 		Função que responde às teclas pressionadas
     */
     void keyboard_reaction(int keys[1024]) {
-        if(*gameIsRunning){
+		double currentSeconds = glfwGetTime(); 
+		double elapsedSeconds = currentSeconds - previousReactionTime;
+		if(*gameIsRunning && elapsedSeconds > 0.016){
+			
+			previousReactionTime = currentSeconds;
+
+
             if (keys[GLFW_KEY_RIGHT] == 1) {
                 if(position->xCenter < (800.00f-speed) ) {
 
@@ -130,12 +124,25 @@ public:
                     e desacelerar
                 */
                 if (position->yCenter >= normalY) {
-                    upSpeed = -30.0f;
+					upSpeed = -30;
                     position->move(0.0f, upSpeed);
-                    upSpeed += upDeceleration;
+					upSpeed += upDeceleration;
                     sprites->setActions(2);
                 }
-            }
+            }// end if(KEY_UP)
+
+			/*
+				Caso esteja no ar, continuar movimento upSpeed,
+				e desacelerar upSpeed;
+			*/
+			if (position->yCenter < normalY) {
+				position->move(0.0f, upSpeed);
+				upSpeed += upDeceleration;
+			}
+			else {
+				sprites->setActions(1);
+			}
+
 
         }
     }

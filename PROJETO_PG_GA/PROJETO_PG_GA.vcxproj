@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\BackgroundObject.h" />
+    <ClInclude Include="header\CharacterObject.h" />
     <ClInclude Include="header\GameObject.h" />
     <ClInclude Include="header\Includes.h" />
     <ClInclude Include="header\Position.h" />

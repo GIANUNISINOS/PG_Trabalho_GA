@@ -35,6 +35,9 @@
     <ClInclude Include="header\Position.h">
       <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="header\CharacterObject.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textura1.jpg">
