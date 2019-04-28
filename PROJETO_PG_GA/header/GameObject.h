@@ -9,15 +9,14 @@ public:
 	SpriteSheet* sprites;
 	VerticesObject* vertices;
 	Position* position;
-	double previousSeconds;
+	double previousFrameTime;
+	double previousReactionTime;
+
 	int t = 0;
 
 	float speed;
 
 	float normalY;
-
-	float upSpeed;
-	float upDeceleration = 4.0f;
 
     bool invertTextureX;
 
@@ -29,7 +28,7 @@ public:
 	GameObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float initialPosX, float initialPosY, float speedParam, bool invertX, bool *gameIsRunning) {
 		shaderProgram = shaderProgramParam;
 		sprites = spritesParam;
-		previousSeconds = glfwGetTime();
+		previousFrameTime = glfwGetTime();
 
 		speed = speedParam;
 		normalY = initialPosY;	// Posição Y sem o pulo
@@ -79,7 +78,11 @@ public:
 	}
 
 	void doingLoping(){
-        if(*gameIsRunning){
+		double currentSeconds = glfwGetTime();
+		double elapsedSeconds = currentSeconds - previousReactionTime;
+		if (*gameIsRunning && elapsedSeconds > 0.016) {
+			previousReactionTime = currentSeconds;
+
             position->move(speed, 0.0f);
             if (position->xCenter <= 0.0f) {
                 position->move( 800.0f-position->xCenter, 0.0f );
@@ -108,21 +111,11 @@ public:
 
         //Troca o sprite a 10 FPS
 		double currentSeconds = glfwGetTime();
-		double elapsedSeconds = currentSeconds - previousSeconds;
+		double elapsedSeconds = currentSeconds - previousFrameTime;
 		if (elapsedSeconds > 0.1) {
 			if(*gameIsRunning)
 		        sprites->nextFrame();
-			previousSeconds = currentSeconds;
-
-
-			/*
-				Caso esteja no ar, continuar movimento upSpeed,
-				e desacelerar upSpeed;
-			*/
-			if (position->yCenter < normalY) {
-				position->move(0.0f, upSpeed);
-				upSpeed += upDeceleration;
-			}
+			previousFrameTime = currentSeconds;
 		}
 	}
 

@@ -18,6 +18,7 @@
 	#include "../header/VerticesObject.h";
 	#include "../header/Position.h";
 	#include "../header/GameObject.h";
+	#include "../header/CharacterObject.h";
 	#include "../header/BackgroundObject.h";
 #endif
 
@@ -147,7 +148,7 @@ int main() {
 
 	character  = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, 400.0f, 490.0f, 5.0f, &gameIsRunning);
 
-	projetil   = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, 900.0f, 490.0f, -4.0f, true, &gameIsRunning);
+	projetil   = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, 900.0f, 490.0f, -6.0f, true, &gameIsRunning);
 
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
