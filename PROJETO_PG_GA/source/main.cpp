@@ -96,6 +96,36 @@ GLFWwindow* createWindow() {
     return window;
 }
 
+void testGameWinOrOver(){
+
+    //testa colisão da morte
+    bool difInX =
+            (character->position->xCenter + character->width / 2.0f)-30.0f > (projetil->position->xCenter - projetil->width/2.0f)
+            &&(character->position->xCenter - character->width / 2.0f)+60.0f< (projetil->position->xCenter + projetil->width/2.0f)
+    ;
+
+    bool difInY =
+            (character->position->yCenter + character->height/2.0f) > (projetil->position->yCenter - projetil->height/2.0f);
+
+
+
+    if(difInX && difInY && gameIsRunning){
+        printf("VOCÊ MORREU, GAME OVER!\n");
+        background->layers[5]->z = -0.47;
+        gameIsRunning = false;
+        //FECHAR JANELA!
+        //glfwSetWindowShouldClose(window, true);
+    }
+
+    //testa o tempo se viver, ganha
+    if (time(NULL) > timeEnd && gameIsRunning){
+        printf("VOCÊ GANHOU, GAME WIN!\n");
+        background->layers[4]->z = -0.48;
+        gameIsRunning = false;
+        //glfwSetWindowShouldClose(window, true);
+    }
+}
+
 int main() {
 	if (!glfwInit()) {
 		fprintf(stderr, "ERRO: não é possivel iniciar GLFW3\n");
@@ -170,32 +200,8 @@ int main() {
         //testa reacoes do teclado como ESC e ESPACO
         main_keyboard_reaction();
 
-        //testa colisão da morte
-        bool difInX =
-                (character->position->xCenter + character->width / 2.0f)-30.0f > (projetil->position->xCenter - projetil->width/2.0f)
-                &&(character->position->xCenter - character->width / 2.0f)+60.0f< (projetil->position->xCenter + projetil->width/2.0f)
-        ;
-
-        bool difInY =
-                (character->position->yCenter + character->height/2.0f) > (projetil->position->yCenter - projetil->height/2.0f);
-
-
-
-        if(difInX && difInY && gameIsRunning){
-            printf("VOCÊ MORREU, GAME OVER!\n");
-            background->layers[5]->z = -0.47;
-            gameIsRunning = false;
-            //FECHAR JANELA!
-            //glfwSetWindowShouldClose(window, true);
-        }
-
-        //testa o tempo se viver, ganha
-        if (time(NULL) > timeEnd && gameIsRunning){
-            printf("VOCÊ GANHOU, GAME WIN!\n");
-            background->layers[4]->z = -0.48;
-            gameIsRunning = false;
-            //glfwSetWindowShouldClose(window, true);
-        }
+        //testa colisoes e game win ou over
+        testGameWinOrOver();
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
