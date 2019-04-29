@@ -12,11 +12,7 @@ public:
 	double previousFrameTime;
 	double previousReactionTime;
 
-	int t = 0;
-
 	float speed;
-
-	float normalY;
 
     bool invertTextureX;
 
@@ -31,7 +27,7 @@ public:
 		previousFrameTime = glfwGetTime();
 
 		speed = speedParam;
-		normalY = initialPosY;	// Posição Y sem o pulo
+
 
         invertTextureX = invertX;
         this->width = width;

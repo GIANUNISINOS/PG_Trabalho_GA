@@ -3,96 +3,19 @@
 #define PROJETO_PG_GA_CHARACTEROBJECT_H
 
 #pragma once
-class CharacterObject
+
+class CharacterObject : public GameObject
 {
 public:
-    Shader *shaderProgram;
-    SpriteSheet* sprites;
-    VerticesObject* vertices;
-    Position* position;
-    double previousFrameTime;
-	double previousReactionTime;
-    int t = 0;
-
-    float speed;
-
     float normalY;
-
     float upSpeed;
     float upDeceleration = 3.0f;
 
-    float width;
-    float height;
-
-    bool *gameIsRunning;
-
-    CharacterObject(Shader* shaderProgramParam, SpriteSheet* spritesParam, float width, float height, float initialPosX, float initialPosY, float speedParam,bool *gameIsRunning) {
-        shaderProgram = shaderProgramParam;
-        sprites = spritesParam;
-		previousFrameTime = glfwGetTime();
-		previousReactionTime = previousFrameTime;
-
-        speed = speedParam;
-        normalY = initialPosY;	// Posição Y sem o pulo
-
-        this->width = width;
-        this->height = height;
-        this->gameIsRunning =gameIsRunning;
-
-        setupVertices(sprites->frames, sprites->actions);
-
-        //poe na pos inicial
-        position = new Position(initialPosX, initialPosY);
-    }
-
-    /*
-        actions e o numero de linhas da imagem de sprites
-        frames  e o numero de colunas da imagem de sprites
-    */
-    void setupVertices(int frames, int actions) {
-        /*
-            Comeca centralizado no zero
-        */
-        float verticesCoordinates[] = {
-                // positions						// texture coords
-                -width/2,  -height/2, 0.0f,			0.0f,                1.0f,							 // top left
-                -width/2,  height/2,  0.0f,			0.0f,	             1.00f - (1.00f/(float)actions), // bottom left
-                width/2,   height/2,  0.0f,			1.00f/(float)frames, 1.00f - (1.00f/(float)actions), // bottom right
-                width/2, - height/2,  0.0f,			1.00f/(float)frames, 1.0f,							 // top right
-        };
-
-        vertices = new VerticesObject(verticesCoordinates, 20);
-    }
-
-    void draw() {
-        // Define shaderProgram como o shader a ser utilizado
-        shaderProgram->UseProgramShaders();
-        glUniformMatrix4fv(
-                glGetUniformLocation(shaderProgram->Program, "matrix_OBJ"), 1,
-                GL_FALSE, glm::value_ptr(position->transformations));
-
-        // Passa os offsets para o shader
-        sprites->passUniformsToShader(shaderProgram);
-
-        // Define qual textura sera desenhada pelo shader
-        sprites->texture->bind(shaderProgram);
-
-        // Define em quais vertices sera desenhado pelo shader
-        vertices->bind(shaderProgram);
-
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-        /*
-            Troca o sprite, e faz o movimento do pulo a 10fps;
-        */
-        double currentSeconds = glfwGetTime();
-        double elapsedSeconds = currentSeconds - previousFrameTime;
-        if (elapsedSeconds > 0.075 && *gameIsRunning) {
-            sprites->nextFrame();
-			previousFrameTime = currentSeconds;
-        }
-    }
-
+	CharacterObject(Shader* shaderProgram, SpriteSheet* sprites, bool *gameIsRunning)
+		: GameObject(shaderProgram, sprites, 100.0f, 100.0f, 400.0f, 490.0f, 5.0f, false, gameIsRunning)
+	{
+		this->normalY = 490.0f;
+	}
 
     /*
 		Função que responde às teclas pressionadas

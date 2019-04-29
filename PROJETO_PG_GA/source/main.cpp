@@ -169,14 +169,13 @@ int main() {
 
 	//Create Objects
     SpriteSheet* knightSprites = new SpriteSheet("resource/warrior.png", 8, 2, -0.48f);
-    knightSprites->setActions(1);
+	knightSprites->setActions(1);
 
     SpriteSheet* projetilSprites = new SpriteSheet("resource/fire.png", 5, 1, -0.47f);
-    projetilSprites->setActions(1);
 
 	background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT, &gameIsRunning);
 
-	character  = new CharacterObject(shaderProgram, knightSprites, 100.0f, 100.0f, 400.0f, 490.0f, 5.0f, &gameIsRunning);
+	character  = new CharacterObject(shaderProgram, knightSprites, &gameIsRunning);
 
 	projetil   = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, 900.0f, 490.0f, -6.0f, true, &gameIsRunning);
 
@@ -207,7 +206,9 @@ int main() {
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
-
+	delete knightSprites;
+	delete projetilSprites;
+	delete projetil;
 	delete background;
 	delete character;
     delete shaderProgram;
@@ -217,3 +218,4 @@ int main() {
 
     return 0;
 }
+

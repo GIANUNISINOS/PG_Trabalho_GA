@@ -5,7 +5,6 @@
 class BackgroundObject
 {
 public:
-	GLuint textureId;
 	Shader *shaderProgram;
 	VerticesObject* vertices;
 	vector<Layer *> layers;
