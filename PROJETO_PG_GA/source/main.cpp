@@ -183,12 +183,16 @@ int main() {
 		glUniformMatrix4fv(
 			glGetUniformLocation(shaderProgram->Program, "proj"), 1, GL_FALSE, glm::value_ptr(projection));
 
+		//camadas do fundo
 		background->draw();
+
+        //personagem que se movimenta via teclado
 		character->keyboard_reaction(keys);
 		character->draw();
-        projetil->draw();
-        projetil->doingLoping();
 
+        //objeto inimigo que se movimenta automaticamente
+		projetil->draw();
+        projetil->doingLoping();
 
         //testa reacoes do teclado como ESC e ESPACO
         main_keyboard_reaction();
@@ -196,6 +200,7 @@ int main() {
         //testa colisoes e game win ou over
         testGameWinOrOver();
 
+        //fila eventos 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
