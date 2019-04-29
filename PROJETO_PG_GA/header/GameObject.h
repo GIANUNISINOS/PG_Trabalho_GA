@@ -10,8 +10,8 @@ public:
 	VerticesObject* vertices;
 	Position* position;
 	double previousFrameTime;
-	double previousReactionTime;
 
+	float frameChangeSpeed;
 	float speed;
 
     bool invertTextureX;
@@ -28,7 +28,7 @@ public:
 
 		speed = speedParam;
 
-
+		frameChangeSpeed = 0.1;
         invertTextureX = invertX;
         this->width = width;
         this->height = height;
@@ -73,19 +73,6 @@ public:
 
 	}
 
-	void doingLoping(){
-		double currentSeconds = glfwGetTime();
-		double elapsedSeconds = currentSeconds - previousReactionTime;
-		if (*gameIsRunning && elapsedSeconds > 0.016) {
-			previousReactionTime = currentSeconds;
-
-            position->move(speed, 0.0f);
-            if (position->xCenter <= 0.0f) {
-                position->move( 800.0f-position->xCenter, 0.0f );
-            }
-        }
-    }
-
 	void draw() {
 		// Define shaderProgram como o shader a ser utilizado
 		shaderProgram->UseProgramShaders();
@@ -105,12 +92,16 @@ public:
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        //Troca o sprite a 10 FPS
+		changeFrame();
+	}
+
+	void changeFrame() {
+		//Troca o sprite a 10 FPS
 		double currentSeconds = glfwGetTime();
 		double elapsedSeconds = currentSeconds - previousFrameTime;
-		if (elapsedSeconds > 0.1) {
-			if(*gameIsRunning)
-		        sprites->nextFrame();
+		if (elapsedSeconds > frameChangeSpeed) {
+			if (*gameIsRunning)
+				sprites->nextFrame();
 			previousFrameTime = currentSeconds;
 		}
 	}

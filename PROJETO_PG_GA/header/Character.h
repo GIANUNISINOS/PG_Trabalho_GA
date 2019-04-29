@@ -4,17 +4,21 @@
 
 #pragma once
 
-class CharacterObject : public GameObject
+class Character: public GameObject
 {
 public:
     float normalY;
     float upSpeed;
-    float upDeceleration = 3.0f;
+    float upDeceleration = 1.0f;
+	float previousReactionTime;
 
-	CharacterObject(Shader* shaderProgram, SpriteSheet* sprites, bool *gameIsRunning)
+	Character(Shader* shaderProgram, SpriteSheet* sprites, bool *gameIsRunning)
 		: GameObject(shaderProgram, sprites, 100.0f, 100.0f, 400.0f, 490.0f, 5.0f, false, gameIsRunning)
 	{
 		this->normalY = 490.0f;
+	}
+	void changeFrame() {
+
 	}
 
     /*
@@ -31,23 +35,28 @@ public:
             if (keys[GLFW_KEY_RIGHT] == 1) {
                 if(position->xCenter < (800.00f-speed) ) {
 
+					frameChangeSpeed = 0.03;
                     position->move(speed, 0.0f);
                 }
             }
             if (keys[GLFW_KEY_LEFT] == 1) {
                 if(position->xCenter> (speed/2.0f) ){
 
+					frameChangeSpeed = 0.25;
                     position->move(-speed, 0.0f);
                 }
             }
+			if (keys[GLFW_KEY_RIGHT] == 0 && keys[GLFW_KEY_LEFT] == 0) {
+				frameChangeSpeed = 0.1;
+			}
             if (keys[GLFW_KEY_UP] == 1) {
                 /*
                     Caso não esteja no ar, iniciar velociade
-                    do pulo em -20.0f, fazer primeiro movimento
+                    do pulo em -12.5f, fazer primeiro movimento
                     e desacelerar
                 */
                 if (position->yCenter >= normalY) {
-					upSpeed = -30;
+					upSpeed = -12.5;
                     position->move(0.0f, upSpeed);
 					upSpeed += upDeceleration;
                     sprites->setActions(2);
@@ -71,10 +80,10 @@ public:
     }
 
 
-    virtual ~CharacterObject();
+    ~Character();
 };
 
-CharacterObject::~CharacterObject()
+Character::~Character()
 {
     delete sprites;
     delete vertices;

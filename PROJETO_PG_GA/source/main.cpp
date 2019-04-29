@@ -7,7 +7,8 @@
     #include "header/VerticesObject.h";
 	#include "header/Position.h";
 	#include "header/GameObject.h";
-    #include "header/CharacterObject.h";
+	#include "header/Projectile.h";
+    #include "header/Character.h";
     #include "header/BackgroundObject.h";
 #elif _WIN64
 	#include "../header/Includes.h";
@@ -18,7 +19,8 @@
 	#include "../header/VerticesObject.h";
 	#include "../header/Position.h";
 	#include "../header/GameObject.h";
-	#include "../header/CharacterObject.h";
+	#include "../header/Projectile.h";
+	#include "../header/Character.h";
 	#include "../header/BackgroundObject.h";
 #endif
 
@@ -32,8 +34,8 @@ bool gameIsRunning;
 time_t timeEnd;
 
 BackgroundObject* background;
-CharacterObject* character;
-GameObject* projetil;
+Character* character;
+Projectile* projetil;
 
 //Atributos janela
 int NEW_WIDTH = 800;
@@ -101,12 +103,12 @@ void testGameWinOrOver(){
 
     //testa colisão da morte
     bool difInX =
-            (character->position->xCenter + character->width / 2.0f)-30.0f > (projetil->position->xCenter - projetil->width/2.0f)
+            (character->position->xCenter + character->width / 2.0f)-40.0f > (projetil->position->xCenter - projetil->width/2.0f)
             &&(character->position->xCenter - character->width / 2.0f)+60.0f< (projetil->position->xCenter + projetil->width/2.0f)
     ;
 
     bool difInY =
-            (character->position->yCenter + character->height/2.0f) > (projetil->position->yCenter - projetil->height/2.0f);
+            (character->position->yCenter + character->height/2.0f)-7.0f > (projetil->position->yCenter - projetil->height/2.0f);
 
 
 
@@ -175,9 +177,9 @@ int main() {
 
 	background = new BackgroundObject(shaderProgram, (float)WIDTH, (float)HEIGHT, &gameIsRunning);
 
-	character  = new CharacterObject(shaderProgram, knightSprites, &gameIsRunning);
+	character  = new Character(shaderProgram, knightSprites, &gameIsRunning);
 
-	projetil   = new GameObject(shaderProgram, projetilSprites, 70.0f, 70.0f, 900.0f, 490.0f, -6.0f, true, &gameIsRunning);
+	projetil   = new Projectile(shaderProgram, projetilSprites, &gameIsRunning);
 
     // looping do main
 	while (!glfwWindowShouldClose(window)) {
@@ -211,6 +213,7 @@ int main() {
 	delete projetil;
 	delete background;
 	delete character;
+	delete projetil;
     delete shaderProgram;
 
     // encerra contexto GL e outros recursos da GLFW

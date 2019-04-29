@@ -17,9 +17,6 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="header\Utils.h">
-      <Filter>headers</Filter>
-    </ClInclude>
     <ClInclude Include="header\SpriteSheet.h">
       <Filter>headers</Filter>
     </ClInclude>
@@ -35,7 +32,10 @@
     <ClInclude Include="header\Position.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="header\CharacterObject.h">
+    <ClInclude Include="header\Projectile.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Character.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
