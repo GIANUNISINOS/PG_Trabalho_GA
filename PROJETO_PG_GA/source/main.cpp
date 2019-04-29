@@ -54,7 +54,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 */
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if(action == GLFW_PRESS) keys[key] = 1;
-    if(action == GLFW_REPEAT) keys[key] = 0;
 	if(action == GLFW_RELEASE) keys[key] = 0;
 }
 
@@ -81,7 +80,7 @@ void main_keyboard_reaction() {
 
 
 GLFWwindow* createWindow() {
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Megamen Game", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Try to survive thirty seconds!", NULL, NULL);
     if (window == NULL) {
         printf("%s", "Houve uma falha ao criar a janela GLFW");
         glfwTerminate();
@@ -137,7 +136,7 @@ int main() {
 
 	window = createWindow();
 
-	// inicia manipulador da extens„o GLEW
+	// inicia manipulador da extensao GLEW
 	glewExperimental = GL_TRUE;
 	glewInit();
 
