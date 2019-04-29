@@ -1,0 +1,6 @@
+Este é um jogo de sobrevivência.
+Se você sobreviver 30 segundos, você ganhará o jogo.
+Se enconstar em algum projétil, você perderá o jogo.
+Utilize as setas do teclado para se movimentar.
+
+Aperte espaço para começar e reiniciar, e se divirta!
