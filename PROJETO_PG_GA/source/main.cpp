@@ -24,10 +24,6 @@
 	#include "../header/BackgroundObject.h";
 #endif
 
-
-//#define EXIT_FAILURE -1
-//#define EXIT_SUCCESS 0
-
 Shader *shaderProgram;
 GLFWwindow *window;
 bool gameIsRunning;
@@ -38,8 +34,6 @@ Character* character;
 Projectile* projetil;
 
 //Atributos janela
-int NEW_WIDTH = 800;
-int NEW_HEIGHT = 600;
 int WIDTH = 800;
 int HEIGHT = 600;
 
@@ -49,8 +43,6 @@ int keys[1024];
 //Define acoes do redimensionamento da tela
 void window_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
-    NEW_WIDTH = width;
-    NEW_HEIGHT = height;
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -208,12 +200,12 @@ int main() {
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
+
 	delete knightSprites;
 	delete projetilSprites;
 	delete projetil;
 	delete background;
 	delete character;
-	delete projetil;
     delete shaderProgram;
 
     // encerra contexto GL e outros recursos da GLFW

@@ -56,7 +56,7 @@ public:
                     e desacelerar
                 */
                 if (position->yCenter >= normalY) {
-					upSpeed = -12.5;
+					upSpeed = -15.0f;
                     position->move(0.0f, upSpeed);
 					upSpeed += upDeceleration;
                     sprites->setActions(2);
@@ -85,9 +85,6 @@ public:
 
 Character::~Character()
 {
-    delete sprites;
-    delete vertices;
-    delete position;
 }
 
 #endif //PROJETO_PG_GA_CHARACTEROBJECT_H

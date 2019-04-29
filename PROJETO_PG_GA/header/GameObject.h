@@ -111,7 +111,6 @@ public:
 
 GameObject::~GameObject()
 {
-	delete sprites;
 	delete vertices;
 	delete position;
 }
